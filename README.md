@@ -6,40 +6,73 @@ This portfolio is intended primarily for:
 - **Recruiters** – to review my QA skills, documentation style, and testing approach.
 - **Future professional opportunities** – including long-term roles and potential freelance work.
 
-## 📂 Folder Structure
+---
 
-- `manual-qa/test-cases` — Test case documentation  
-- `manual-qa/bug-reports` — Sample bug reports  
-- `manual-qa/test-plan` — Test planning documents  
-- `manual-qa/requirements` — User stories and requirements examples  
+## Portfolio Overview
 
-## Screenshots (Manual QA)
+Each client folder contains:
 
-A **manual-qa/screenshots** folder is included to store visual evidence such as:
+- **Test Cases** — feature-grouped test cases in Markdown format  
+- **Screenshots** — evidence of executed tests (sensitive information censored)  
+- **Bug Reports** — sample or demo bug reports  
+- **Requirements** — sample requirement documents  
+- **Test Plans** — test plan documents  
 
-- Passed test case screenshots  
-- Bug reproduction steps  
-- UI validation captures  
+Additionally, the repository includes:
 
-These support the written test cases and demonstrate real testing flow.
+- **index.html** — the website homepage to showcase the portfolio online  
+- **styles.css** — the stylesheet used for portfolio pages
 
 
-## 🖥️ Portfolio Website
+---
 
-A simple front-end page is included to showcase my QA work and professional branding:
+## Portfolio Structure
 
-- `index.html` — main portfolio page  
-- `styles.css` — styling for the portfolio website  
+```text
+manual-qa/
+  amazon/
+    amazon-tests.md
+    screenshots/
+      amazon-login-success-censored.PNG
+      amazon-login-failed.PNG
+    bug-reports/
+    requirements/
+    test-plans/
+  delta/
+    delta-tests.md
+    screenshots/
+    bug-reports/
+    requirements/
+    test-plans/
+  macys/
+    macys-tests.md
+    screenshots/
+    bug-reports/
+    requirements/
+    test-plans/
+```
 
-## 🔧 Tools & Practices Demonstrated
+---
 
-- Manual test case design  
-- Bug reporting and defect documentation  
-- Basic requirements analysis  
-- Test planning fundamentals  
-- Git & GitHub workflow  
 
-## ⚡ Notes
+## How to View Test Cases
 
-- All examples use demo accounts and safe test data.  
-- Additional screenshots and artifacts will continue to be added as my portfolio grows.
+1. Open the folder for the desired website (Amazon, Delta, Macy's).  
+2. Open the `*-tests.md` file to view feature-grouped test cases.  
+3. Screenshots are included in the `screenshots/` folder and referenced in the Markdown files.  
+
+> Example: In Amazon tests, the invalid login screenshot is linked as:
+>
+> `![Invalid Password](screenshots/amazon-login-failed.PNG)`
+
+---
+
+## Notes
+
+- All screenshots with sensitive data are **censored**.  
+- The repository is structured for **recruiters and potential clients** to see professional QA work.  
+- Test cases include **functional and UI/responsive checks**, grouped by feature.  
+- Each unofficial client folder has its **own screenshots, test cases, bug reports, requirements, and test plan files**.  
+- Automation QA will be added to the portfolio in the future.
+
+
