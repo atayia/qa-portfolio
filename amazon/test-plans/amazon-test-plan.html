@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amazon Test Plan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+      padding: 0;
+      max-width: 900px;
+    }
+    h1, h2, h3 {
+      color: #222;
+    }
+    .section {
+      margin-bottom: 24px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>Amazon Login Feature Test Plan</h1>
+
+  <div class="section">
+    <h2>1. Introduction</h2>
+    <p>This test plan outlines the verification and validation strategy for Amazon's login workflow, covering functional behavior, UI consistency, error handling, and system responsiveness.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Scope</h2>
+    <p><strong>In Scope:</strong></p>
+    <ul>
+      <li>Valid login</li>
+      <li>Invalid login (wrong password, wrong email)</li>
+      <li>UI validation on login page</li>
+      <li>Error messages</li>
+      <li>Navigation to password reset</li>
+    </ul>
+    <p><strong>Out of Scope:</strong></p>
+    <ul>
+      <li>Account creation</li>
+      <li>Prime signup flow</li>
+      <li>2FA/MFA</li>
+      <li>Backend authentication logic</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>3. Test Objectives</h2>
+    <ul>
+      <li>Verify that authenticated users can successfully access their account.</li>
+      <li>Ensure invalid credentials produce correct error messaging.</li>
+      <li>Validate layout, fields, and links are functioning and displayed properly.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Test Approach</h2>
+    <p>Testing will follow a black-box manual QA approach, using exploratory, functional, and UI validation methods. Regression tests may be executed as needed.</p>
+  </div>
+
+  <div class="section">
+    <h2>5. Test Environment</h2>
+    <ul>
+      <li><strong>Browsers:</strong> Chrome (latest), Firefox (latest), Safari</li>
+      <li><strong>OS:</strong> macOS, Windows 10+</li>
+      <li><strong>Network:</strong> Standard broadband</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6. Risks & Dependencies</h2>
+    <ul>
+      <li>Amazon may update the UI at any time.</li>
+      <li>Network outages may affect accessibility.</li>
+      <li>Issues may arise due to rate-limiting or security captchas.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>7. Test Deliverables</h2>
+    <ul>
+      <li>Test Cases</li>
+      <li>Bug Reports</li>
+      <li>Screenshots</li>
+      <li>Execution Results</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>8. Exit Criteria</h2>
+    <ul>
+      <li>All planned test cases executed</li>
+      <li>All critical and high-severity defects resolved</li>
+      <li>Approved test execution summary</li>
+    </ul>
+  </div>
+
+  <footer style="margin-top:40px; color:#555;">
+    <p>Unofficial portfolio test artifact. For demonstration purposes only.</p>
+  </footer>
+</body>
+</html>

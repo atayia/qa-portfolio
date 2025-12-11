@@ -169,12 +169,12 @@ header p {
 
 /* Coming soon style overrides */
 .deliverable.coming-soon {
-  background: rgba(255,255,255,0.03);
-  color: var(--muted);
-  box-shadow: none;
-  font-style: italic;
-  cursor: default;
+  color: #999;            /* greyed out text */
+  cursor: default;        /* default cursor instead of pointer */
+  pointer-events: none;   /* disables clicking */
+  opacity: 0.7;           /* slightly faded */
 }
+
 
 /* ------- Project page header (client) ------- */
 .project-hero {
