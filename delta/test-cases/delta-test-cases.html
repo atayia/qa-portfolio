@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unofficial Client — Delta Test Cases</title>
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<a id="top"></a>    
+
+<div class="container">
+  <a href="../delta.html" class="back-link">&larr; Back to Delta Project Page</a>
+
+  <!-- Project header -->
+  <div class="project-hero">
+    <h1>Unofficial Client — Delta Manual Test Cases</h1>
+    <p>Manual QA Portfolio Deliverable</p>
+    <p><strong>Tester Email:</strong> heatqa.test@gmail.com</p>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="section">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#DLT-TC001">DLT-TC001 — Login Success (Positive Test)</a></li>
+      <li><a href="#DLT-TC002">DLT-TC002 — Login Failure (Negative Test)</a></li>
+      <li><a href="#DLT-TC003">DLT-TC003 — Search Flight</a></li>
+      <li><a href="#DLT-TC004">DLT-TC004 — Book Flight</a></li>
+      <li><a href="#DLT-TC005">DLT-TC005 — Cancel Booking</a></li>
+      <li><a href="#DLT-TC006">DLT-TC006 — UI Responsiveness</a></li>
+      <li><a href="#DLT-TC007">DLT-TC007 — Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Spacer -->
+  <div class="test-case"></div>
+
+  <!-- Test Cases -->
+
+  <div class="test-case" id="DLT-TC001">
+    <h2>DLT-TC001 — Login Success (Positive Test)</h2>
+    <p><strong>Description:</strong> Verify a user can log in with valid credentials.</p>
+    <p><strong>Preconditions:</strong> User has a valid account: heatqa.test@gmail.com</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Navigate to Delta login page.</li>
+      <li>Enter email: <code>heatqa.test@gmail.com</code>.</li>
+      <li>Enter correct password.</li>
+      <li>Click "Sign In".</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong></p>
+    <ul>
+      <li>User successfully logs in.</li>
+      <li>Homepage displays user information.</li>
+    </ul>
+
+    <p><strong>Status:</strong> To be executed ⬜</p>
+
+    <p><strong>Screenshot:</strong><br>
+      <img src="../screenshots/delta-login-success.PNG"
+           alt="Delta Login Success"
+           style="max-width: 900px; width: 100%; height: auto;" />
+    </p>
+  </div>
+
+  <div class="test-case" id="DLT-TC002">
+    <h2>DLT-TC002 — Login Failure (Negative Test)</h2>
+    <p><strong>Description:</strong> Verify login fails with incorrect password.</p>
+    <p><strong>Preconditions:</strong> User has a valid account: heatqa.test@gmail.com</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Navigate to Delta login page.</li>
+      <li>Enter email: <code>heatqa.test@gmail.com</code>.</li>
+      <li>Enter incorrect password.</li>
+      <li>Click "Sign In".</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong></p>
+    <ul>
+      <li>Login fails and an error message is displayed.</li>
+    </ul>
+
+    <p><strong>Status:</strong> To be executed ⬜</p>
+
+    <p><strong>Screenshot:</strong><br>
+      <img src="../screenshots/delta-login-failed.PNG"
+           alt="Delta Login Failed"
+           style="max-width: 900px; width: 100%; height: auto;" />
+    </p>
+  </div>
+
+  <div class="test-case" id="DLT-TC003">
+    <h2>DLT-TC003 — Search Flight</h2>
+    <p><strong>Description:</strong> Verify users can search for flights.</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Enter origin, destination, and travel dates.</li>
+      <li>Click "Search".</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong> Relevant flights appear in search results.</p>
+    <p><strong>Status:</strong> To be executed ⬜</p>
+  </div>
+
+  <div class="test-case" id="DLT-TC004">
+    <h2>DLT-TC004 — Book Flight</h2>
+    <p><strong>Description:</strong> Verify a user can book a flight successfully.</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Select a flight from search results.</li>
+      <li>Enter passenger details.</li>
+      <li>Complete payment process.</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong> Booking confirmation page is displayed.</p>
+    <p><strong>Status:</strong> To be executed ⬜</p>
+  </div>
+
+  <div class="test-case" id="DLT-TC005">
+    <h2>DLT-TC005 — Cancel Booking</h2>
+    <p><strong>Description:</strong> Verify a user can cancel a booking.</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Navigate to "My Trips".</li>
+      <li>Select a booking and click "Cancel".</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong> Booking is successfully canceled.</p>
+    <p><strong>Status:</strong> To be executed ⬜</p>
+  </div>
+
+  <div class="test-case" id="DLT-TC006">
+    <h2>DLT-TC006 — UI Responsiveness</h2>
+    <p><strong>Description:</strong> Verify Delta site adapts to mobile and tablet screens.</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Open site on various screen sizes.</li>
+      <li>Navigate main pages.</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong> Layout and menus adjust properly.</p>
+    <p><strong>Status:</strong> To be executed ⬜</p>
+  </div>
+
+  <div class="test-case" id="DLT-TC007">
+    <h2>DLT-TC007 — Logout</h2>
+    <p><strong>Description:</strong> Verify a user can log out successfully.</p>
+
+    <p><strong>Test Steps:</strong></p>
+    <ul>
+      <li>Log in with valid credentials.</li>
+      <li>Click "Sign Out".</li>
+    </ul>
+
+    <p><strong>Expected Result:</strong> User is logged out and redirected to homepage.</p>
+    <p><strong>Status:</strong> To be executed ⬜</p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="left">
+        © 2025 Marie-Jo Atayi • Last updated: <span id="last-updated"></span>
+        <p class="footer-note"><i>Unofficial portfolio test artifact. For demonstration purposes only.</i></p>
+      </div>
+
+      <div class="icons">
+
+        <!-- Resume Icon -->
+        <a class="icon" href="../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank" aria-label="Resume">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" stroke="#e6eef6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 2v6h6" stroke="#e6eef6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 10h8M8 14h8M8 18h4" stroke="#e6eef6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <!-- Email -->
+        <a class="icon" href="mailto:josianeatayi@gmail.com" aria-label="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13a2.5 2.5 0 0 0 2.5-2.5v-9" stroke="#e6eef6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 7.5L12 13 3 7.5" stroke="#e6eef6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <!-- GitHub -->
+        <a class="icon" href="https://github.com/atayia" target="_blank" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 .5C5.65.5.75 5.36.75 11.7c0 4.8 3.1 8.9 7.41 10.35.54.1.73-.24.73-.52 0-.26-.01-1-.02-1.95-3.01.66-3.65-1.47-3.65-1.47-.49-1.24-1.2-1.57-1.2-1.57-.98-.67.07-.66.07-.66 1.08.08 1.65 1.12 1.65 1.12.96 1.64 2.52 1.17 3.14.9.1-.7.38-1.17.7-1.44-2.4-.27-4.92-1.2-4.92-5.34 0-1.18.42-2.14 1.11-2.9-.11-.27-.48-1.36.11-2.84 0 0 .9-.29 2.95 1.1a10.07 10.07 0 0 1 2.68-.37c.91 0 1.82.12 2.68.37 2.04-1.39 2.95-1.1 2.95-1.1.59 1.48.22 2.57.11 2.84.69.76 1.11 1.72 1.11 2.9 0 4.15-2.52 5.07-4.92 5.34.39.34.74 1.02.74 2.06 0 1.49-.01 2.69-.01 3.05 0 .29.19.63.74.52C20.15 20.6 23.25 16.5 23.25 11.7 23.25 5.36 18.35.5 12 .5z" fill="#e6eef6"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a class="icon" href="https://www.linkedin.com/in/ayikouele-atayi" target="_blank" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4.98 3.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5zM3.5 9.5h3v11h-3v-11zM9.5 9.5h2.88v1.5h.04c.4-.76 1.38-1.58 2.84-1.58 3.04 0 3.6 2 3.6 4.58v6.5h-3v-5.75c0-1.37-.02-3.12-1.9-3.12-1.9 0-2.19 1.48-2.19 3.01v5.86h-3v-11z" fill="#e6eef6"/>
+          </svg>
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </footer>
+
+  <script>
+  // Automatically set the last updated date
+  const lastUpdated = document.getElementById('last-updated');
+  const today = new Date();
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  lastUpdated.textContent = today.toLocaleDateString(undefined, options);
+  </script>
+</div>
+
+<a href="#top" class="back-to-top" aria-label="Back to top">
+    ↑
+</a>
+</body>
+</html>
