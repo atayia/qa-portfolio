@@ -7,19 +7,19 @@
 
 ## Table of Contents
 
-- [TC001 — Login Success (Positive Test)](#tc001---login-success-positive-test)
-- [TC002 — Login Failure (Negative Test — Incorrect Password)](#tc002---login-failure-negative-test-incorrect-password)
-- [TC003 — Search Product](#tc003---search-product)
-- [TC004 — Add to Cart](#tc004---add-to-cart)
-- [TC005 — Remove from Cart](#tc005---remove-from-cart)
-- [TC006 — Checkout Process](#tc006---checkout-process)
-- [TC007 — UI Responsiveness](#tc007---ui-responsiveness)
-- [TC008 — Logout](#tc008---logout)
+- [AMZ-TC001 — Login Success (Positive Test)](#AMZ-TC001---login-success-positive-test)
+- [AMZ-TC002 — Login Failure (Negative Test — Incorrect Password)](#AMZ-TC002---login-failure-negative-test-incorrect-password)
+- [AMZ-TC003 — Search Product](#AMZ-AMZ-TC003---search-product)
+- [AMZ-TC004 — Add to Cart](#AMZ-TC004---add-to-cart)
+- [AMZ-TC005 — Remove from Cart](#AMZ-TC005---remove-from-cart)
+- [AMZ-TC006 — Checkout Process](#AMZ-TC006---checkout-process)
+- [AMZ-TC007 — UI Responsiveness](#AMZ-TC007---ui-responsiveness)
+- [AMZ-TC008 — Logout](#AMZ-TC008---logout)
 
 
 ---
 
-## TC001 — Login Success (Positive Test)
+## AMZ-TC001 — Login Success (Positive Test)
 
 **Description:** Verify that a user can successfully log in with correct credentials.  
 
@@ -43,7 +43,7 @@
 
 ---
 
-## TC002 — Login Failure (Negative Test — Incorrect Password)
+## AMZ-TC002 — Login Failure (Negative Test — Incorrect Password)
 
 **Description:** Verify that login fails when an incorrect password is entered.  
 
@@ -67,7 +67,7 @@
 
 ---
 
-## TC003 — Search Product
+## AMZ-TC003 — Search Product
 
 **Description:** Verify that a product can be searched successfully.  
 
@@ -82,7 +82,7 @@
 
 ---
 
-## TC004 — Add to Cart
+## AMZ-TC004 — Add to Cart
 
 **Description:** Verify that a product can be added to the cart.  
 
@@ -99,7 +99,7 @@
 
 ---
 
-## TC005 — Remove from Cart
+## AMZ-TC005 — Remove from Cart
 
 **Description:** Verify that a product can be removed from the cart.  
 
@@ -116,7 +116,7 @@
 
 ---
 
-## TC006 — Checkout Process
+## AMZ-TC006 — Checkout Process
 
 **Description:** Verify that checkout flow proceeds correctly.  
 
@@ -134,7 +134,7 @@
 
 ---
 
-## TC007 — UI Responsiveness
+## AMZ-TC007 — UI Responsiveness
 
 **Description:** Verify that the website layout adapts to mobile and tablet screens.  
 
@@ -150,7 +150,7 @@
 
 ---
 
-## TC008 — Logout
+## AMZ-TC008 — Logout
 
 **Description:** Verify that a user can successfully log out.  
 
