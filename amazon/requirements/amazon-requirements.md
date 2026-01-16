@@ -1,9 +1,8 @@
-# Unofficial Client - Amazon Requirements
+# Business Requirements - Amazon Project
 
-- Users must be able to create an account and login successfully.
-- Login form must validate input fields and display appropriate error messages for invalid credentials.
-- Users can browse categories, search for products, and view product details.
-- Add to cart functionality must work correctly.
-- Checkout process should calculate total correctly and handle payment input.
-- Responsive layout: pages must display correctly on desktop, tablet, and mobile.
-- Buttons, links, and images must be clickable and visually correct.
+| ID | Requirement Description | Verification Method |
+| :--- | :--- | :--- |
+| **REQ-AMZ-01** | **User Authentication**: System shall allow valid credentials to establish a secure session and display a personalized greeting. | [TC-AMZ-001](amazon-test-cases.md#tc-amz-001) |
+| **REQ-AMZ-02** | **Security Handling**: System shall reject invalid credentials with non-revealing error messages to prevent unauthorized access. | [TC-AMZ-002](amazon-test-cases.md#tc-amz-002) |
+| **REQ-AMZ-03** | **Global Product Search**: System shall return relevant results for alphanumeric queries or display a graceful "no results" state. | [TC-AMZ-003](amazon-test-cases.md#tc-amz-003), [TC-AMZ-005](amazon-test-cases.md#tc-amz-005) |
+| **REQ-AMZ-04** | **Shopping Cart State**: System shall maintain item persistence across sessions and enforce quantity limitations based on stock. | [TC-AMZ-004](amazon-test-cases.md#tc-amz-004), [TC-AMZ-006](amazon-test-cases.md#tc-amz-006) |

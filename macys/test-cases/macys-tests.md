@@ -6,18 +6,18 @@
 
 ## Table of Contents
 
-- [TC001 — Login Success (Positive Test)](#tc001---login-success-positive-test)
-- [TC002 — Login Failure (Negative Test)](#tc002---login-failure-negative-test)
-- [TC003 — Search Product](#tc003---search-product)
-- [TC004 — Add to Cart](#tc004---add-to-cart)
-- [TC005 — Remove from Cart](#tc005---remove-from-cart)
-- [TC006 — Checkout Process](#tc006---checkout-process)
-- [TC007 — UI Responsiveness](#tc007---ui-responsiveness)
-- [TC008 — Logout](#tc008---logout)
+- [MAC-TC001 — Login Success (Positive Test)](#mac-tc001---login-success-positive-test)
+- [MAC-TC002 — Login Failure (Negative Test)](#mac-tc002---login-failure-negative-test)
+- [MAC-TC003 — Search Product](#mac-tc003---search-product)
+- [MAC-TC004 — Add to Cart](#mac-tc004---add-to-cart)
+- [MAC-TC005 — Remove from Cart](#mac-tc005---remove-from-cart)
+- [MAC-TC006 — Checkout Process](#mac-tc006---checkout-process)
+- [MAC-TC007 — UI Responsiveness](#mac-tc007---ui-responsiveness)
+- [MAC-TC008 — Logout](#mac-tc008---logout)
 
 ---
 
-## TC001 — Login Success (Positive Test)
+## MAC-TC001 — Login Success (Positive Test)
 
 **Description:** Verify a user can log in with valid credentials.
 
@@ -41,7 +41,7 @@
 
 ---
 
-## TC002 — Login Failure (Negative Test)
+## MAC-TC002 — Login Failure (Negative Test)
 
 **Description:** Verify login fails with incorrect password.
 
@@ -64,7 +64,7 @@
 
 ---
 
-## TC003 — Search Product
+## MAC-TC003 — Search Product
 
 **Description:** Verify users can search for products.  
 
@@ -79,7 +79,7 @@
 
 ---
 
-## TC004 — Add to Cart
+## MAC-TC004 — Add to Cart
 
 **Description:** Verify a product can be added to cart.  
 
@@ -95,7 +95,7 @@
 
 ---
 
-## TC005 — Remove from Cart
+## MAC-TC005 — Remove from Cart
 
 **Description:** Verify a product can be removed from cart.  
 
@@ -111,7 +111,7 @@
 
 ---
 
-## TC006 — Checkout Process
+## MAC-TC006 — Checkout Process
 
 **Description:** Verify checkout flow works.  
 
@@ -127,7 +127,7 @@
 
 ---
 
-## TC007 — UI Responsiveness
+## MAC-TC007 — UI Responsiveness
 
 **Description:** Verify Macy’s site adapts to mobile/tablet screens.  
 
@@ -142,7 +142,7 @@
 
 ---
 
-## TC008 — Logout
+## MAC-TC008 — Logout
 
 **Description:** Verify a user can log out.  
 

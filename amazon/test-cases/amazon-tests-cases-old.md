@@ -7,15 +7,14 @@
 
 ## Table of Contents
 
-- [AMZ-TC001 — Login Success (Positive Test)](#AMZ-TC001---login-success-positive-test)
-- [AMZ-TC002 — Login Failure (Negative Test — Incorrect Password)](#AMZ-TC002---login-failure-negative-test-incorrect-password)
-- [AMZ-TC003 — Search Product](#AMZ-AMZ-TC003---search-product)
-- [AMZ-TC004 — Add to Cart](#AMZ-TC004---add-to-cart)
-- [AMZ-TC005 — Remove from Cart](#AMZ-TC005---remove-from-cart)
-- [AMZ-TC006 — Checkout Process](#AMZ-TC006---checkout-process)
-- [AMZ-TC007 — UI Responsiveness](#AMZ-TC007---ui-responsiveness)
-- [AMZ-TC008 — Logout](#AMZ-TC008---logout)
-
+- [AMZ-TC001 — Login Success (Positive Test)](#amz-tc001---login-success-positive-test)
+- [AMZ-TC002 — Login Failure (Negative Test — Incorrect Password)](#amz-tc002---login-failure-negative-test---incorrect-password)
+- [AMZ-TC003 — Search Product](#amz-tc003---search-product)
+- [AMZ-TC004 — Add to Cart](#amz-tc004---add-to-cart)
+- [AMZ-TC005 — Remove from Cart](#amz-tc005---remove-from-cart)
+- [AMZ-TC006 — Checkout Process](#amz-tc006---checkout-process)
+- [AMZ-TC007 — UI Responsiveness](#amz-tc007---ui-responsiveness)
+- [AMZ-TC008 — Logout](#amz-tc008---logout)
 
 ---
 
@@ -34,12 +33,12 @@
 
 **Expected Result:**  
 - User is redirected to the account homepage.  
-- Account username/email is displayed on the top right.  
+- Account user's name is displayed on the top right.  
 
 **Status:** Passed ✅  
 
 **Screenshot:**  
-`![Login Success](screenshots/amazon-login-success-censored.PNG)`  
+`![Login Success](../screenshots/amazon-login-success.png)`  
 
 ---
 

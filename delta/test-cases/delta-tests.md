@@ -6,17 +6,17 @@
 
 ## Table of Contents
 
-- [TC001 — Login Success (Positive Test)](#tc001---login-success-positive-test)
-- [TC002 — Login Failure (Negative Test)](#tc002---login-failure-negative-test)
-- [TC003 — Search Flight](#tc003---search-flight)
-- [TC004 — Book Flight](#tc004---book-flight)
-- [TC005 — Cancel Booking](#tc005---cancel-booking)
-- [TC006 — UI Responsiveness](#tc006---ui-responsiveness)
-- [TC007 — Logout](#tc007---logout)
+- [DLT-TC001 — Login Success (Positive Test)](#dlt-tc001---login-success-positive-test)
+- [DLT-TC002 — Login Failure (Negative Test)](#dlt-tc002---login-failure-negative-test)
+- [DLT-TC003 — Search Flight](#dlt-tc003---search-flight)
+- [DLT-TC004 — Book Flight](#dlt-tc004---book-flight)
+- [DLT-TC005 — Cancel Booking](#dlt-tc005---cancel-booking)
+- [DLT-TC006 — UI Responsiveness](#dlt-tc006---ui-responsiveness)
+- [DLT-TC007 — Logout](#dlt-tc007---logout)
 
 ---
 
-## TC001 — Login Success (Positive Test)
+## DLT-TC001 — Login Success (Positive Test)
 
 **Description:** Verify a user can log in with valid credentials.
 
@@ -40,7 +40,7 @@
 
 ---
 
-## TC002 — Login Failure (Negative Test)
+## DLT-TC002 — Login Failure (Negative Test)
 
 **Description:** Verify login fails with incorrect password.
 
@@ -63,7 +63,7 @@
 
 ---
 
-## TC003 — Search Flight
+## DLT-TC003 — Search Flight
 
 **Description:** Verify users can search for flights.  
 
@@ -78,7 +78,7 @@
 
 ---
 
-## TC004 — Book Flight
+## DLT-TC004 — Book Flight
 
 **Description:** Verify a user can book a flight successfully.  
 
@@ -94,7 +94,7 @@
 
 ---
 
-## TC005 — Cancel Booking
+## DLT-TC005 — Cancel Booking
 
 **Description:** Verify a user can cancel a booking.  
 
@@ -109,7 +109,7 @@
 
 ---
 
-## TC006 — UI Responsiveness
+## DLT-TC006 — UI Responsiveness
 
 **Description:** Verify Delta site adapts to mobile/tablet screens.  
 
@@ -124,7 +124,7 @@
 
 ---
 
-## TC007 — Logout
+## DLT-TC007 — Logout
 
 **Description:** Verify a user can log out successfully.  
 

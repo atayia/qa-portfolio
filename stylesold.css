@@ -1,0 +1,289 @@
+/* styles.css
+   Dark (charcoal) theme — unified for homepage + project pages
+   Palette:
+     - Background: #111827 (charcoal)
+     - Surface (tiles): #ffffff (white)
+     - Muted surface hover: #f1f7ff (very light blue tint)
+     - Accent: #3b82f6 (blue)
+     - Text (light): #e6eef6
+     - Text (dark inside tile): #0f1724
+*/
+
+:root{
+  --bg: #111827;
+  --panel: #0b1220;       /* header/footer slightly darker */
+  --tile: #ffffff;
+  --tile-hover: #e7f0ff;
+  --accent: #3b82f6;
+  --muted: #94a3b8;
+  --text: #e6eef6;
+  --tile-text: #0f1724;
+  --max-width: 1000px;
+  --radius: 10px;
+  --shadow: 0 6px 20px rgba(2,6,23,0.6);
+}
+
+/* ------- Global ------- */
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg), #0f1724 120%);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  padding-bottom: 40px;
+}
+
+/* Utility container */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ------- Header ------- */
+header {
+  background: var(--panel);
+  padding: 2.2rem 0;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.5);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+header .container { text-align: center; }
+header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  color: var(--text);
+  letter-spacing: 0.2px;
+}
+header p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* ------- Hero / About ------- */
+.about {
+  max-width: 100%;       /* Allows it to expand more on wide screens */
+  margin: 2.2rem auto;
+  /*padding: 0 1rem;      /* Optional, gives some space from edges */
+}
+
+.about h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 1.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  padding-bottom: 0.45rem;
+
+}
+.about p {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 100%;      /* Fill the container width */
+  line-height: 1.6;     /* Optional: improves readability */
+}
+
+.skills p {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+
+
+/* ------- Homepage client summary (compact card) ------- */
+.client-summary {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 1.1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.client-summary .info {
+  flex: 1;
+}
+.client-summary h3 {
+  margin: 0 0 0.25rem 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+.client-summary p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.client-summary .btn {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.client-summary .btn:hover {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.09);
+}
+
+/* ------- Tiles / Deliverables (used on project pages) ------- */
+.deliverables {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.deliverable {
+  background: var(--tile);
+  color: var(--tile-text);
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  text-align: center;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deliverable a {
+  color: var(--tile-text);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.96rem;
+}
+.deliverable:hover {
+  transform: translateY(-6px);
+  background: var(--tile-hover);
+  box-shadow: 0 18px 40px rgba(2,6,23,0.55);
+}
+
+/* Coming soon style overrides */
+.deliverable.coming-soon {
+  color: #999;            /* greyed out text */
+  cursor: default;        /* default cursor instead of pointer */
+  pointer-events: none;   /* disables clicking */
+  opacity: 0.7;           /* slightly faded */
+}
+
+
+/* ------- Project page header (client) ------- */
+.project-hero {
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+}
+.project-hero h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.4rem;
+}
+.project-hero p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ------- Back link ------- */
+.back-link {
+  display: inline-block;
+  margin: 0.6rem 0 0;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ------- Hyperlinks ------- */
+.section a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.section a:hover {
+  text-decoration: underline;
+}
+
+.test-case {
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(230, 238, 246, 0.08);
+}
+
+/* ------- Footer ------- */
+.footer {
+  margin-top: 2.6rem;
+  padding: 1.6rem 0;
+  background: var(--panel);
+  border-top: 1px solid rgba(255,255,255,0.02);
+}
+.footer .container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.footer .left { color: var(--muted); font-size: 0.95rem; }
+.footer .icons { display:flex; gap:0.6rem; align-items:center; }
+.footer a.icon {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px; height:36px;
+  border-radius:8px;
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  text-decoration:none;
+  transition: background 160ms ease, transform 160ms ease;
+}
+.footer a.icon:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-3px);
+}
+
+/* ------- Small screens ------- */
+@media (max-width: 720px) {
+  .footer .container { flex-direction: column; text-align:center; gap: 0.6rem; }
+  .client-summary { flex-direction: column; align-items: flex-start; }
+  .client-summary .btn { margin-top: 0.6rem; }
+}
+
+.footer-note {
+  font-size: 0.95rem;        /* match .footer .left */
+  color: var(--muted);       /* muted text color */
+  margin: 0.3rem 0 0;        /* small spacing above/below */
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--accent);
+  color: #0b1220;
+  text-decoration: none;
+  font-size: 18px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.back-to-top:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+
