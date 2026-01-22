@@ -3,103 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bug Report: AMZ-BUG-001 | Heat QA</title>
+  <title>Bug Reports | Heat QA Solutions</title>
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body id="top">
 
   <div class="wrapper">
-    <header style="margin-bottom: 4rem;">
-      <a href="../amazon.html" style="color:var(--accent); text-decoration:none; font-size:0.9rem;">← AMAZON HUB</a>
-      <h1 style="font-size: 3rem; margin: 1rem 0;">Defect Report</h1>
-      <p style="color:var(--muted)">Project: Amazon E-Commerce | Lead Tester: Heat</p>
+    <header class="intro-container bug-header">
+      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Defect Reports</span></h1>
+      <p class="deliverable-subtitle">Project: Amazon E-Commerce | Lead QA: Marie-Jo A.</p>
+
+      <nav class="project-menu">
+        <a href="../test-plans/amazon-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="../requirements/amazon-requirements.html" class="menu-link">Requirements</a>
+        <a href="../test-cases/amazon-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="../bug-reports/amazon-bug-reports.html" class="menu-link active">Bug Reports</a>
+      </nav>
     </header>
 
     <main>
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">AMZ-BUG-001: Search Pagination API Failure</h2>
+      <article class="report-section">
+        <h2 class="report-title">AMZ-BUG-00X: Pending bug report - Placeholder</h2>
         
         <div class="tc-table">
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">1. Bug ID</span></div>
-            <div class="cell cell-right">AMZ-BUG-001</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">2. Linked Requirement</span></div>
-            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-03" style="color:var(--accent)">REQ-AMZ-03 (Global Search)</a></div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">3. Severity</span></div>
-            <div class="cell cell-right"><span class="status-badge severity-high" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444;">High</span></div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">4. Priority</span></div>
-            <div class="cell cell-right">P1 (Immediate Fix Required)</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">5. Environment</span></div>
-            <div class="cell cell-right">Chrome 120.0 (Win11); Mobile Emulation: iPhone 14 Pro</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">6. Reported By</span></div>
-            <div class="cell cell-right"><code>heatqa.test@gmail.com</code> (Heat)</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">7. Steps to Reproduce</span></div>
-            <div class="cell cell-right">
-              <ol style="margin: 0; padding-left: 1.2rem;">
-                <li>Search for "Logitech Mouse" as user Heat.</li>
-                <li>Scroll to the footer and trigger pagination via "Next" or "Page 2".</li>
-                <li>Observe UI behavior and Network tab in DevTools.</li>
-              </ol>
             </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">8. Expected Result</span></div>
-            <div class="cell cell-right">Page 2 of results loads successfully within 2 seconds.</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">9. Actual Result</span></div>
-            <div class="cell cell-right">Loading spinner hangs indefinitely; console returns 404 error on GET request.</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">10. Status</span></div>
-            <div class="cell cell-right"><span class="status-badge pass" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6;">Open</span></div>
-          </div>
-        </div>
 
-        <div class="evidence-area" style="margin-top: 2rem;">
-          <div class="evidence-box">
-            <h4>UI Screenshot</h4>
-            <div class="placeholder-img">[ Infinite Spinner Screenshot ]</div>
-          </div>
-          <div class="evidence-box">
-            <h4>DevTools Evidence</h4>
-            <div class="placeholder-img">[ Failed Network Request: GET /api/v1/search/p2 ]</div>
-          </div>
+        <div class="audit-trail-container">
+          <h3 class="label-text audit-trail-header"><i class="fas fa-history"></i> Defect History & Audit Trail</h3>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action / Note</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jan 21, 2026</td>
+                <td><span class="status-badge status-new">New</span></td>
+                <td>Sample bug report - Placeholder</td>
+                <td>Marie-Jo A.</td>
+              </tr>
+              <tr>
+                <td>--</td>
+                <td><span class="status-pending-text">Pending</span></td>
+                <td>Developer Triage</td>
+                <td>--</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </article>
 
-        <div class="tc-separator"></div>
+      <article class="discovery-placeholder">
+        <h2 class="report-title">AMZ-BUG-00X: [Pending Discovery]</h2>
+        <div class="dashed-container">
+          <p>No further defects identified. Placeholder active for regression testing results.</p>
+        </div>
       </article>
     </main>
   </div>
 
-  <footer>
-    <div class="footer-top" style="display:flex; justify-content:space-between; padding: 0 5%; color:var(--muted); font-size:0.8rem; margin-bottom:2rem;">
-        <span>&copy; 2026 Marie-Jo Atayi</span>
-        <span>Last Updated: <span id="auto-date"></span></span>
-    </div>
-    <div class="footer-icons">
-      <a href="mailto:heatqa.test@gmail.com"><i class="fas fa-envelope"></i></a>
-      <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
-      <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+  <a href="#top" id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" title="Jump to Bottom"><i class="fas fa-arrow-down"></i></a>
+
+  <footer id="footer-bottom">
+    <div class="footer-container">
+        <div class="footer-copyright">
+            <p>&copy; 2026 Marie-Jo Atayi | Heat QA Solutions</p>
+        </div>
+        <div class="footer-icons">
+          <a href="mailto:josianeatayi@gmail.com"><i class="fas fa-envelope"></i></a>
+          <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
+          <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('auto-date').textContent = new Date(document.lastModified).toLocaleDateString();
+    const backToTop = document.getElementById('backToTop');
+    const jumpToBottom = document.getElementById('jumpToBottom');
+    
+    window.onscroll = function() {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        backToTop.style.opacity = "1";
+        backToTop.style.pointerEvents = "auto";
+      } else {
+        backToTop.style.opacity = "0";
+        backToTop.style.pointerEvents = "none";
+      }
+
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+        jumpToBottom.style.opacity = "0";
+        jumpToBottom.style.pointerEvents = "none";
+      } else {
+        jumpToBottom.style.opacity = "1";
+        jumpToBottom.style.pointerEvents = "auto";
+      }
+    };
   </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,149 +8,559 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
+
 <body id="top">
 
   <div class="wrapper">
-    <header style="margin-bottom: 4rem;">
-      <a href="../amazon.html" style="color:var(--accent); text-decoration:none; font-size:0.9rem;">← AMAZON HUB</a>
-      <h1 style="font-size: 3rem; margin: 1rem 0;">Test Execution Log</h1>
-      <p style="color:var(--muted)">Project: Amazon E-Commerce | Environment: macOS Sequoia 15 (Tahoe '26 Beta) | Tester: Heat</p>
+    <header class="intro-container bug-header">
+      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Test Execution Log</span></h1>
+      <p class="deliverable-subtitle">Project: Amazon E-Commerce | Environment: macOS Sequoia 15 (Tahoe '26 Beta) | Lead QA:
+        Marie-Jo A.</p>
+
+        <nav class="project-menu">
+          <a href="../test-plans/amazon-test-plan.html" class="menu-link">Test Plan</a>
+          <a href="../requirements/amazon-requirements.html" class="menu-link">Requirements</a>
+          <a href="../test-cases/amazon-test-cases.html" class="menu-link active">Test Cases</a>
+          <a href="../bug-reports/amazon-bug-reports.html" class="menu-link">Bug Reports</a>
+        </nav>
     </header>
 
     <main>
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">TC-AMZ-001: Valid Login (Positive)</h2>
+      <article class="report-section" id="TC-AMZ-001">
+        <h2 class="report-title">TC-AMZ-001: Valid Login (Positive)</h2>
         <div class="tc-table">
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">1. ID</span></div><div class="cell cell-right">TC-AMZ-001</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">2. Requirement ID</span></div><div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-01" style="color:var(--accent)">REQ-AMZ-01</a></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">3. Test Type</span></div><div class="cell cell-right"><span class="badge positive">Positive / Smoke</span></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">4. Priority</span></div><div class="cell cell-right">High (P0)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">5. Environment</span></div><div class="cell cell-right">MacBook Pro 15", macOS Sequoia 15 (Tahoe '26 Beta), Chrome v120</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">6. Test Data</span></div><div class="cell cell-right"><code>heatqa.test@gmail.com</code> / <code>********</code></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">7. Execution Steps</span></div><div class="cell cell-right"><ol style="margin: 0; padding-left: 1.2rem;"><li>Navigate to Amazon.com Sign-in.</li><li>Enter valid test email and click continue.</li><li>Enter password and click submit.</li></ol></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">8. Expected Result</span></div><div class="cell cell-right">User redirected to dashboard with personalized greeting "Hello, Heat".</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">9. Actual Result</span></div><div class="cell cell-right">System navigated to Home Page; "Hello, Heat" displayed in header.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">10. Status</span></div><div class="cell cell-right"><span class="status-badge pass">Pass</span></div></div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-001</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify that a user can successfully log in with valid credentials.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">Browser cache cleared; User has a pre-existing registered account.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-01"
+                class="back-link">REQ-AMZ-01</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge positive">Positive / Smoke</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">High (P0)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">macOS Sequoia 15, Chrome v120</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right"><code>heatqa.test@gmail.com</code> / <code>********</code></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Navigate to Amazon.com Sign-in.</li>
+                <li>Enter valid test email and click continue.</li>
+                <li>Enter password and click submit.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">User redirected to dashboard with personalized greeting "Hello, Heat".</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">System navigated to Home Page; "Hello, Heat" displayed.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge pass">Pass</span></div>
+          </div>
         </div>
-        <div class="evidence-area" style="margin-top: 2rem;">
-          <div class="evidence-box"><h4>UI Screenshot</h4><img src="../screenshots/amazon-login-success.PNG" alt="Login Success" class="tc-screenshot" style="max-width: 900px; width: 100%; height: auto; border-radius: 8px;" /></div>
-          <div class="evidence-box"><h4>DevTools Evidence</h4><div class="placeholder-img">[ HTTP 302 Redirect Log ]</div></div>
+        <div class="tc-separator"></div>
+      </article>
+      
+      <article class="report-section" id="TC-AMZ-002">
+        <h2 class="report-title">TC-AMZ-002: Invalid Password (Negative)</h2>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-002</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify error message appears when using an invalid password.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">User is on the login password entry screen.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-02"
+                class="back-link">REQ-AMZ-02</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge negative">Negative</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">High (P1)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">macOS Sequoia 15, Chrome v120</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right">Pass: <code>WrongPass123!</code></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Enter incorrect password.</li>
+                <li>Click Sign-In.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">Login rejected; Error: "Your password is incorrect" displayed.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">Access denied; correct error string confirmed.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge pass">Pass</span></div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+      
+      <article class="report-section" id="TC-AMZ-003">
+        <h2 class="report-title">TC-AMZ-003: Alphanumeric Search (Positive)</h2>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-003</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify global search bar returns relevant items for alphanumeric queries.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">User is on the Amazon Homepage.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-03"
+                class="back-link">REQ-AMZ-03</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge positive">Functional</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">High (P1)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">macOS Sequoia 15, Chrome v120</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right">Query: <code>Logitech MX Master 3S</code></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Input query into global bar.</li>
+                <li>Execute search.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">SERP loads relevant products; Result count > 0.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">N/A (Pending Execution)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+      
+      <article class="report-section" id="TC-AMZ-004">
+        <h2 class="report-title">TC-AMZ-004: Cart Persistence (State)</h2>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-004</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify items in cart persist after logout/login.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">User is logged in; Cart is initially empty.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-04"
+                class="back-link">REQ-AMZ-04</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge positive">Regression / State</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">Medium (P2)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">macOS Sequoia 15, Chrome v120</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right">Item ID: B0982XWDRS</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Add item to cart.</li>
+                <li>Logout.</li>
+                <li>Login and check cart content.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">Cart count persists as (1) post-re-authentication.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">N/A (Pending Execution)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+      
+      <article class="report-section" id="TC-AMZ-005">
+        <h2 class="report-title">TC-AMZ-005: Global Search - No Results (Negative)</h2>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-005</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify "No Results Found" message for non-existent strings.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">User is on the Search results page.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-03"
+                class="back-link">REQ-AMZ-03</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge negative">Negative</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">Medium (P2)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">macOS Sequoia 15, Chrome v120</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right">Query: <code>zxyvwk123456789</code></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Input non-existent string.</li>
+                <li>Submit search.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">"No results" message displayed with fallback suggestions.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">N/A (Pending Execution)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+      
+      <article class="report-section" id="TC-AMZ-006">
+        <h2 class="report-title">TC-AMZ-006: Shopping Cart - Max Quantity (Boundary)</h2>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-006</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify cart enforces stock limits for high-quantity updates.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">Item added to cart with limited availability (e.g., &lt; 100 units).</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-04"
+                class="back-link">REQ-AMZ-04</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge positive">BVA (Boundary)</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">Medium (P2)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">macOS Sequoia 15, Chrome v120</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right">Quantity Update: 999</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Open Cart.</li>
+                <li>Edit quantity field to 999.</li>
+                <li>Submit update.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">System enforces inventory stock limit and shows warning.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">N/A (Pending Execution)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+          </div>
         </div>
         <div class="tc-separator"></div>
       </article>
 
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">TC-AMZ-002: Invalid Password (Negative)</h2>
+      <article class="report-section" id="TC-AMZ-007">
+        <h2 class="report-title">TC-AMZ-007: Keyboard-Only Navigation (A11y)</h2>
         <div class="tc-table">
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">1. ID</span></div><div class="cell cell-right">TC-AMZ-002</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">2. Requirement ID</span></div><div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-02" style="color:var(--accent)">REQ-AMZ-02</a></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">3. Test Type</span></div><div class="cell cell-right"><span class="badge negative" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444;">Negative</span></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">4. Priority</span></div><div class="cell cell-right">High (P1)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">5. Environment</span></div><div class="cell cell-right">MacBook Pro 15", macOS Sequoia 15 (Tahoe '26 Beta)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">6. Test Data</span></div><div class="cell cell-right">Pass: <code>WrongPass123!</code></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">7. Execution Steps</span></div><div class="cell cell-right"><ol style="margin: 0; padding-left: 1.2rem;"><li>Enter valid email.</li><li>Enter incorrect password.</li><li>Click Sign-In.</li></ol></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">8. Expected Result</span></div><div class="cell cell-right">Login rejected; Error: "Your password is incorrect" displayed.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">9. Actual Result</span></div><div class="cell cell-right">Access denied; correct error string confirmed.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">10. Status</span></div><div class="cell cell-right"><span class="status-badge pass">Pass</span></div></div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-007</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify login can be completed without a mouse using only 'Tab' and 'Enter' keys.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">User is on the Amazon Sign-In landing page. No mouse/trackpad interaction allowed.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-01"
+                class="back-link">REQ-AMZ-01</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge positive">Accessibility / WCAG</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">High (P1)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">Chrome v120, macOS Sequoia (Keyboard Only)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right"><code>heatqa.test@gmail.com</code></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Load Amazon Sign-in page.</li>
+                <li>Navigate using 'Tab' key to the email field.</li>
+                <li>Enter valid email and 'Tab' to Continue button.</li>
+                <li>Enter password and 'Enter' to Sign-in.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">Focus indicators are clearly visible; login process completes successfully.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">N/A (Pending Execution)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+          </div>
         </div>
         <div class="tc-separator"></div>
       </article>
-
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">TC-AMZ-003: Alphanumeric Search (Positive)</h2>
+      
+      <article class="report-section" id="TC-AMZ-008">
+        <h2 class="report-title">TC-AMZ-008: Screen Reader Programmatic Labels</h2>
         <div class="tc-table">
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">1. ID</span></div><div class="cell cell-right">TC-AMZ-003</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">2. Requirement ID</span></div><div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-03" style="color:var(--accent)">REQ-AMZ-03</a></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">3. Test Type</span></div><div class="cell cell-right"><span class="badge positive">Functional</span></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">4. Priority</span></div><div class="cell cell-right">High (P1)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">5. Environment</span></div><div class="cell cell-right">MacBook Pro 15", macOS Sequoia 15 (Tahoe '26 Beta)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">6. Test Data</span></div><div class="cell cell-right">Query: <code>Logitech MX Master 3S</code></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">7. Execution Steps</span></div><div class="cell cell-right"><ol style="margin: 0; padding-left: 1.2rem;"><li>Input query into global bar.</li><li>Execute search.</li><li>Verify Result relevance.</li></ol></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">8. Expected Result</span></div><div class="cell cell-right">SERP loads relevant products; Result count > 0.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">9. Actual Result</span></div><div class="cell cell-right">Correct items displayed with brand filtering active.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">10. Status</span></div><div class="cell cell-right"><span class="status-badge pass">Pass</span></div></div>
-        </div>
-        <div class="tc-separator"></div>
-      </article>
-
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">TC-AMZ-004: Cart Persistence (State)</h2>
-        <div class="tc-table">
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">1. ID</span></div><div class="cell cell-right">TC-AMZ-004</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">2. Requirement ID</span></div><div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-04" style="color:var(--accent)">REQ-AMZ-04</a></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">3. Test Type</span></div><div class="cell cell-right"><span class="badge positive">Regression / State</span></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">4. Priority</span></div><div class="cell cell-right">Medium (P2)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">5. Environment</span></div><div class="cell cell-right">MacBook Pro 15", macOS Sequoia 15 (Tahoe '26 Beta)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">6. Test Data</span></div><div class="cell cell-right">Item: Logitech Mouse</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">7. Execution Steps</span></div><div class="cell cell-right"><ol style="margin: 0; padding-left: 1.2rem;"><li>Add item to cart.</li><li>Logout.</li><li>Login as <code>heatqa.test@gmail.com</code> and check cart.</li></ol></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">8. Expected Result</span></div><div class="cell cell-right">Cart count persists as (1) post-login.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">9. Actual Result</span></div><div class="cell cell-right">Cart state synchronized successfully for user Heat.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">10. Status</span></div><div class="cell cell-right"><span class="status-badge pass">Pass</span></div></div>
-        </div>
-        <div class="tc-separator"></div>
-      </article>
-
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">TC-AMZ-005: Global Search - No Results (Negative)</h2>
-        <div class="tc-table">
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">1. ID</span></div><div class="cell cell-right">TC-AMZ-005</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">2. Requirement ID</span></div><div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-03" style="color:var(--accent)">REQ-AMZ-03</a></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">3. Test Type</span></div><div class="cell cell-right"><span class="badge negative" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444;">Negative</span></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">4. Priority</span></div><div class="cell cell-right">Medium (P2)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">5. Environment</span></div><div class="cell cell-right">MacBook Pro 15", macOS Sequoia 15 (Tahoe '26 Beta)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">6. Test Data</span></div><div class="cell cell-right">Query: <code>zxyvwk123456789</code></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">7. Execution Steps</span></div><div class="cell cell-right"><ol style="margin: 0; padding-left: 1.2rem;"><li>Input non-existent string.</li><li>Submit search.</li></ol></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">8. Expected Result</span></div><div class="cell cell-right">"No results" message displayed with suggestions.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">9. Actual Result</span></div><div class="cell cell-right">Fallback UI triggered correctly.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">10. Status</span></div><div class="cell cell-right"><span class="status-badge pass">Pass</span></div></div>
-        </div>
-        <div class="tc-separator"></div>
-      </article>
-
-      <article class="test-case-wrapper">
-        <h2 class="tc-title-top" style="margin-bottom: 1.5rem; font-size: 1.5rem;">TC-AMZ-006: Shopping Cart - Max Quantity (Boundary)</h2>
-        <div class="tc-table">
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">1. ID</span></div><div class="cell cell-right">TC-AMZ-006</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">2. Requirement ID</span></div><div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-04" style="color:var(--accent)">REQ-AMZ-04</a></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">3. Test Type</span></div><div class="cell cell-right"><span class="badge positive">BVA (Boundary)</span></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">4. Priority</span></div><div class="cell cell-right">Medium (P2)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">5. Environment</span></div><div class="cell cell-right">MacBook Pro 15", macOS Sequoia 15 (Tahoe '26 Beta)</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">6. Test Data</span></div><div class="cell cell-right">Quantity: 999</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">7. Execution Steps</span></div><div class="cell cell-right"><ol style="margin: 0; padding-left: 1.2rem;"><li>Open Cart.</li><li>Edit quantity to 999.</li><li>Submit update.</li></ol></div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">8. Expected Result</span></div><div class="cell cell-right">System enforces inventory stock limit.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">9. Actual Result</span></div><div class="cell cell-right">Limit of 30 enforced; price recalculated.</div></div>
-          <div class="tc-row-item"><div class="cell cell-left"><span class="label-text">10. Status</span></div><div class="cell cell-right"><span class="status-badge pass">Pass</span></div></div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">1. ID</span></div>
+            <div class="cell cell-right">TC-AMZ-008</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">2. Description</span></div>
+            <div class="cell cell-right">Verify all authentication input fields have explicit labels for assistive technology.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">3. Pre-conditions</span></div>
+            <div class="cell cell-right">Screen reader (VoiceOver/NVDA) is active.</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">4. Requirement ID</span></div>
+            <div class="cell cell-right"><a href="../requirements/amazon-requirements.html#REQ-AMZ-01"
+                class="back-link">REQ-AMZ-01</a></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">5. Test Type</span></div>
+            <div class="cell cell-right"><span class="badge positive">Accessibility / WCAG</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">6. Priority</span></div>
+            <div class="cell cell-right">High (P1)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">7. Environment</span></div>
+            <div class="cell cell-right">Chrome v120 / VoiceOver</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">8. Test Data</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">9. Execution Steps</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Navigate to Login fields using screen reader shortcuts.</li>
+                <li>Verify auditory output for Email and Password fields.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">10. Expected Result</span></div>
+            <div class="cell cell-right">Programmatic labels match visual labels (e.g., "Email" field is announced).</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
+            <div class="cell cell-right">N/A (Pending Execution)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">12. Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+          </div>
         </div>
       </article>
     </main>
   </div>
 
-  <a href="#footer-bottom" id="jumpToBottom" title="Jump to Bottom"><i class="fas fa-arrow-down"></i></a>
   <a href="#top" id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" title="Jump to Bottom"><i class="fas fa-arrow-down"></i></a>
 
   <footer id="footer-bottom">
-    <div class="footer-top" style="display:flex; justify-content:space-between; padding: 0 5%; color:var(--muted); font-size:0.8rem; margin-bottom:2rem;">
-        <span>&copy; 2026 Marie-Jo Atayi</span>
-        <span>Last Updated: <span id="auto-date"></span></span>
-    </div>
-    <div class="footer-icons">
-      <a href="mailto:heatqa.test@gmail.com"><i class="fas fa-envelope"></i></a>
-      <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
-      <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+    <div class="footer-container">
+      <div class="footer-copyright">
+        <p>&copy; 2026 Marie-Jo Atayi | Heat QA Solutions</p>
+      </div>
+      <div class="footer-icons">
+        <a href="mailto:josianeatayi@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
+        <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
     </div>
   </footer>
 
   <script>
     const backToTop = document.getElementById('backToTop');
     const jumpToBottom = document.getElementById('jumpToBottom');
-    window.onscroll = function() {
-      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) { backToTop.style.opacity = "1"; backToTop.style.pointerEvents = "auto"; } 
-      else { backToTop.style.opacity = "0"; backToTop.style.pointerEvents = "none"; }
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 150) { jumpToBottom.style.opacity = "0"; jumpToBottom.style.pointerEvents = "none"; } 
-      else { jumpToBottom.style.opacity = "1"; jumpToBottom.style.pointerEvents = "auto"; }
+    window.onscroll = function () {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        backToTop.style.opacity = "1";
+        backToTop.style.pointerEvents = "auto";
+      } else {
+        backToTop.style.opacity = "0";
+        backToTop.style.pointerEvents = "none";
+      }
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+        jumpToBottom.style.opacity = "0";
+        jumpToBottom.style.pointerEvents = "none";
+      } else {
+        jumpToBottom.style.opacity = "1";
+        jumpToBottom.style.pointerEvents = "auto";
+      }
     };
-    document.getElementById('auto-date').textContent = new Date(document.lastModified).toLocaleDateString();
   </script>
 </body>
+
 </html>

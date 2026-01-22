@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,73 +8,199 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
+
 <body id="top">
 
   <div class="wrapper">
-    <header style="margin-bottom: 4rem;">
-      <a href="../amazon.html" style="color:var(--accent); text-decoration:none; font-size:0.9rem;">← AMAZON HUB</a>
-      <h1 style="font-size: 3rem; margin: 1rem 0;">Business Requirements</h1>
-      <p style="color:var(--muted)">Traceability Matrix: Verifying the core Amazon shopping experience.</p>
+    <header class="intro-container bug-header">
+      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Business Requirements</span></h1>
+      <p class="deliverable-subtitle">Traceability Matrix: Verifying the core Amazon shopping experience.</p>
+
+      <nav class="project-menu">
+        <a href="../test-plans/amazon-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="../requirements/amazon-requirements.html" class="menu-link active">Requirements</a>
+        <a href="../test-cases/amazon-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="../bug-reports/amazon-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
     </header>
 
     <main>
-      <div class="req-item" id="REQ-AMZ-01">
-        <h3 style="color:var(--accent); margin-bottom: 0.5rem;">REQ-AMZ-01: User Authentication</h3>
-        <p>The system shall allow users with valid email/password combinations to establish a secure authenticated session. Upon success, the system must display a personalized greeting.</p>
-        <div style="margin-top: 1rem; font-size: 0.85rem;">
-          <span style="color:var(--muted)">Verified by:</span> 
-          <a href="amazon-test-cases.html#TC-AMZ-001" style="color:white; text-decoration:underline;">TC-AMZ-001</a>
+      <article class="report-section" id="REQ-AMZ-01">
+        <div class="project-card-header">
+            <h2 class="report-title">REQ-AMZ-01: User Authentication & Accessibility</h2>
+            <span class="badge positive">WCAG 2.1 AA Compliance</span>
         </div>
-      </div>
+        <div class="tc-table">
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">1. Description</span></div>
+                <div class="cell cell-right">
+                    The system shall allow users with valid email/password combinations to establish a secure authenticated session. Upon success, a personalized greeting "Hello, [User]" must be displayed.
+                </div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">2. A11y Compliance</span></div>
+                <div class="cell cell-right">
+                    Interface must meet WCAG 2.1 AA standards:
+                    <ul class="standard-list">
+                        <li>Keyboard-only navigation (Tab/Enter) must be fully functional.</li>
+                        <li>Screen readers must announce input labels correctly.</li>
+                        <li>Minimum color contrast ratio of 4.5:1 for all text.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">3. Verified By</span></div>
+                <div class="cell cell-right">
+                    <a href="../test-cases/amazon-test-cases.html#TC-AMZ-001" class="back-link">TC-AMZ-001</a>, 
+                    <a href="../test-cases/amazon-test-cases.html#TC-AMZ-007" class="back-link">TC-AMZ-007</a>, 
+                    <a href="../test-cases/amazon-test-cases.html#TC-AMZ-008" class="back-link">TC-AMZ-008</a>
+                </div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">4. Status</span></div>
+                <div class="cell cell-right"><span class="status-badge partial">Partially Verified</span></div>
+            </div>
+            <div class="tc-row-item">
+              <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+              <div class="cell cell-right">N/A</div>
+            </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
 
-      <div class="req-item" id="REQ-AMZ-02">
-        <h3 style="color:var(--accent); margin-bottom: 0.5rem;">REQ-AMZ-02: Security Handling</h3>
-        <p>The system shall reject invalid credentials and provide clear, non-revealing error messages to prevent unauthorized access.</p>
-        <div style="margin-top: 1rem; font-size: 0.85rem;">
-          <span style="color:var(--muted)">Verified by:</span> 
-          <a href="amazon-test-cases.html#TC-AMZ-002" style="color:white; text-decoration:underline;">TC-AMZ-002</a>
+      <article class="report-section" id="REQ-AMZ-02">
+        <div class="project-card-header">
+            <h2 class="report-title">REQ-AMZ-02: Security Handling</h2>
         </div>
-      </div>
+        <div class="tc-table">
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Description</span></div>
+                <div class="cell cell-right">The system shall reject invalid credentials and provide non-revealing error messages.</div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+                <div class="cell cell-right"><a href="../test-cases/amazon-test-cases.html#TC-AMZ-002" class="back-link">TC-AMZ-002</a></div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Status</span></div>
+                <div class="cell cell-right"><span class="status-badge pass">Verified</span></div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+                <div class="cell cell-right">N/A</div>
+            </div>
+        </div>
+      </article>
 
-      <div class="req-item" id="REQ-AMZ-03">
-        <h3 style="color:var(--accent); margin-bottom: 0.5rem;">REQ-AMZ-03: Global Product Search</h3>
-        <p>The system shall return relevant product results for alphanumeric search queries. If no items match, a graceful "no results" state must be displayed with alternative suggestions.</p>
-        <div style="margin-top: 1rem; font-size: 0.85rem;">
-          <span style="color:var(--muted)">Verified by:</span> 
-          <a href="amazon-test-cases.html#TC-AMZ-003" style="color:white; text-decoration:underline;">TC-AMZ-003</a>, 
-          <a href="amazon-test-cases.html#TC-AMZ-005" style="color:white; text-decoration:underline;">TC-AMZ-005</a>
+      <article class="report-section" id="REQ-AMZ-03">
+        <div class="project-card-header">
+            <h2 class="report-title">REQ-AMZ-03: Global Product Search</h2>
         </div>
-      </div>
+        <div class="tc-table">
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Description</span></div>
+                <div class="cell cell-right">The system shall return relevant product results for alphanumeric search queries.</div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+                <div class="cell cell-right">
+                  <a href="../test-cases/amazon-test-cases.html#TC-AMZ-003" class="back-link">TC-AMZ-003,</a>
+                  <a href="../test-cases/amazon-test-cases.html#TC-AMZ-005" class="back-link"> TC-AMZ-005</a>
+                </div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Status</span></div>
+                <div class="cell cell-right"><span class="status-badge in-progress">In Progress</span></div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+                <div class="cell cell-right"><a >N/A</a></div>
+            </div>
+        </div>
+      </article>
 
-      <div class="req-item" id="REQ-AMZ-04">
-        <h3 style="color:var(--accent); margin-bottom: 0.5rem;">REQ-AMZ-04: Shopping Cart State</h3>
-        <p>The system shall maintain the persistence of items added to the cart across different sessions (log-in/log-out) and enforce quantity limitations based on available stock.</p>
-        <div style="margin-top: 1rem; font-size: 0.85rem;">
-          <span style="color:var(--muted)">Verified by:</span> 
-          <a href="amazon-test-cases.html#TC-AMZ-004" style="color:white; text-decoration:underline;">TC-AMZ-004</a>, 
-          <a href="amazon-test-cases.html#TC-AMZ-006" style="color:white; text-decoration:underline;">TC-AMZ-006</a>
+      <article class="report-section" id="REQ-AMZ-04">
+        <h2 class="report-title">REQ-AMZ-04: Shopping Cart State</h2>
+        <div class="tc-table">
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Description</span></div>
+                <div class="cell cell-right">The system shall maintain cart persistence across sessions and enforce stock-based quantity limits.</div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+                <div class="cell cell-right">
+                  <a href="../test-cases/amazon-test-cases.html#TC-AMZ-004" class="back-link">TC-AMZ-004,</a>
+                  <a href="../test-cases/amazon-test-cases.html#TC-AMZ-006" class="back-link"> TC-AMZ-006</a>
+                </div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Status</span></div>
+                <div class="cell cell-right"><span class="status-badge in-progress">In Progress</span></div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+                <div class="cell cell-right">N/A</div>
+            </div>
         </div>
-      </div>
+      </article>
+
+      <article class="report-section" id="REQ-AMZ-05">
+        <h2 class="report-title">REQ-AMZ-05: Product Detail Accuracy</h2>
+        <div class="tc-table">
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Description</span></div>
+                <div class="cell cell-right">The system shall display accurate pricing, reviews, and high-resolution images for all listed products.</div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+                <div class="cell cell-right">TBD</div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Status</span></div>
+                <div class="cell cell-right"><span class="status-pending-text">Draft</span></div>
+            </div>
+            <div class="tc-row-item">
+                <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+                <div class="cell cell-right">N/A</div>
+            </div>
+        </div>
+      </article>
     </main>
   </div>
 
-  <a href="#top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+  <a href="#top" id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" title="Jump to Bottom"><i class="fas fa-arrow-down"></i></a>
 
-  <footer>
-    <div class="footer-top" style="display:flex; justify-content:space-between; margin-bottom:2rem; color:var(--muted); font-size:0.8rem; padding: 0 5%;">
-        <span>&copy; 2026 Marie-Jo Atayi</span>
-        <span>Last Updated: <span id="auto-date"></span></span>
-    </div>
-    <div class="footer-icons">
-      <a href="mailto:heatqa.test@gmail.com"><i class="fas fa-envelope"></i></a>
-      <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
-      <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+  <footer id="footer-bottom">
+    <div class="footer-container">
+        <div class="footer-copyright">
+            <p>&copy; 2026 Marie-Jo Atayi | Heat QA Solutions</p>
+        </div>
+        <div class="footer-icons">
+          <a href="mailto:josianeatayi@gmail.com"><i class="fas fa-envelope"></i></a>
+          <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
+          <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('auto-date').textContent = new Date(document.lastModified).toLocaleDateString();
+    const backToTop = document.getElementById('backToTop');
+    const jumpToBottom = document.getElementById('jumpToBottom');
+    window.onscroll = function() {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) { 
+        backToTop.style.opacity = "1"; backToTop.style.pointerEvents = "auto"; 
+      } else { 
+        backToTop.style.opacity = "0"; backToTop.style.pointerEvents = "none"; 
+      }
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+        jumpToBottom.style.opacity = "0"; jumpToBottom.style.pointerEvents = "none";
+      } else {
+        jumpToBottom.style.opacity = "1"; jumpToBottom.style.pointerEvents = "auto";
+      }
+    };
   </script>
 </body>
 </html>

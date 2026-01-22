@@ -10,49 +10,55 @@
 <body id="top">
 
   <div class="wrapper">
-    <header style="margin-bottom: 4rem;">
-      <a href="../amazon.html" style="color:var(--accent); text-decoration:none; font-size:0.9rem;">← AMAZON HUB</a>
-      <h1 style="font-size: 3rem; margin: 1rem 0;">Test Plan</h1>
-      <p style="color:var(--muted)">Master Strategy for Authentication and Global Search Modules.</p>
+    <header class="intro-container bug-header">
+      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
+    
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Test Plan</span></h1>
+      <p class="deliverable-subtitle">Master Strategy for Authentication, Global Search, and WCAG Compliance.</p>
+    
+      <nav class="project-menu">
+        <a href="../test-plans/amazon-test-plan.html" class="menu-link active">Test Plan</a>
+        <a href="../requirements/amazon-requirements.html" class="menu-link">Requirements</a>
+        <a href="../test-cases/amazon-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="../bug-reports/amazon-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
     </header>
-
+    
     <main>
       <div class="tc-table">
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Scope</span></div>
-          <div class="cell cell-right">Testing focuses on the user lifecycle: Authentication, Product Discovery (Search), and Cart Persistence.</div>
+          <div class="cell cell-right">Testing focuses on the user lifecycle: Authentication, Product Discovery (Search),
+            and Cart Persistence.</div>
         </div>
-        
+    
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Testing Strategy</span></div>
-          <div class="cell cell-right">Risk-based approach utilizing manual Functional, Negative, and Boundary Value Analysis (BVA).</div>
+          <div class="cell cell-right">Risk-based approach utilizing manual Functional, Negative, and Accessibility (WCAG
+            2.1 AA) validation.</div>
         </div>
-
+    
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Environments</span></div>
           <div class="cell cell-right">
-            Browser: Chrome (v120+), Firefox (Latest)<br>
-            Device: Windows Desktop, iOS (Mobile Emulation)
+            Browser: Chrome (v120+), Safari (Latest)<br>
+            Assistive Tech: NVDA / VoiceOver (A11y verification)
           </div>
         </div>
-
-        <div class="tc-row-item">
-          <div class="cell cell-left"><span class="label-text">Tools</span></div>
-          <div class="cell cell-right">Chrome DevTools (Network/Console), Postman (API verification).</div>
-        </div>
-
+    
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Exit Criteria</span></div>
-          <div class="cell cell-right">100% of P0 and P1 test cases executed; all High-severity bugs resolved and verified.</div>
+          <div class="cell cell-right">100% of P0/P1 cases executed; all High-severity bugs resolved; WCAG AA contrast
+            standards met.</div>
         </div>
-
+    
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Deliverables</span></div>
           <div class="cell cell-right">
-            <ul style="margin: 0; padding-left: 1.2rem;">
-              <li><a href="amazon-test-cases.html" style="color:var(--accent)">Manual Test Cases</a></li>
-              <li><a href="amazon-bug-report.html" style="color:var(--accent)">Defect Log</a></li>
-              <li>Summary Execution Report</li>
+            <ul class="standard-list">
+              <li><a href="../test-cases/amazon-test-cases.html" class="back-link" style="padding: 0;">Manual Test Cases</a></li>
+              <li><a href="../bug-reports/amazon-bug-reports.html" class="back-link" style="padding: 0;">Defect Log</a></li>
+              <li><a href="../requirements/amazon-requirements.html" class="back-link" style="padding: 0;">Requirement Traceability Matrix (RTM)</a></li>
             </ul>
           </div>
         </div>
@@ -60,21 +66,42 @@
     </main>
   </div>
 
-  <footer>
-    <div class="footer-top" style="display:flex; justify-content:space-between; margin-bottom:2rem; color:var(--muted); font-size:0.8rem; padding: 0 5%;">
-        <span>&copy; 2026 Marie-Jo Atayi</span>
-        <span>Last Updated: <span id="auto-date"></span></span>
-    </div>
-    <div class="footer-icons">
-      <a href="mailto:heatqa.test@gmail.com"><i class="fas fa-envelope"></i></a>
-      <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
-      <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+  <a href="#top" id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" title="Jump to Bottom"><i class="fas fa-arrow-down"></i></a>
+
+  <footer id="footer-bottom">
+    <div class="footer-container">
+      <div class="footer-copyright">
+        <p>&copy; 2026 Marie-Jo Atayi | Heat QA Solutions</p>
+      </div>
+      <div class="footer-icons">
+        <a href="mailto:josianeatayi@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="../../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
+        <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('auto-date').textContent = new Date(document.lastModified).toLocaleDateString();
+    const backToTop = document.getElementById('backToTop');
+    const jumpToBottom = document.getElementById('jumpToBottom');
+    window.onscroll = function () {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        backToTop.style.opacity = "1";
+        backToTop.style.pointerEvents = "auto";
+      } else {
+        backToTop.style.opacity = "0";
+        backToTop.style.pointerEvents = "none";
+      }
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+        jumpToBottom.style.opacity = "0";
+        jumpToBottom.style.pointerEvents = "none";
+      } else {
+        jumpToBottom.style.opacity = "1";
+        jumpToBottom.style.pointerEvents = "auto";
+      }
+    };
   </script>
 </body>
 </html>

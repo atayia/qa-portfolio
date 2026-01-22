@@ -1,11 +1,13 @@
 :root {
-  --bg: #0f172a;           /* Deep Midnight */
-  --glass: rgba(30, 41, 59, 0.7); /* Translucent Slate */
-  --text: #f1f5f9;         
-  --muted: #94a3b8;        
-  --accent: #38bdf8;       
+  --bg: #0f172a;
+  --glass: rgba(30, 41, 59, 0.7);
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
   --radius: 16px;
   --transition: all 0.3s ease;
+  /* Standard content width for perfect vertical alignment */
+  --content-max-width: 900px; 
 }
 
 body {
@@ -18,198 +20,87 @@ body {
   min-height: 100vh;
 }
 
-/* 90% Width Layout */
+/* Universal Layout Container */
 .wrapper {
   width: 90%;
-  margin: 0 auto;
+  max-width: var(--content-max-width);
+  margin: 0 auto !important; /* Forces horizontal centering */
   padding: 4rem 0;
   flex: 1;
 }
 
-/* Dynamic 2-Column Row */
-.tc-row {
-  display: flex;
-  gap: 2rem; /* Small spacing between the 2 "boxes" */
-  margin-bottom: 2rem;
-  align-items: stretch; /* Makes both columns same height */
-}
-
-/* Dynamic 2-Column Grid for Metadata */
-.tc-grid-container {
-  display: grid;
-  grid-template-columns: 200px 1fr; /* 200px for labels, the rest for data */
-  gap: 10px; /* The "1/10th" thin space you requested */
-  margin-bottom: 2rem;
-}
-
-/* Left & Right Glass Panes */
-.pane {
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius);
-}
-
-.left-pane {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* Space between rows */
-}
-
-.right-pane {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* Matches left pane perfectly */
-}
-
-/* Row Styling */
-.row-item {
-  min-height: 1.5rem; /* Ensures alignment even if one side is empty */
-  display: flex;
-  align-items: center;
-}
-
-.label-text {
-  color: var(--accent);
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-}
-
-/* Glass Separator Line */
-.tc-separator {
-  height: 2px;
+/* --- INDEX.HTML CLASSES --- */
+.intro-container {
+  margin-bottom: 3rem;
   width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
-  margin: 5rem 0;
-  border-radius: 50%;
 }
 
-/* The Glassed Boxes */
-.tc-label-box {
-  flex: 0 0 250px; /* Fixed width for labels to keep it clean */
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  padding: 2rem;
-  border-radius: var(--radius);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.main-title {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  letter-spacing: -3px;
+  margin: 0;
 }
 
-.tc-content-box {
-  flex: 1; /* Takes the rest of the space (dynamic) */
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  padding: 2rem;
-  border-radius: var(--radius);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.deliverable-title {
+  font-size: clamp(2.0rem, 6vw, 3.5rem);
+  letter-spacing: -3px;
+  margin: 0;
 }
 
-.label-title {
+.brand-subtitle {
   color: var(--accent);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  font-weight: 800;
-}
-
-.tc-title {
-  font-size: 1.4rem;
   font-weight: 700;
-  margin-top: 0.5rem;
-}
-
-/* Evidence Section (Separated from table) */
-.evidence-area {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Side-by-side evidence */
-  gap: 2rem;
-}
-
-.evidence-box {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-}
-
-.evidence-box h4 {
   font-size: 0.8rem;
-  color: var(--muted);
-  margin-top: 0;
-  margin-bottom: 1rem;
   text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-top: 10px;
+}
+.deliverable-subtitle {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  letter-spacing: 4px;
+  margin-top: 10px;
 }
 
-.placeholder-img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: #020617;
+.narrative-text {
+  max-width: 850px;
+}
+
+.narrative-text p {
+  font-size: 1.25rem;
+  color: #f1f5f9;
+  line-height: 1.7;
+}
+
+.projects-header {
+  font-size: 1.3rem;
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 1rem;
+}
+
+.project-card-header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
-
-/* Each row is a 2-column grid */
-.tc-row-item {
-  display: grid;
-  grid-template-columns: 220px 1fr; 
-  gap: 10px; /* The "River" gap stays clean */
-  margin-bottom: 0; 
-}
-
-/* Cell Styling with Per-Pane Dark Lines */
-.cell {
-  background: var(--glass);
-  padding: 1.2rem 1.5rem;
-  display: flex;
+  justify-content: space-between;
   align-items: flex-start;
-  /* Darker shade line - etched into the glass */
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.4); 
+  margin-bottom: 1rem;
 }
 
-/* Removes border from last row to keep the bottom clean */
-.tc-row-item:last-child .cell {
-  border-bottom: none;
+.project-links {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 700;
 }
 
-/* Soft shimmer effect on left cells for hierarchy */
-.cell-left {
-  background: rgba(30, 41, 59, 0.5); /* Slightly darker glass for labels */
-}
-
-/* Rounded corners only for the very top and bottom cells of the group */
-.tc-row-item:first-child .cell-left { border-top-left-radius: var(--radius); }
-.tc-row-item:first-child .cell-right { border-top-right-radius: var(--radius); }
-.tc-row-item:last-child .cell-left { border-bottom-left-radius: var(--radius); }
-.tc-row-item:last-child .cell-right { border-bottom-right-radius: var(--radius); }
-.tc-row-item:last-child { border-bottom: none; } /* Remove line on last row */
-
-/* Status Badge Styling */
-.status-badge {
-  padding: 6px 16px;
-  border-radius: 4px;
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-}
-.pass { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
-.fail { background: rgba(248, 113, 113, 0.2); color: #f87171; border: 1px solid #f87171; }
-
-
-/* Bug Report Specifics */
-.severity-high { background: rgba(220, 38, 38, 0.2); color: #ef4444; border: 1px solid #ef4444; }
-.severity-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
-
-/* Requirement List Styling */
+/* --- SHARED COMPONENTS --- */
 .req-item {
   background: var(--glass);
   padding: 1.5rem;
@@ -217,135 +108,453 @@ body {
   margin-bottom: 1rem;
   border-left: 4px solid var(--accent);
   transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
+
 .req-item:hover { transform: translateX(10px); background: rgba(30, 41, 59, 0.9); }
 
-/* Fluid Layout Utilities */
-.intro-container {
-    padding: 4rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separation */
-}
-
-.intro-brand-line {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-}
-
-.intro-text-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr; /* Asymmetric grid feels more modern */
-    gap: 4rem;
-    align-items: start;
-}
-
-@media (max-width: 850px) {
-    .intro-text-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-}
-
-.lead-text {
-    font-size: 1.5rem;
-    font-weight: 300;
-    line-height: 1.6;
-    color: #ffffff;
-    margin-bottom: 0;
-}
-
-.support-text {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: var(--muted);
-}
-
-.intro-container {
-    padding: 6rem 0 4rem 0;
-}
-
-.narrative-text {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    color: #cbd5e1;
-    max-width: 1000px;
-}
-
-.intro-container {
-    padding: 8rem 0 4rem 0;
-    max-width: 900px; /* Prevents the 75% stretch */
-    margin: 0 auto;    /* Centers the container */
-}
-
-/* Brighter Brand Identity */
 .brand-gradient {
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+.deliverable-gradient {
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
 }
 
-.narrative-text p {
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: #f1f5f9; /* Much brighter than var(--muted) */
-    margin-bottom: 1.5rem;
-}
-
-.disclaimer-bar {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem 1.5rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin: 2rem 0;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.disclaimer-bar i { color: var(--accent); }
-
-/* Icon-Based Footer */
-footer {
-  background: #020617;
-  padding: 3rem 5%; /* 5% margin to match wrapper */
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.footer-icons {
-  display: flex;
-  justify-content: center;
-  gap: 3.5rem;
-}
-
-.footer-icons a {
-  color: var(--text);
-  font-size: 1.6rem;
-  transition: var(--transition);
-}
-
-.footer-icons a:hover {
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  background: rgba(59, 130, 246, 0.1);
   color: var(--accent);
-  transform: scale(1.2);
 }
 
-#backToTop {
+/* --- NAVIGATION ARROWS --- */
+#backToTop, #jumpToBottom {
   position: fixed;
-  bottom: 40px;
-  right: 5%;
-  width: 50px;
-  height: 50px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
   background: var(--accent);
+  color: #020617; /* Dark icon for contrast */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000;
-  opacity: 0;
-  transition: var(--transition);
+  text-decoration: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: opacity 0.3s, transform 0.3s;
 }
 
-#backToTop.show { opacity: 1; }
+#backToTop { bottom: 30px; opacity: 0; pointer-events: none; }
+#jumpToBottom { bottom: 85px; }
+
+
+/* Standardized Footer Layout */
+.footer-container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+footer {
+  margin-top: 8rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 4rem 0;
+  background: #020617;
+}
+
+.footer-content {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.footer-icons {
+  display: flex;
+  gap: 25px;
+  font-size: 1.2rem;
+}
+
+.footer-icons a { color: #fff; transition: var(--transition); }
+.footer-icons a:hover { color: var(--accent); transform: scale(1.1); }
+
+/* --- TEST CASE TABLE STYLES --- */
+.tc-row-item {
+  display: grid;
+  grid-template-columns: 220px 1fr; 
+  gap: 10px;
+}
+
+.cell {
+  background: var(--glass);
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.4); 
+}
+
+.cell-left { background: rgba(30, 41, 59, 0.5); }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .project-card-header { flex-direction: column; gap: 10px; }
+  .tc-row-item { grid-template-columns: 1fr; }
+  .cell { width: 100% !important; border-radius: 0 !important; }
+}
+
+
+/* --- AUDIT TRAIL & HISTORY TABLE --- */
+.audit-trail-section {
+    margin-top: 3rem;
+}
+
+.audit-trail-title {
+    margin-bottom: 1rem;
+}
+
+.history-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 1rem;
+background: rgba(15, 23, 42, 0.4);
+border-radius: 8px;
+overflow: hidden;
+}
+
+.history-table th {
+background: rgba(56, 189, 248, 0.1);
+color: var(--accent);
+text-transform: uppercase;
+font-size: 0.7rem;
+text-align: left;
+padding: 12px 15px;
+letter-spacing: 1px;
+}
+
+.history-table td {
+padding: 12px 15px;
+border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+font-size: 0.85rem;
+color: var(--muted);
+}
+
+.history-table tr:last-child td { border-bottom: none; }
+
+/* Pending state for future audit rows */
+.status-pending {
+    opacity: 0.3;
+}
+
+/* --- UPDATED BUG REPORT CLASSES --- */
+.back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.bug-header {
+    margin-bottom: 4rem;
+}
+
+.report-section {
+    margin-bottom: 4rem;
+}
+
+.report-title {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* Audit Trail Layout */
+.audit-trail-container {
+    margin-top: 3rem;
+}
+
+.audit-trail-header {
+    margin-bottom: 1rem;
+}
+
+/* Discovery Placeholder Section */
+.discovery-placeholder {
+    margin-top: 5rem;
+    opacity: 0.6;
+}
+
+.dashed-container {
+    padding: 2rem;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+/* History Table Colors */
+.status-new {
+    color: #60a5fa;
+    border-color: #3b82f6;
+}
+
+.status-pending-text {
+    opacity: 0.3;
+}
+
+/* --- EVIDENCE AREA GRID --- */
+.evidence-area {
+    margin-top: 2rem;
+    display: grid;
+    /* This creates a 2-column grid that collapses to 1 column on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.evidence-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.evidence-box h4 {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tc-screenshot {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+}
+
+/* Placeholder box for API results or missing images */
+.placeholder-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.placeholder-box i {
+    margin-right: 8px;
+}
+
+/* --- LISTS & SEPARATORS --- */
+.standard-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    line-height: 1.6;
+}
+
+.standard-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Glass Separator Line*/
+.tc-separator {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
+  margin: 5rem 0;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+}
+
+/* Status Badge for Unexecuted Cases */
+.status-badge.status-pending {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.status-badge.status-todo {
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+  border: 1px solid #3498db;
+}
+
+/* Requirement Specific Statuses */
+.status-badge.in-progress {
+  background: rgba(243, 156, 18, 0.1);
+  /* Orange/Amber */
+  color: #f39c12;
+  border: 1px solid #f39c12;
+}
+
+.status-badge.partial {
+  background: rgba(52, 152, 219, 0.1);
+  /* Blue */
+  color: #3498db;
+  border: 1px solid #3498db;
+}
+
+.project-menu {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.menu-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.menu-link:hover {
+  color: var(--accent);
+}
+
+.menu-link.active {
+  color: #38bdf8;
+  /* Your light blue glass color */
+  font-weight: bold;
+}
+
+/* --- AMAZON HUB LAYOUT --- */
+
+/* 1. Main Container (Used for Overview) */
+.hub-section {
+  background:#1a2230 !important;;
+  border: none !important;
+  border-top: 5px solid #38bdf8 !important;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+  transition: all 0.3s ease;
+}
+
+/* 2. Grid - Forced 2 Columns */
+.deliverables-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1200px;
+}
+
+/* 3. The Thick-Border Deliverable Cards */
+.hub-section.card-inner {
+  background: #1a2230 !important;
+  /* Forces the navy color from your image */
+  border: none !important;
+  border-left: 8px solid #38bdf8 !important;
+  /* Thick accent bar */
+  padding: 2.5rem;
+  border-radius: 15px;
+  margin-bottom: 0;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hub-section-title {
+  font-size: 1.7rem;
+    font-weight: 700;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 4. Hover State for Cards */
+.hub-card-link {
+  text-decoration: none;
+  display: block;
+}
+
+.hub-card-link:hover .card-inner {
+  background: #232d3f !important;
+  transform: translateY(-5px);
+  border-left-color: #7dd3fc !important;
+  /* Brighter blue on hover */
+}
+
+/* 5. Typography inside Cards */
+.deliverable-link-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.deliverable-link-title i {
+  font-size: 1.2rem;
+}
+
+.card-inner p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 6. Metadata Layout (The 3-column top row) */
+.hub-metadata-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.metadata-label {
+  color: var(--accent);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.metadata-value {
+  color: var(--text-bright);
+  font-weight: 500;
+}
+
+/* 7. Responsiveness */
+@media (max-width: 768px) {
+  .deliverables-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-section.card-inner {
+    padding: 2rem;
+  }
+}
