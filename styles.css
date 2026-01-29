@@ -45,6 +45,14 @@ body {
   font-size: clamp(2.0rem, 6vw, 3.5rem);
   letter-spacing: -3px;
   margin: 0;
+  line-height: 1.2;
+  overflow: visible;
+}
+
+.deliverable-title span {
+  display: inline-block;
+  padding-right: 0.2em;
+  vertical-align: bottom;
 }
 
 .brand-subtitle {
@@ -560,6 +568,32 @@ color: var(--muted);
     width: 100%;
     box-sizing: border-box;
   }
+  /* --- Table & Test Case Mobile Fix --- */
+  
+  .tc-row-item {
+    /* Change from '220px 1fr' to just one vertical column */
+    grid-template-columns: 1fr !important; 
+    gap: 0;
+  }
+
+  .cell {
+    padding: 1rem 1.25rem;
+    /* Remove that heavy bottom border if it looks too thick on mobile */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Optional: Make the left-side 'labels' (ID, Priority, etc.) 
+     look like headers on mobile */
+  .cell:nth-child(odd) {
+    background: rgba(56, 189, 248, 0.05);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding-top: 1.5rem;
+  }
 
   /* 2. Grid Scaling: 1 column for phones, 2 for tablets */
   .deliverables-grid {
@@ -617,6 +651,4 @@ color: var(--muted);
     position: relative;
     left: 0;
   }
-
-
 }
