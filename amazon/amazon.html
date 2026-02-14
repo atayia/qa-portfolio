@@ -86,23 +86,10 @@
       </div>
     </main>
     </div>
-    <a href="#top" class="scroll-btn" id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></a>
-    <a href="#footer-bottom" class="scroll-btn" id="jumpToBottom" title="Jump to Bottom"><i
-        class="fas fa-arrow-down"></i></a>
 
-    <footer id="footer-bottom">
-      <div class="footer-container">
-        <div class="footer-copyright">
-          <p>&copy; 2026 Marie-Jo Atayi | Heat QA Solutions</p>
-        </div>
-        <div class="footer-icons">
-          <a href="mailto:josianeatayi@gmail.com"><i class="fas fa-envelope"></i></a>
-          <a href="../resume/Marie-Jo_Atayi_Resume.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
-          <a href="https://linkedin.com/in/atayia" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="https://github.com/atayia" target="_blank"><i class="fab fa-github"></i></a>
-        </div>
-      </div>
-    </footer>
+    <footer id="footer-bottom"></footer>
+    
+    <script src="/scripts.js"></script>
 
   <script>
     // Logic to fetch counts from deliverable pages
@@ -123,28 +110,6 @@
         console.error("Count sync failed:", e);
       }
     }
-
-    // Scroll Logic
-    const backToTop = document.getElementById('backToTop');
-    const jumpToBottom = document.getElementById('jumpToBottom');
-
-    window.onscroll = function () {
-      if (window.scrollY > 500) {
-        backToTop.style.opacity = "1";
-        backToTop.style.pointerEvents = "auto";
-      } else {
-        backToTop.style.opacity = "0";
-        backToTop.style.pointerEvents = "none";
-      }
-
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 150) {
-        jumpToBottom.style.opacity = "0";
-        jumpToBottom.style.pointerEvents = "none";
-      } else {
-        jumpToBottom.style.opacity = "1";
-        jumpToBottom.style.pointerEvents = "auto";
-      }
-    };
 
     window.onload = updateCounts;
   </script>
