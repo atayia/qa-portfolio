@@ -4,58 +4,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <meta name="description" content="Heat QA Solutions — Independent QA portfolio by Marie-Jo Atayi. Manual testing, API testing, and automation audits on real-world applications.">
+    <meta name="author" content="Marie-Jo Atayi">
+    <meta name="keywords" content="QA engineer, quality assurance, manual testing, test cases, bug reports, portfolio, automation testing">
+
+    <!-- Open Graph — controls how this page looks when shared on LinkedIn, Slack, etc. -->
+    <meta property="og:title" content="Heat QA Solutions | Marie-Jo Atayi">
+    <meta property="og:description" content="Independent QA audit portfolio — Manual testing, API testing, and automation. Building toward AI QA Engineering.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atayia.github.io/qa-portfolio/">
+
     <title>Heat QA Solutions | Marie-Jo Atayi</title>
+
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body id="top">
     <div class="wrapper">
+
+        <!-- HEADER -->
         <header class="intro-container">
             <h1 class="main-title"><span class="brand-gradient">Heat QA Solutions.</span></h1>
             <p class="brand-subtitle">Independent Quality Verification</p>
 
             <div class="narrative-text">
-                <p>I’m <span class="highlight-name">Marie-Jo Atayi</span>, building my QA brand under <strong>Heat QA
-                        Solutions</strong>. This portfolio highlights my Manual QA expertise through structured
-                    deliverables and transparent documentation.</p>
-
-                <p class="sub-narrative">Designed for recruiters and potential clients, this hub showcases my
-                    methodology in validating functionality, UI quality, and system stability. <span
-                        class="automation-status">Automation QA projects are coming soon.</span></p>
+                <p>I'm <span class="highlight-name">Marie-Jo Atayi</span>, a QA engineer building
+                    <strong>Heat QA Solutions</strong> as a professional practice rooted in precision,
+                    structured documentation, and a deliberate path toward AI QA Engineering.
+                </p>
+                
+                <p class="sub-narrative">This portfolio reflects where I am and where I'm going — beginning
+                    with rigorous manual audits that validate functionality, UI quality, and system stability,
+                    and expanding into API testing, automation, and AI-assisted QA as I build each layer
+                    intentionally. <span class="automation-status">Every project here is a step in that
+                        progression.</span></p>
 
                 <p class="disclaimer-text">
-                    <strong>Disclaimer:</strong> This project is an independent QA audit conducted for portfolio
-                    purposes. Amazon is an unofficial client; this work is not affiliated with Amazon.com, Inc.
+                    <strong>Disclaimer:</strong> All audits are independent and conducted solely for portfolio
+                    and skills demonstration purposes. No company listed here has a commercial relationship
+                    with Heat QA Solutions.
                 </p>
+            </div>
+
+            <!-- ROADMAP -->
+            <div class="roadmap-container">
+                <div class="roadmap-step active">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Manual QA</span>
+                </div>
+                <div class="roadmap-arrow">→</div>
+                <div class="roadmap-step upcoming">
+                    <i class="fas fa-plug"></i>
+                    <span>API Testing</span>
+                </div>
+                <div class="roadmap-arrow">→</div>
+                <div class="roadmap-step upcoming">
+                    <i class="fas fa-robot"></i>
+                    <span>Automation</span>
+                </div>
+                <div class="roadmap-arrow">→</div>
+                <div class="roadmap-step upcoming">
+                    <i class="fas fa-brain"></i>
+                    <span>AI QA</span>
+                </div>
             </div>
         </header>
 
+        <!-- PROJECTS -->
         <main>
             <h2 class="projects-header">Independent Audit Case Studies</h2>
 
-            <a href="amazon/amazon.html" class="req-item">
+            <!-- AMAZON — Active -->
+            <article class="project-card">
+                <a href="amazon/amazon.html" class="project-card-link" aria-label="View Amazon QA audit">
+                    <div class="project-card-header">
+                        <h3 class="amazon-card-title">Amazon E-Commerce Verification</h3>
+                        <span class="status-badge in-progress">Audit in Progress</span>
+                    </div>
+                    <p class="card-description">
+                        A comprehensive quality audit focusing on high-traffic functional modules.
+                        Includes Requirements Traceability (RTM), Master Test Planning, and
+                        detailed execution logs with screenshot evidence.
+                    </p>
+                    <div class="project-links">
+                        <span><i class="fas fa-file-invoice"></i> RTM</span>
+                        <span><i class="fas fa-tasks"></i> TEST CASES</span>
+                        <span><i class="fas fa-bug"></i> DEFECTS</span>
+                        <span><i class="fas fa-camera"></i> SCREENSHOTS</span>
+                    </div>
+                </a>
+            </article>
+
+            <!-- STRIPE — Coming Soon -->
+            <article class="project-card project-card--coming-soon">
                 <div class="project-card-header">
-                    <h3 class="amazon-card-title">Amazon E-Commerce Verification</h3>
-                    <span class="status-badge in-progress">Audit in Progress</span>
+                    <h3 class="stripe-card-title">Stripe API Testing</h3>
+                    <span class="status-badge coming-soon">Coming Soon</span>
                 </div>
                 <p class="card-description">
-                    A comprehensive quality audit focusing on high-traffic functional modules.
-                    Includes Traceability (RTM), Master Test Planning, and detailed execution logs.
+                    REST API verification of Stripe's payment and checkout endpoints.
+                    Will include Postman collections, request/response validation,
+                    and negative test case coverage.
                 </p>
                 <div class="project-links">
-                    <span><i class="fas fa-file-invoice"></i> RTM</span>
-                    <span><i class="fas fa-tasks"></i> TEST CASES</span>
+                    <span><i class="fas fa-plug"></i> API TESTS</span>
+                    <span><i class="fas fa-file-code"></i> POSTMAN</span>
                     <span><i class="fas fa-bug"></i> DEFECTS</span>
                 </div>
-            </a>
+            </article>
+
+            <!-- AI TESTING — Roadmap -->
+            <article class="project-card project-card--roadmap">
+                <div class="project-card-header">
+                    <h3 class="ai-card-title">AI QA Engineering</h3>
+                    <span class="status-badge roadmap">Roadmap</span>
+                </div>
+                <p class="card-description">
+                    Planned exploration of LLM output validation, prompt testing, and
+                    AI-assisted QA workflows. Target: 2026 AI QA Engineering transition.
+                </p>
+                <div class="project-links">
+                    <span><i class="fas fa-brain"></i> LLM TESTING</span>
+                    <span><i class="fas fa-comments"></i> PROMPT QA</span>
+                    <span><i class="fas fa-chart-bar"></i> EVAL METRICS</span>
+                </div>
+            </article>
         </main>
     </div>
 
-    <footer id="footer-bottom"></footer>
-    
-    <script src="scripts.js"></script>
+    <!-- FOOTER — hardcoded fallback, scripts.js can still enhance it -->
+    <footer id="footer-bottom">
+        <div class="footer-content">
+            <p class="footer-name">Marie-Jo Atayi &mdash; Heat QA Solutions</p>
+            <div class="footer-links">
+                <a href="mailto:josianeatayi@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i> josianeatayi@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/ayikouele-atayi" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com/atayia" target="_blank" rel="noopener" aria-label="GitHub">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="resume/Marie-Jo_Atayi_Resume.pdf" target="_blank" aria-label="Resume">
+                    <i class="fas fa-file-pdf"></i> Resume
+                </a>
+            </div>
+            <p class="footer-disclaimer">All audits are independent and for portfolio purposes only.</p>
+            <p class="footer-updated">Last updated: May 2026</p>
+        </div>
+    </footer>
 
+    <script src="scripts.js"></script>
 </body>
 
 </html>
