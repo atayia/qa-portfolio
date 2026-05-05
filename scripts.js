@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const path = window.location.pathname;
     const segments = path.split('/').filter(s => s.length > 0);
 
-    // 2. Calculate how deep we are
+    // Calculate how deep we are
     // GitHub Pages: /repo-name/folder/subfolder/index.html -> ["repo", "folder", "subfolder", "index.html"]
     // Ignore the 'repo' name and the 'filename'.
     const isGitHub = window.location.hostname.includes('github.io');
@@ -45,7 +45,28 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     }
 
-    // 2. SCROLL BUTTON LOGIC (Back to Top / Jump to Bottom)
+    // Evidence Modal Logic
+    function openModal(imgSrc) {
+        const modal = document.getElementById("evidenceModal");
+        const modalImg = document.getElementById("modalImg");
+
+        modal.style.display = "block";
+        modalImg.src = imgSrc;
+
+        // Close when clicking the 'X'
+        document.querySelector(".close-modal").onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Close when clicking anywhere outside the image
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    // SCROLL BUTTON LOGIC (Back to Top / Jump to Bottom)
     const backToTop = document.getElementById('backToTop');
     const jumpToBottom = document.getElementById('jumpToBottom');
 

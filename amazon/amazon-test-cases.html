@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Amazon Execution Suite | Heat QA</title>
-  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
@@ -19,10 +19,10 @@
         Marie-Jo A.</p>
 
         <nav class="project-menu">
-          <a href="../requirements/amazon-requirements.html" class="menu-link">Requirements</a>
-          <a href="../test-plans/amazon-test-plan.html" class="menu-link">Test Plan</a>
-          <a href="../test-cases/amazon-test-cases.html" class="menu-link active">Test Cases</a>
-          <a href="../bug-reports/amazon-bug-reports.html" class="menu-link">Bug Reports</a>
+          <a href="amazon-requirements.html" class="menu-link">Requirements</a>
+          <a href="amazon-test-plan.html" class="menu-link">Test Plan</a>
+          <a href="amazon-test-cases.html" class="menu-link active">Test Cases</a>
+          <a href="amazon-bug-reports.html" class="menu-link">Bug Reports</a>
         </nav>
     </header>
 
@@ -84,6 +84,21 @@
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">12. Status</span></div>
             <div class="cell cell-right"><span class="status-badge pass">Pass</span></div>
+          </div>
+          <!-- <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">13. Evidence</span></div>
+            <div class="cell cell-right">
+              <div class="evidence-wrapper">
+                <img src="screenshots/amazon-login-success.png" alt="Login Success" class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div> 
+            </div> -->
+          </div>
+          
+          <div id="evidenceModal" class="modal">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="modalImg">
           </div>
         </div>
         <div class="tc-separator"></div>
@@ -526,7 +541,7 @@
 
   <footer id="footer-bottom"></footer>
   
-  <script src="../../scripts.js"></script>
+  <script src="../scripts.js"></script>
 
 </body>
 

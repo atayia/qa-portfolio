@@ -446,6 +446,74 @@ color: var(--muted);
     object-fit: cover;
 }
 
+.evidence-thumb {
+  width: 150px;
+  height: auto;
+  border: 2px solid var(--teal);
+  border-radius: 4px;
+  margin-top: 10px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.evidence-thumb:hover {
+  transform: scale(1.05);
+  border-color: var(--magenta);
+}
+
+.evidence-caption {
+  font-size: 0.8rem;
+  color: var(--teal);
+  margin-top: 5px;
+}
+
+/* --- Lightbox Modal --- */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  /* Dark background */
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: auto;
+  max-width: 90%;
+  max-height: 85vh;
+  margin-top: 5vh;
+  border: 2px solid var(--teal);
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: var(--magenta);
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  color: #fff;
+}
+
+/* Make images look clickable */
+.zoomable {
+  cursor: zoom-in;
+}
+
 /* Placeholder box for API results or missing images */
 .placeholder-box {
     width: 100%;
