@@ -1,3 +1,14 @@
+
+#MacOS
 .DS_Store
-backup.sh
-standard-footer.md
+.DS_Store?
+._*
+
+#tools
+tools/backup.sh
+docs/standard-footer.md
+
+#Editor/system files
+.vscode/
+.idea/
+Thumbs.db
