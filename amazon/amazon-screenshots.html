@@ -13,92 +13,211 @@
 
   <div class="wrapper">
     <header class="intro-container bug-header">
-      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
+      <a href="amazon.html" class="back-link">← AMAZON HUB</a>
       <h1 class="deliverable-title"><span class="deliverable-gradient">Screenshots</span></h1>
       <p class="deliverable-subtitle">Execution Evidence — Amazon E-Commerce Audit</p>
 
       <nav class="project-menu">
-        <a href="../amazon-requirements.html" class="menu-link">Requirements</a>
-        <a href="../amazon-test-plan.html" class="menu-link">Test Plan</a>
-        <a href="../amazon-test-cases.html" class="menu-link">Test Cases</a>
-        <a href="../amazon-bug-reports.html" class="menu-link">Bug Reports</a>
+        <a href="amazon-requirements.html" class="menu-link">Requirements</a>
+        <a href="amazon-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="amazon-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="amazon-bug-reports.html" class="menu-link">Bug Reports</a>
       </nav>
     </header>
 
     <main>
 
+      <!-- LOGIN & AUTHENTICATION -->
       <section class="report-section">
         <div class="project-card-header">
           <h2 class="report-title">Login &amp; Authentication</h2>
-          <span class="status-badge in-progress">In Progress</span>
+          <span class="status-badge partial">2 of 3 Captured</span>
         </div>
+
         <div class="evidence-area">
+
           <div class="evidence-box">
-            <h4>Login Success</h4>
-            <a href="amazon-login-success.png" target="_blank">
-              <img src="thumbs/amazon-login-success-thumb.png"
+            <h4><i class="fas fa-desktop"></i> UI — Login Success</h4>
+            <a href="screenshots/amazon-login-success.png" target="_blank">
+              <img src="screenshots/amazon-login-success.png"
                 alt="Amazon login success screenshot"
-                class="tc-screenshot zoomable">
+                class="tc-screenshot zoomable"
+                onclick="openModal('screenshots/amazon-login-success.png')">
             </a>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-001 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-001" class="back-link">View Test Case</a>
+            </p>
           </div>
+
           <div class="evidence-box">
-            <h4>Login Failed</h4>
-            <a href="amazon-login-failed.png" target="_blank">
-              <img src="thumbs/amazon-login-failed-thumb.png"
+            <h4><i class="fas fa-desktop"></i> UI — Login Failed</h4>
+            <a href="screenshots/amazon-login-failed.png" target="_blank">
+              <img src="screenshots/amazon-login-failed.png"
                 alt="Amazon login failed screenshot"
-                class="tc-screenshot zoomable">
+                class="tc-screenshot zoomable"
+                onclick="openModal('screenshots/amazon-login-failed.png')">
             </a>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-002 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-002" class="back-link">View Test Case</a>
+            </p>
           </div>
+
+          <div class="evidence-box">
+            <h4><i class="fas fa-code"></i> Network — POST 302 (signin)</h4>
+            <a href="screenshots/amazon-login-network.png" target="_blank">
+              <img src="screenshots/amazon-login-network.png"
+                alt="DevTools network tab showing signin POST 302 redirect"
+                class="tc-screenshot zoomable"
+                onclick="openModal('screenshots/amazon-login-network.png')">
+            </a>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-001 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-001" class="back-link">View Test Case</a>
+            </p>
+          </div>
+
         </div>
       </section>
 
       <div class="tc-separator"></div>
 
+      <!-- SEARCH & PRODUCT PAGES -->
       <section class="report-section">
         <div class="project-card-header">
           <h2 class="report-title">Search &amp; Product Pages</h2>
-          <span class="status-badge status-pending">Pending</span>
+          <span class="status-badge status-pending">Pending Execution</span>
         </div>
+
         <div class="evidence-area">
+
           <div class="evidence-box">
-            <h4>Search Results</h4>
+            <h4><i class="fas fa-desktop"></i> UI — Search Results</h4>
             <div class="placeholder-box">
-              <i class="fas fa-camera"></i> Screenshot pending test execution
+              <i class="fas fa-camera"></i> Screenshot pending — TC-AMZ-003
             </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-003 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-003" class="back-link">View Test Case</a>
+            </p>
           </div>
+
           <div class="evidence-box">
-            <h4>Product Detail Page</h4>
+            <h4><i class="fas fa-code"></i> Network — Search API Response</h4>
             <div class="placeholder-box">
-              <i class="fas fa-camera"></i> Screenshot pending test execution
+              <i class="fas fa-code"></i> DevTools capture pending — TC-AMZ-003
             </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-003 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-003" class="back-link">View Test Case</a>
+            </p>
           </div>
+
+          <div class="evidence-box">
+            <h4><i class="fas fa-desktop"></i> UI — Product Detail Page</h4>
+            <div class="placeholder-box">
+              <i class="fas fa-camera"></i> Screenshot pending — TC-AMZ-005
+            </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-005 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-005" class="back-link">View Test Case</a>
+            </p>
+          </div>
+
         </div>
       </section>
 
       <div class="tc-separator"></div>
 
+      <!-- CART & CHECKOUT -->
       <section class="report-section">
         <div class="project-card-header">
           <h2 class="report-title">Cart &amp; Checkout</h2>
-          <span class="status-badge status-pending">Pending</span>
+          <span class="status-badge status-pending">Pending Execution</span>
         </div>
+
         <div class="evidence-area">
+
           <div class="evidence-box">
-            <h4>Add to Cart</h4>
+            <h4><i class="fas fa-desktop"></i> UI — Add to Cart</h4>
             <div class="placeholder-box">
-              <i class="fas fa-camera"></i> Screenshot pending test execution
+              <i class="fas fa-camera"></i> Screenshot pending — TC-AMZ-004
             </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-004 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-004" class="back-link">View Test Case</a>
+            </p>
           </div>
+
           <div class="evidence-box">
-            <h4>Checkout Flow</h4>
+            <h4><i class="fas fa-code"></i> Network — Cart State GET</h4>
             <div class="placeholder-box">
-              <i class="fas fa-camera"></i> Screenshot pending test execution
+              <i class="fas fa-code"></i> DevTools capture pending — TC-AMZ-004
             </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-004 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-004" class="back-link">View Test Case</a>
+            </p>
           </div>
+
+          <div class="evidence-box">
+            <h4><i class="fas fa-desktop"></i> UI — Cart Quantity Limit</h4>
+            <div class="placeholder-box">
+              <i class="fas fa-camera"></i> Screenshot pending — TC-AMZ-006
+            </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-006 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-006" class="back-link">View Test Case</a>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="tc-separator"></div>
+
+      <!-- ACCESSIBILITY -->
+      <section class="report-section">
+        <div class="project-card-header">
+          <h2 class="report-title">Accessibility (WCAG 2.1 AA)</h2>
+          <span class="status-badge status-pending">Pending Execution</span>
+        </div>
+
+        <div class="evidence-area">
+
+          <div class="evidence-box">
+            <h4><i class="fas fa-keyboard"></i> Keyboard Navigation</h4>
+            <div class="placeholder-box">
+              <i class="fas fa-camera"></i> Screenshot pending — TC-AMZ-007
+            </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-007 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-007" class="back-link">View Test Case</a>
+            </p>
+          </div>
+
+          <div class="evidence-box">
+            <h4><i class="fas fa-assistive-listening-systems"></i> Screen Reader Labels</h4>
+            <div class="placeholder-box">
+              <i class="fas fa-camera"></i> Screenshot pending — TC-AMZ-008
+            </div>
+            <p class="evidence-caption">
+              <i class="fas fa-link"></i> TC-AMZ-008 &mdash;
+              <a href="amazon-test-cases.html#TC-AMZ-008" class="back-link">View Test Case</a>
+            </p>
+          </div>
+
         </div>
       </section>
 
     </main>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="evidenceModal" class="modal" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg" alt="Evidence screenshot enlarged">
   </div>
 
   <footer id="footer-bottom"></footer>
