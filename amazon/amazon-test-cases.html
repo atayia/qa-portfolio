@@ -539,7 +539,7 @@
       <article class="report-section" id="TC-AMZ-007">
         <div class="project-card-header">
           <h2 class="report-title">TC-AMZ-007: Keyboard-Only Navigation (A11y)</h2>
-          <span class="status-badge status-pending">Pending</span>
+          <span class="status-badge partial">Pass</span>
         </div>
         <div class="tc-table">
           <div class="tc-row-item">
@@ -593,11 +593,24 @@
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
-            <div class="cell cell-right">N/A (Pending Execution)</div>
+            <div class="cell cell-right">Each signin data field is visibly focused, homepage successfully loads</div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">12. Status</span></div>
-            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+            <div class="cell cell-right"><span class="status-badge partial">Pass</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">13. Evidence</span></div>
+            <div class="cell cell-right">
+              <div class="evidence-area">
+                <div class="evidence-box">
+                  <h4>UI Validation</h4>
+                  <img src="screenshots/amazon-a11y-keyboard.png" alt="Visible focus on each singin data field with successful login page"
+                    class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                  <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="tc-separator"></div>
@@ -607,7 +620,7 @@
       <article class="report-section" id="TC-AMZ-008">
         <div class="project-card-header">
           <h2 class="report-title">TC-AMZ-008: Screen Reader Programmatic Labels (A11y)</h2>
-          <span class="status-badge status-pending">Pending</span>
+          <span class="status-badge partial">Pass</span>
         </div>
         <div class="tc-table">
           <div class="tc-row-item">
@@ -661,11 +674,27 @@
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">11. Actual Result</span></div>
-            <div class="cell cell-right">N/A (Pending Execution)</div>
+            <div class="cell cell-right">VoiceOver correctly announced "Password, secure text field, has keyboard focus". Programmatic labels match visual
+            labels. Page context announced as 'Amazon Sign-In, web content'.</div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">12. Status</span></div>
-            <div class="cell cell-right"><span class="status-badge status-pending">Pending</span></div>
+            <div class="cell cell-right"><span class="status-badge partial">Pass</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">13. Evidence</span></div>
+            <div class="cell cell-right">
+              <div class="evidence-area">
+                <div class="evidence-box">
+                  <h4>VoiceOver Captions</h4>
+                  <img src="screenshots/amazon-a11y-screenreader.png"
+                    alt="VoiceOver announcing email and password field labels on Amazon sign-in page"
+                    class="tc-screenshot zoomable"
+                    onclick="openModal(this.src)">
+                  <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="tc-separator"></div>
