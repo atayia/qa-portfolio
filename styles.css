@@ -1019,4 +1019,18 @@ footer {
   .footer-links {
     gap: 1rem;
   }
+
+  /* API pages — tc-block-title wraps cleanly */
+  .tc-block-title {
+    flex-wrap: wrap;
+    white-space: normal;
+    line-height: 1.6;
+  }
+
+  /* Code blocks — scroll horizontally, never overflow viewport */
+  .code-block {
+    overflow-x: auto;
+    max-width: 100%;
+    font-size: 0.72rem;
+  }
 }
