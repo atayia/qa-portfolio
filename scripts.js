@@ -1,16 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   // ==========================================================================
-  // 1. FOOTER INJECTION
-  // Injects the 3-column footer on all inner pages.
-  // Skipped on index.html which has its own hardcoded footer-content layout.
+  // 1. FOOTER INJECTION — all pages including index.html
   // ==========================================================================
   const footerElement = document.getElementById('footer-bottom');
-  const isIndexPage = window.location.pathname.endsWith('index.html') ||
-                      window.location.pathname.endsWith('/') ||
-                      window.location.pathname.endsWith('/qa-portfolio/');
 
-  if (footerElement && !isIndexPage) {
+  if (footerElement) {
 
     // Calculate relative path prefix based on page depth
     const path = window.location.pathname;
