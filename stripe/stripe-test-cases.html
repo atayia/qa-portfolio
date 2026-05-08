@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Cases | Stripe Project | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body id="top">
+
+  <div class="wrapper">
+    <header class="intro-container bug-header">
+      <a href="stripe.html" class="back-link">← STRIPE HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Test Cases</span></h1>
+      <p class="deliverable-subtitle">Execution Log — Stripe Payments API</p>
+
+      <nav class="project-menu">
+        <a href="stripe-requirements.html" class="menu-link">API Contract</a>
+        <a href="stripe-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="stripe-test-cases.html" class="menu-link active">Test Cases</a>
+        <a href="stripe-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- ═══════════════════════════════════════
+           SECTION 1 — PAYMENT INTENTS
+      ════════════════════════════════════════ -->
+      <h2 class="section-heading" id="payment-intents">
+        <i class="fas fa-bolt"></i> Payment Intents
+      </h2>
+
+      <!-- TC-PI-001 -->
+      <article class="report-section tc-block" id="TC-PI-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-001 &mdash; Create PaymentIntent — Happy Path
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify a PaymentIntent is created successfully with valid amount, currency, and payment method.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-01" class="back-link">REQ-STR-01</a></div>
+
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">Valid Stripe test secret key set in Postman environment.</div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 2000,
+  "currency": "usd",
+  "payment_method": "pm_card_visa",
+  "confirm": true,
+  "return_url": "https://example.com/return"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code> &bull;
+            <code style="color:var(--accent);">currency: "usd"</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Test card <code style="color:var(--accent);">4242 4242 4242 4242</code> — always succeeds. Save <code style="color:var(--accent);">id</code> to Postman env.</div>
+        </div>
+      </article>
+
+      <!-- TC-PI-002 -->
+      <article class="report-section tc-block" id="TC-PI-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-002 &mdash; Create PaymentIntent — Generic Decline
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API returns a structured card_declined error for a declined card.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-02" class="back-link">REQ-STR-02</a></div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 2000,
+  "currency": "usd",
+  "payment_method": "pm_card_visa_chargeDeclined",
+  "confirm": true,
+  "return_url": "https://example.com/return"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 402 &bull; <code style="color:var(--accent);">error.code: "card_declined"</code> &bull;
+            <code style="color:var(--accent);">error.decline_code: "generic_decline"</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Test card <code style="color:var(--accent);">4000 0000 0000 0002</code>.</div>
+        </div>
+      </article>
+
+      <!-- TC-PI-003 -->
+      <article class="report-section tc-block" id="TC-PI-003">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-003 &mdash; Create PaymentIntent — Insufficient Funds
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API surfaces an <code style="color:var(--accent);">insufficient_funds</code> decline code distinctly from a generic decline.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-02" class="back-link">REQ-STR-02</a></div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 2000,
+  "currency": "usd",
+  "payment_method": "pm_card_visa_chargeDeclinedInsufficientFunds",
+  "confirm": true,
+  "return_url": "https://example.com/return"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">HTTP 402 &bull; <code style="color:var(--accent);">error.decline_code: "insufficient_funds"</code></div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Test card <code style="color:var(--accent);">4000 0000 0000 9995</code>.</div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- ═══════════════════════════════════════
+           SECTION 2 — CHARGES
+      ════════════════════════════════════════ -->
+      <h2 class="section-heading" id="charges">
+        <i class="fas fa-credit-card"></i> Charges API
+      </h2>
+
+      <!-- TC-CH-001 -->
+      <article class="report-section tc-block" id="TC-CH-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-CH-001 &mdash; Create Charge — Valid Token
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/charges</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify a charge is created and immediately captured with a valid card token.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-03" class="back-link">REQ-STR-03</a></div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 1500,
+  "currency": "usd",
+  "source": "tok_visa",
+  "description": "TC-CH-001 test charge"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">paid: true</code> &bull;
+            <code style="color:var(--accent);">amount: 1500</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Save response <code style="color:var(--accent);">id</code> as <code style="color:var(--accent);">{{charge_id}}</code> in Postman env for TC-CH-002 and TC-RF-001.</div>
+        </div>
+      </article>
+
+      <!-- TC-CH-002 -->
+      <article class="report-section tc-block" id="TC-CH-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-get">GET</span>
+          TC-CH-002 &mdash; Retrieve Charge by ID
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">GET /v1/charges/{{charge_id}}</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify a previously created charge can be retrieved by ID with all fields intact.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-03" class="back-link">REQ-STR-03</a></div>
+
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">TC-CH-001 executed; <code style="color:var(--accent);">{{charge_id}}</code> set in Postman environment.</div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">object: "charge"</code> &bull;
+            <code style="color:var(--accent);">id</code> matches requested charge
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Confirm <code style="color:var(--accent);">amount</code>, <code style="color:var(--accent);">currency</code>, and <code style="color:var(--accent);">paid</code> fields match TC-CH-001 request.</div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- ═══════════════════════════════════════
+           SECTION 3 — REFUNDS
+      ════════════════════════════════════════ -->
+      <h2 class="section-heading" id="refunds">
+        <i class="fas fa-rotate"></i> Refunds
+      </h2>
+
+      <!-- TC-RF-001 -->
+      <article class="report-section tc-block" id="TC-RF-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-RF-001 &mdash; Full Refund
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/refunds</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify a full refund is issued and the charge transitions to <code style="color:var(--accent);">refunded: true</code>.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-04" class="back-link">REQ-STR-04</a></div>
+
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">TC-CH-001 executed; <code style="color:var(--accent);">{{charge_id}}</code> set in Postman environment.</div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "charge": "{{charge_id}}"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">amount: 1500</code> &bull;
+            charge <code style="color:var(--accent);">refunded: true</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Verify the charge object afterwards via GET to confirm <code style="color:var(--accent);">refunded: true</code>.</div>
+        </div>
+      </article>
+
+      <!-- TC-RF-002 -->
+      <article class="report-section tc-block" id="TC-RF-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-RF-002 &mdash; Partial Refund
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/refunds</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify a partial refund is processed correctly and the charge reflects the right <code style="color:var(--accent);">amount_refunded</code> without marking the charge as fully refunded.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-04" class="back-link">REQ-STR-04</a></div>
+
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">A fresh charge created specifically for this test — do not reuse TC-RF-001's charge.</div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "charge": "{{charge_id}}",
+  "amount": 500
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">amount: 500</code> &bull;
+            charge <code style="color:var(--accent);">amount_refunded: 500</code> &bull;
+            charge <code style="color:var(--accent);">refunded: false</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Verify <code style="color:var(--accent);">refunded: false</code> is explicit in the charge object — not absent.</div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- ═══════════════════════════════════════
+           SECTION 4 — AUTH & SECURITY
+      ════════════════════════════════════════ -->
+      <h2 class="section-heading" id="auth">
+        <i class="fas fa-shield-halved"></i> Auth &amp; Security
+      </h2>
+
+      <!-- TC-AU-001 -->
+      <article class="report-section tc-block" id="TC-AU-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-AU-001 &mdash; Missing API Key
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API returns HTTP 401 when the Authorization header is absent.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-05" class="back-link">REQ-STR-05</a></div>
+
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">Remove the <code style="color:var(--accent);">Authorization</code> header from the request — do not leave it empty, remove it entirely.</div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 401 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Document the exact error message — Stripe's auth errors are part of the public contract.</div>
+        </div>
+      </article>
+
+      <!-- TC-AU-002 -->
+      <article class="report-section tc-block" id="TC-AU-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-AU-002 &mdash; Live Key Against Test Resource
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API rejects a live-mode key when used with test-mode card tokens and returns a descriptive error.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-05" class="back-link">REQ-STR-05</a></div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">HTTP 400 or 402 &bull; error explicitly referencing test/live mode mismatch</div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Log the exact error message; Stripe should make the mode mismatch explicit in the error body.</div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- ═══════════════════════════════════════
+           SECTION 5 — ERROR HANDLING
+      ════════════════════════════════════════ -->
+      <h2 class="section-heading" id="errors">
+        <i class="fas fa-triangle-exclamation"></i> Error Handling
+      </h2>
+
+      <!-- TC-ER-001 -->
+      <article class="report-section tc-block" id="TC-ER-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-001 &mdash; Invalid Amount (Zero)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API rejects a zero amount with a descriptive validation error identifying the offending field.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-06" class="back-link">REQ-STR-06</a></div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 0,
+  "currency": "usd",
+  "payment_method": "pm_card_visa"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "amount"</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Stripe minimum charge is $0.50 USD (50 cents). Log the exact message for documentation.</div>
+        </div>
+      </article>
+
+      <!-- TC-ER-002 -->
+      <article class="report-section tc-block" id="TC-ER-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-002 &mdash; Invalid Currency Code
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API returns a validation error for a malformed or unsupported currency code.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-06" class="back-link">REQ-STR-06</a></div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 2000,
+  "currency": "xyz",
+  "payment_method": "pm_card_visa"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "currency"</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Also test with a real but unsupported currency (e.g. <code style="color:var(--accent);">bdt</code>) if account restrictions allow.</div>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="evidenceModal" class="modal" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg" alt="Evidence screenshot enlarged">
+  </div>
+
+  <a href="#" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" aria-label="Jump to bottom"><i class="fas fa-chevron-down"></i></a>
+
+  <footer id="footer-bottom"></footer>
+
+  <script src="../scripts.js"></script>
+
+</body>
+</html>

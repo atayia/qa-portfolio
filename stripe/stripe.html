@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stripe API Hub | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body id="top">
+
+  <div class="wrapper">
+    <header class="intro-container">
+      <a href="../index.html" class="back-link">← ALL PROJECTS</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Stripe API Hub</span></h1>
+      <p class="deliverable-subtitle">REST API Verification — Payments, Refunds &amp; Error Handling</p>
+    </header>
+
+    <main>
+      <section class="hub-section">
+        <h2 class="hub-section-title">Audit Overview</h2>
+        <p>
+          Independent REST API audit of Stripe's Payments API using the sandbox environment.
+          Tests cover the full payment lifecycle — PaymentIntents, Charges, Refunds, Error Handling,
+          and Auth &amp; Security — executed through Postman with structured request/response assertions.
+        </p>
+        <p style="font-size:0.85rem; color:var(--muted); margin-top:0.75rem; font-style:italic;">
+          All requests target the Stripe test environment using test-mode secret keys.
+          No real transactions were processed.
+        </p>
+
+        <div class="hub-metadata-grid">
+          <div>
+            <span class="metadata-label">Client</span>
+            <span class="metadata-value">Stripe, Inc. (Unofficial)</span>
+          </div>
+          <div>
+            <span class="metadata-label">Environment</span>
+            <span class="metadata-value">Stripe Sandbox — Test Mode</span>
+          </div>
+          <div>
+            <span class="metadata-label">Tool</span>
+            <span class="metadata-value">Postman</span>
+          </div>
+          <div>
+            <span class="metadata-label">API Version</span>
+            <span class="metadata-value">2024-06-20</span>
+          </div>
+          <div>
+            <span class="metadata-label">Status</span>
+            <span class="status-badge in-progress">In Progress</span>
+          </div>
+          <div>
+            <span class="metadata-label">Started</span>
+            <span class="metadata-value">May 2025</span>
+          </div>
+        </div>
+      </section>
+
+      <h2 class="projects-header">Project Deliverables</h2>
+
+      <div class="deliverables-grid">
+
+        <a href="stripe-requirements.html" class="hub-card-link">
+          <div class="hub-section card-inner">
+            <h3 class="deliverable-link-title">
+              <i class="fas fa-file-contract"></i> API Contract (RTM)
+            </h3>
+            <p>Endpoint requirements mapped to test coverage — status codes, payload schema, and error contract.</p>
+          </div>
+        </a>
+
+        <a href="stripe-test-plan.html" class="hub-card-link">
+          <div class="hub-section card-inner">
+            <h3 class="deliverable-link-title">
+              <i class="fas fa-map"></i> Test Strategy
+            </h3>
+            <p>Scope, Postman environment setup, auth strategy, risk areas, and exit criteria.</p>
+          </div>
+        </a>
+
+        <a href="stripe-test-cases.html" class="hub-card-link">
+          <div class="hub-section card-inner">
+            <h3 class="deliverable-link-title">
+              <i class="fas fa-vial"></i> Test Cases
+            </h3>
+            <p><span id="case-count">10</span> test cases across Payment Intents, Charges, Refunds, Auth, and Error Handling.</p>
+          </div>
+        </a>
+
+        <a href="stripe-bug-reports.html" class="hub-card-link">
+          <div class="hub-section card-inner">
+            <h3 class="deliverable-link-title">
+              <i class="fas fa-bug"></i> Bug Reports
+            </h3>
+            <p>API contract deviations and unexpected response behaviour identified during execution.</p>
+          </div>
+        </a>
+
+      </div>
+    </main>
+  </div>
+
+  <footer id="footer-bottom"></footer>
+
+  <script>
+    async function updateCounts() {
+      try {
+        const tcRes = await fetch('stripe-test-cases.html');
+        const tcDoc = new DOMParser().parseFromString(await tcRes.text(), 'text/html');
+        const tcCount = tcDoc.querySelectorAll('.tc-block').length;
+        document.getElementById('case-count').textContent = tcCount || '10';
+      } catch (e) {
+        console.warn('Count sync skipped (likely local file:// context):', e.message);
+      }
+    }
+    window.onload = updateCounts;
+  </script>
+
+  <script src="../scripts.js"></script>
+
+</body>
+</html>

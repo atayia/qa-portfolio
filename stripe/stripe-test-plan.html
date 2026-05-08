@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Plan | Stripe Project | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body id="top">
+
+  <div class="wrapper">
+    <header class="intro-container bug-header">
+      <a href="stripe.html" class="back-link">← STRIPE HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">Test Plan</span></h1>
+      <p class="deliverable-subtitle">API Testing Strategy — Stripe Payments, Refunds &amp; Error Handling</p>
+
+      <nav class="project-menu">
+        <a href="stripe-requirements.html" class="menu-link">API Contract</a>
+        <a href="stripe-test-plan.html" class="menu-link active">Test Plan</a>
+        <a href="stripe-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="stripe-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="tc-table">
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Scope</span></div>
+          <div class="cell cell-right">
+            REST API testing of Stripe's core payment lifecycle in test mode: PaymentIntents,
+            Charges, Refunds, Auth &amp; Security, and Input Validation. Webhooks and Connect
+            platform features are out of scope for this audit cycle.
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Testing Strategy</span></div>
+          <div class="cell cell-right">
+            Black-box API testing using Postman. Approach covers:
+            <ul class="standard-list" style="margin-top:0.75rem;">
+              <li><strong>Happy path</strong> — valid inputs, expected success responses</li>
+              <li><strong>Negative / error path</strong> — declined cards, invalid inputs, bad auth</li>
+              <li><strong>Contract verification</strong> — response structure, field presence, status codes</li>
+              <li><strong>State chaining</strong> — Postman environment variables to carry IDs across requests</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Environment</span></div>
+          <div class="cell cell-right">
+            Base URL: <code style="color:var(--accent);">https://api.stripe.com/v1</code><br>
+            Auth: Bearer token — Stripe test secret key (<code style="color:var(--accent);">sk_test_…</code>)<br>
+            API Version header: <code style="color:var(--accent);">Stripe-Version: 2024-06-20</code><br>
+            Tool: Postman (Desktop) with environment file for key and variable management
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Test Data</span></div>
+          <div class="cell cell-right">
+            Stripe-provided test cards only. No real card numbers used.
+            <ul class="standard-list" style="margin-top:0.75rem;">
+              <li><code style="color:var(--accent);">4242 4242 4242 4242</code> — always succeeds (Visa)</li>
+              <li><code style="color:var(--accent);">4000 0000 0000 0002</code> — generic decline</li>
+              <li><code style="color:var(--accent);">4000 0000 0000 9995</code> — insufficient funds</li>
+              <li><code style="color:var(--accent);">4000 0000 0000 0101</code> — incorrect CVC</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Risk Areas</span></div>
+          <div class="cell cell-right">
+            <ul class="standard-list">
+              <li><strong>High:</strong> Auth failure — missing or wrong-mode API keys must be clearly rejected</li>
+              <li><strong>High:</strong> Partial refund state — <code style="color:var(--accent);">amount_refunded</code> accuracy</li>
+              <li><strong>Medium:</strong> Error response consistency — <code style="color:var(--accent);">error.param</code> must be present on 400s</li>
+              <li><strong>Low:</strong> Metadata field passthrough — confirmed by contract but lower user impact</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Out of Scope</span></div>
+          <div class="cell cell-right">
+            Webhooks, Stripe Connect, Subscriptions, Invoices, Radar (fraud rules),
+            and any live-mode transaction processing.
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Exit Criteria</span></div>
+          <div class="cell cell-right">
+            100% of test cases executed; all High-risk scenarios verified;
+            all identified contract deviations documented in Bug Reports.
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Deliverables</span></div>
+          <div class="cell cell-right">
+            <ul class="standard-list">
+              <li><a href="stripe-requirements.html" class="back-link">API Contract (RTM)</a></li>
+              <li><a href="stripe-test-cases.html" class="back-link">Test Cases</a></li>
+              <li><a href="stripe-bug-reports.html" class="back-link">Bug Reports</a></li>
+              <li>Postman Collection export (coming soon)</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <footer id="footer-bottom"></footer>
+
+  <script src="../scripts.js"></script>
+
+</body>
+</html>

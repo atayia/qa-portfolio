@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Contract | Stripe Project | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body id="top">
+
+  <div class="wrapper">
+    <header class="intro-container bug-header">
+      <a href="stripe.html" class="back-link">← STRIPE HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">API Contract</span></h1>
+      <p class="deliverable-subtitle">Requirements Traceability — Stripe Payments API</p>
+
+      <nav class="project-menu">
+        <a href="stripe-requirements.html" class="menu-link active">API Contract</a>
+        <a href="stripe-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="stripe-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="stripe-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- REQ-STR-01 -->
+      <article class="report-section" id="REQ-STR-01">
+        <div class="project-card-header">
+          <h2 class="report-title">REQ-STR-01: PaymentIntent Creation — Happy Path</h2>
+          <span class="status-badge status-todo">To Do</span>
+        </div>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Endpoint</span></div>
+            <div class="cell cell-right">
+              <span class="method-pill method-post">POST</span>
+              <code>/v1/payment_intents</code>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Description</span></div>
+            <div class="cell cell-right">
+              The API shall create a PaymentIntent and return HTTP 200 when provided a valid amount,
+              currency, and payment method. The response must include <code>id</code>,
+              <code>status: "succeeded"</code>, <code>amount</code>, and <code>currency</code>.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-PI-001" class="back-link">TC-PI-001</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+
+      <!-- REQ-STR-02 -->
+      <article class="report-section" id="REQ-STR-02">
+        <div class="project-card-header">
+          <h2 class="report-title">REQ-STR-02: Card Decline Error Contract</h2>
+          <span class="status-badge status-todo">To Do</span>
+        </div>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Endpoint</span></div>
+            <div class="cell cell-right">
+              <span class="method-pill method-post">POST</span>
+              <code>/v1/payment_intents</code>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Description</span></div>
+            <div class="cell cell-right">
+              The API shall return HTTP 402 with a structured error object when a card is declined.
+              The error object must include <code>error.type</code>, <code>error.code: "card_declined"</code>,
+              and <code>error.decline_code</code>. Generic and specific decline reasons
+              (e.g. <code>insufficient_funds</code>) must be surfaced distinctly.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-PI-002" class="back-link">TC-PI-002</a>,
+              <a href="stripe-test-cases.html#TC-PI-003" class="back-link">TC-PI-003</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+
+      <!-- REQ-STR-03 -->
+      <article class="report-section" id="REQ-STR-03">
+        <div class="project-card-header">
+          <h2 class="report-title">REQ-STR-03: Charge Creation &amp; Retrieval</h2>
+          <span class="status-badge status-todo">To Do</span>
+        </div>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Endpoint</span></div>
+            <div class="cell cell-right">
+              <span class="method-pill method-post">POST</span>
+              <code>/v1/charges</code> &nbsp;&bull;&nbsp;
+              <span class="method-pill method-get">GET</span>
+              <code>/v1/charges/:id</code>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Description</span></div>
+            <div class="cell cell-right">
+              The API shall create a charge and return HTTP 200 with <code>status: "succeeded"</code>
+              and <code>paid: true</code>. A created charge must be retrievable by its ID with
+              all fields intact, including <code>object: "charge"</code> and correct <code>amount</code>.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-CH-001" class="back-link">TC-CH-001</a>,
+              <a href="stripe-test-cases.html#TC-CH-002" class="back-link">TC-CH-002</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+
+      <!-- REQ-STR-04 -->
+      <article class="report-section" id="REQ-STR-04">
+        <div class="project-card-header">
+          <h2 class="report-title">REQ-STR-04: Refund Processing</h2>
+          <span class="status-badge status-todo">To Do</span>
+        </div>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Endpoint</span></div>
+            <div class="cell cell-right">
+              <span class="method-pill method-post">POST</span>
+              <code>/v1/refunds</code>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Description</span></div>
+            <div class="cell cell-right">
+              The API shall process full and partial refunds against a succeeded charge.
+              Full refunds must set <code>refunded: true</code> on the charge object.
+              Partial refunds must correctly reflect <code>amount_refunded</code> without
+              setting <code>refunded: true</code> until the full amount is returned.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-RF-001" class="back-link">TC-RF-001</a>,
+              <a href="stripe-test-cases.html#TC-RF-002" class="back-link">TC-RF-002</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+
+      <!-- REQ-STR-05 -->
+      <article class="report-section" id="REQ-STR-05">
+        <div class="project-card-header">
+          <h2 class="report-title">REQ-STR-05: Authentication &amp; Authorization</h2>
+          <span class="status-badge status-todo">To Do</span>
+        </div>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Endpoint</span></div>
+            <div class="cell cell-right">All endpoints</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Description</span></div>
+            <div class="cell cell-right">
+              Requests with missing or invalid API keys must be rejected with HTTP 401.
+              Requests using live-mode keys against test-mode resources (or vice versa)
+              must be rejected with a descriptive error identifying the mode mismatch.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-AU-001" class="back-link">TC-AU-001</a>,
+              <a href="stripe-test-cases.html#TC-AU-002" class="back-link">TC-AU-002</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+
+      <!-- REQ-STR-06 -->
+      <article class="report-section" id="REQ-STR-06">
+        <div class="project-card-header">
+          <h2 class="report-title">REQ-STR-06: Input Validation &amp; Error Responses</h2>
+          <span class="status-badge status-todo">To Do</span>
+        </div>
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Endpoint</span></div>
+            <div class="cell cell-right">
+              <span class="method-pill method-post">POST</span>
+              <code>/v1/payment_intents</code> &nbsp;&bull;&nbsp;
+              <span class="method-pill method-post">POST</span>
+              <code>/v1/charges</code>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Description</span></div>
+            <div class="cell cell-right">
+              The API shall return HTTP 400 with <code>error.type: "invalid_request_error"</code>
+              and a meaningful <code>error.param</code> field for invalid inputs, including
+              zero or negative amounts, unsupported currency codes, and missing required fields.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Verified By</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-ER-001" class="back-link">TC-ER-001</a>,
+              <a href="stripe-test-cases.html#TC-ER-002" class="back-link">TC-ER-002</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Status</span></div>
+            <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Bug</span></div>
+            <div class="cell cell-right">N/A</div>
+          </div>
+        </div>
+        <div class="tc-separator"></div>
+      </article>
+
+    </main>
+  </div>
+
+  <footer id="footer-bottom"></footer>
+
+  <script src="../scripts.js"></script>
+
+</body>
+</html>
