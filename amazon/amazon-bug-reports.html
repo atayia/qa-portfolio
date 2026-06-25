@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bug Reports | Amazon Project | Heat QA Solutions</title>
-  <link rel="stylesheet" href="../styles.css">
+  <title>Bug Reports | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-
 <body id="top">
 
   <div class="wrapper">
     <header class="intro-container bug-header">
-      <a href="amazon.html" class="back-link">← AMAZON HUB</a>
+      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
       <h1 class="deliverable-title"><span class="deliverable-gradient">Defect Reports</span></h1>
       <p class="deliverable-subtitle">Project: Amazon E-Commerce | SQA: Marie-Jo A.</p>
 
@@ -26,88 +24,14 @@
     </header>
 
     <main>
-
-      <!-- AMZ-OBS-001 -->
-      <article class="report-section" id="AMZ-OBS-001">
-        <div class="project-card-header">
-          <h2 class="report-title">AMZ-OBS-001: Empty Search State Suppressed in Favor of Sponsored Content</h2>
-          <span class="status-badge status-todo">Observation</span>
-        </div>
-
+      <article class="report-section">
+        <h2 class="report-title">AMZ-BUG-00X: Pending bug report - Placeholder</h2>
+        
         <div class="tc-table">
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Type</span></div>
-            <div class="cell cell-right">Observation — Intentional Product Behavior</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Severity</span></div>
-            <div class="cell cell-right">Low</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Priority</span></div>
-            <div class="cell cell-right">Low</div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Summary</span></div>
-            <div class="cell cell-right">
-              The system never surfaces a true empty state for search queries that return no organic
-              results. Instead, sponsored fallback products are always displayed regardless of query
-              relevance, deviating from the documented requirement which specifies a
-              "no results" message with fallback suggestions.
             </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Steps to Reproduce</span></div>
-            <div class="cell cell-right">
-              <ol class="standard-list">
-                <li>Navigate to Amazon.com homepage.</li>
-                <li>Enter a non-existent, random alphanumeric string into the search bar (e.g. <code>zxyvwk123456789</code>).</li>
-                <li>Submit the search.</li>
-                <li>Observe the results page.</li>
-              </ol>
-            </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Expected Result</span></div>
-            <div class="cell cell-right">
-              A "No results found" message displayed with graceful fallback suggestions
-              per REQ-AMZ-03.
-            </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Actual Result</span></div>
-            <div class="cell cell-right">
-              No organic results returned. System displays sponsored fallback products with no
-              "no results" message. Amazon does not surface a true empty state — this appears
-              to be a deliberate product decision to maximize ad inventory visibility.
-            </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Linked Requirement</span></div>
-            <div class="cell cell-right">
-              <a href="amazon-requirements.html#REQ-AMZ-03" class="back-link">REQ-AMZ-03</a>
-            </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">Linked Test Case</span></div>
-            <div class="cell cell-right">
-              <a href="amazon-test-cases.html#TC-AMZ-005" class="back-link">TC-AMZ-005</a>
-            </div>
-          </div>
-          <div class="tc-row-item">
-            <div class="cell cell-left"><span class="label-text">QA Recommendation</span></div>
-            <div class="cell cell-right">
-              No action required — this is intentional product behavior. Requirement REQ-AMZ-03
-              should be updated to reflect Amazon's actual empty state handling if this audit
-              were to be formally delivered. Logged here for traceability and documentation completeness.
-            </div>
-          </div>
-        </div>
 
         <div class="audit-trail-container">
-          <h3 class="label-text audit-trail-header">
-            <i class="fas fa-history"></i> Observation History &amp; Audit Trail
-          </h3>
+          <h3 class="label-text audit-trail-header"><i class="fas fa-history"></i> Defect History & Audit Trail</h3>
           <table class="history-table">
             <thead>
               <tr>
@@ -119,38 +43,40 @@
             </thead>
             <tbody>
               <tr>
-                <td>May 6, 2026</td>
+                <td>Jan 21, 2026</td>
                 <td><span class="status-badge status-new">New</span></td>
-                <td>Identified during TC-AMZ-005 execution. Logged as observation — not a defect.</td>
+                <td>Sample bug report - Placeholder</td>
                 <td>Marie-Jo A.</td>
               </tr>
               <tr>
-                <td>May 6, 2026</td>
-                <td><span class="status-badge status-todo">Observation</span></td>
-                <td>Confirmed intentional product behavior. No developer triage required.</td>
-                <td>Marie-Jo A.</td>
+                <td>--</td>
+                <td><span class="status-pending-text">Pending</span></td>
+                <td>Developer Triage</td>
+                <td>--</td>
               </tr>
             </tbody>
           </table>
         </div>
       </article>
 
-      <div class="tc-separator"></div>
-
-      <!-- Future bug discovery slot -->
       <article class="discovery-placeholder">
+        <h2 class="report-title">AMZ-BUG-00X: [Pending Discovery]</h2>
         <div class="dashed-container">
-          <p>No defects identified during this audit cycle. Slot reserved for regression testing results.</p>
+          <p>No further defects identified. Placeholder active for regression testing results.</p>
         </div>
       </article>
-
     </main>
   </div>
 
-  <footer id="footer-bottom"></footer>
+  <a href="#" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" aria-label="Jump to bottom"><i class="fas fa-chevron-down"></i></a>
 
-  <script src="../scripts.js"></script>
+  <a href="#" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" aria-label="Jump to bottom"><i class="fas fa-chevron-down"></i></a>
+
+  <footer id="footer-bottom"></footer>
+  
+  <script src="../../scripts.js"></script>
 
 </body>
-
 </html>
