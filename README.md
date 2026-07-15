@@ -95,11 +95,11 @@ The portfolio is designed to be browsed as a website, not raw files.
 
 | Deliverable | Format | Status |
 |---|---|---|
-| Test Plan | HTML + MD | 🔄 In Progress |
-| Requirements / RTM | HTML + MD | 🔄 In Progress |
-| Test Cases | HTML + MD | 🔄 In Progress |
-| Bug Reports | HTML | 🔄 In Progress |
-| Screenshots | PNG + HTML gallery | 🔄 In Progress |
+| Test Plan | HTML + MD | ✅ Completed |
+| Requirements / RTM | HTML + MD | ✅ Completed |
+| Test Cases | HTML + MD | ✅ Completed |
+| Bug Reports | HTML | ✅ Completed |
+| Screenshots | PNG + HTML gallery | ✅ Completed |
 | Automation | — | ⏳ Planned |
 
 **Modules under audit:** Login & Authentication, Search & Filters, Product Detail Pages, Cart & Checkout, UI Consistency
