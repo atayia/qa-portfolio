@@ -167,6 +167,58 @@
         </div>
       </article>
 
+      <!-- TC-PI-004 -->
+      <article class="report-section tc-block" id="TC-PI-004">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-004 &mdash; PaymentIntent Authorization Only (Manual Capture)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell cell-right"><code>POST /v1/payment_intents</code></div>
+
+          <div class="cell cell-left">Objective</div>
+          <div class="cell cell-right">Verify a PaymentIntent with <code>capture_method: "manual"</code> authorizes the card and holds funds without capturing, returning <code>status: "requires_capture"</code>.</div>
+
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell cell-right"><a href="stripe-requirements.html#REQ-STR-01" class="back-link">REQ-STR-01</a></div>
+
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell cell-right">Valid Stripe test secret key set in Postman environment.</div>
+
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell cell-right">
+            <pre class="code-block">{
+  "amount": 2000,
+  "currency": "usd",
+  "payment_method": "pm_card_visa",
+  "capture_method": "manual",
+  "confirm": true,
+  "return_url": "https://example.com/return"
+}</pre>
+          </div>
+
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell cell-right">
+            HTTP 200 &bull; <code>status: "requires_capture"</code> &bull;
+            <code>amount: 2000</code> &bull; <code>capture_method: "manual"</code>
+          </div>
+
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell cell-right status-pending-text">— Pending execution —</div>
+
+          <div class="cell cell-left">Status</div>
+          <div class="cell cell-right"><span class="status-badge status-todo">To Do</span></div>
+
+          <div class="cell cell-left">Notes</div>
+          <div class="cell cell-right">
+            Common in e-commerce for pre-authorization flows (e.g. hotel holds, ride-sharing).
+            Save the <code>id</code> to Postman env — a follow-up capture request
+            (<code>POST /v1/payment_intents/:id/capture</code>) can be added as TC-PI-005.
+          </div>
+        </div>
+      </article>
+
       <div class="tc-separator"></div>
 
 
