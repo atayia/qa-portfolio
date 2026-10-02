@@ -948,14 +948,14 @@ footer {
   }
 
   /* Label cells become header-style on mobile */
-  .cell:nth-child(odd) {
-    background: rgba(56, 189, 248, 0.05);
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    padding-top: 1.5rem;
-  }
+    .cell-left {
+      background: rgba(56, 189, 248, 0.05);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      padding-top: 1.5rem;
+    }
 
   /* Deliverables grid → single column */
   .deliverables-grid {
