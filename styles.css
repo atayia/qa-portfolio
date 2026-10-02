@@ -945,8 +945,9 @@ footer {
     padding: 1rem 1.25rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
+    overflow-x: hidden;
   }
-
+  
   .cell code {
     white-space: normal;
     word-break: break-all;
