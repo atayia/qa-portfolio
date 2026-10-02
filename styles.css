@@ -1035,7 +1035,7 @@ footer {
   /* Code blocks — scroll horizontally, never overflow viewport */
   .code-block {
     overflow-x: auto;
-    max-width: 100%;
+    max-width: calc(100vw - 3rem);
     font-size: 0.72rem;
   }
 }
