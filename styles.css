@@ -460,6 +460,10 @@ body {
 
 .cell-left {
   background: rgba(30, 41, 59, 0.5);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
 }
 
 /* Scrollable table wrapper */
@@ -945,9 +949,8 @@ footer {
     padding: 1rem 1.25rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-    overflow-x: hidden;
   }
-  
+
   .cell code {
     white-space: normal;
     word-break: break-all;
@@ -1036,7 +1039,7 @@ footer {
   /* Code blocks — scroll horizontally, never overflow viewport */
   .code-block {
     overflow-x: auto;
-    max-width: calc(100vw - 3rem);
+    max-width: 100%;
     font-size: 0.72rem;
   }
 }
