@@ -1051,4 +1051,11 @@ footer {
     max-width: 100%;
     font-size: 0.72rem;
   }
+
+  /* Table — scroll horizontally on small screens */
+  .history-table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  }
 }
