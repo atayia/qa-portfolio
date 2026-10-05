@@ -459,15 +459,35 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 400 · Card Token usage on the Charges API has reached end of life. 
+            Stripe requires migration to the Payment Intents and Payment Methods API.
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge status-blocked">Blocked</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Save response <code style="color:var(--accent);">id</code> as <code style="color:var(--accent);">{{charge_id}}</code> in Postman env for TC-CH-002 and TC-RF-001.</div>
+          <div class="cell">
+            Blocked by Stripe's Card Token EOL policy. Policy re-enable attempted via Stripe Dashboard API settings and key
+            regeneration — error persisted. Charge creation verified via PaymentIntents in TC-PI-001. See <a
+            href="stripe-bug-reports.html#STR-OBS-001" class="back-link">STR-OBS-001</a>.
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 Card Token EOL</h4>
+                <img src="screenshots_stripe/tc-ch-001-obs.png" alt="TC-CH-001 400 error Card Token EOL"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -504,15 +524,19 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 400 · Blocked — depends on TC-CH-001 which is blocked due to Stripe Card Token EOL policy.
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge status-blocked">Blocked</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Confirm <code style="color:var(--accent);">amount</code>, <code style="color:var(--accent);">currency</code>, and <code style="color:var(--accent);">paid</code> fields match TC-CH-001 request.</div>
+          <div class="cell">Blocked — depends on TC-CH-001 which is blocked. Charge retrieval will be verified using charge ID from TC-PI-001
+          response if needed.
+          </div>
         </div>
       </article>
 

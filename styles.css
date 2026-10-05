@@ -371,6 +371,12 @@ body {
   border-color: #22c55e;
 }
 
+.status-badge.status-blocked {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid #ef4444;;
+}
+
 /* Inline pending text (not a badge) */
 .status-new         { color: #60a5fa; border-color: #3b82f6; }
 .status-pending-text { opacity: 0.3; }
@@ -456,6 +462,7 @@ body {
   padding: 1.2rem 1.5rem;
   display: block;
   border-bottom: 1.5px solid rgba(0, 0, 0, 0.4);
+  overflow-wrap: break-word;
 }
 
 .cell-left {
@@ -504,7 +511,8 @@ body {
   background: rgba(56, 189, 248, 0.08);
   padding: 1px 5px;
   border-radius: 3px;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
   vertical-align: baseline;
 }
 

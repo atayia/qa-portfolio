@@ -27,19 +27,143 @@
 
     <main>
 
-      <!-- Placeholder — no bugs filed yet -->
-      <article class="discovery-placeholder">
-        <div class="dashed-container">
-          <p>No defects or observations identified yet — test execution in progress.</p>
-          <p style="margin-top:0.5rem; font-size:0.85rem;">
-            Bug reports will be filed here as execution proceeds, following the same
-            format as the Amazon audit (type, severity, steps to reproduce, expected vs. actual,
-            linked requirement, linked test case, and audit trail).
-          </p>
+      <!-- STR-OBS-001 -->
+      <article class="report-section" id="STR-OBS-001">
+        <div class="project-card-header">
+          <h2 class="report-title">STR-OBS-001: Charges API Card Token EOL Policy Setting Has No Effect</h2>
+          <span class="status-badge status-todo">Observation</span>
+        </div>
+
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Type</span></div>
+            <div class="cell cell-right">Observation — API Deprecation / Policy Enforcement Issue</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Severity</span></div>
+            <div class="cell cell-right">High — blocks Charges API test execution entirely</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Priority</span></div>
+            <div class="cell cell-right">High</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Summary</span></div>
+            <div class="cell cell-right">
+              The Charges API rejects Card Token usage with an EOL error. Stripe's own documentation
+              states that enabling Card Token support via the API Policies settings page
+              (<code>dashboard.stripe.com/settings/developers/api-policies</code>) should allow
+              continued usage. However, enabling this policy and regenerating the API key
+              had no effect — the EOL error persisted across all attempts.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Steps to Reproduce</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Create a Stripe test account and obtain a test secret key.</li>
+                <li>Send <code>POST /v1/charges</code> with <code>source: tok_visa</code>, <code>amount: 1500</code>, <code>currency: usd</code>.</li>
+                <li>Observe HTTP 400 error: "Card Token usage on the Customers API and Charges API has reached end of life."</li>
+                <li>Navigate to Stripe Dashboard → Settings → Developers → API Policies.</li>
+                <li>Enable Card Token support and save.</li>
+                <li>Regenerate a new test secret key.</li>
+                <li>Re-send the same request with the new key.</li>
+                <li>Observe the same HTTP 400 EOL error persists.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Expected Result</span></div>
+            <div class="cell cell-right">
+              After enabling Card Token support in API Policies, the Charges API should accept
+              <code>source: tok_visa</code> and return HTTP 200 with a succeeded charge.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Actual Result</span></div>
+            <div class="cell cell-right">
+              HTTP 400 · <code>Card Token usage on the Customers API and Charges API has reached end of life.</code>
+              Error persists after enabling the policy setting and regenerating the API key.
+              Stripe's own suggested remediation had no effect.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Requirement</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-requirements.html#REQ-STR-03" class="back-link">REQ-STR-03</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Test Cases</span></div>
+            <div class="cell cell-right">
+              <a href="stripe-test-cases.html#TC-CH-001" class="back-link">TC-CH-001</a>,
+              <a href="stripe-test-cases.html#TC-CH-002" class="back-link">TC-CH-002</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">QA Recommendation</span></div>
+            <div class="cell cell-right">
+              Migrate Charges API test cases to use the PaymentIntents API (<code>POST /v1/payment_intents</code>)
+              with <code>pm_card_visa</code> as Stripe recommends. Charge creation via PaymentIntents
+              is already verified in TC-PI-001. The Charges API with Card Tokens is effectively
+              deprecated for new test accounts regardless of policy settings.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+            <div class="cell cell-right">
+              <div class="evidence-area">
+                <div class="evidence-box">
+                  <h4>Response — 400 Card Token EOL</h4>
+                  <img src="screenshots_stripe/tc-ch-001-obs.png"
+                    alt="TC-CH-001 400 error Card Token EOL"
+                    class="tc-screenshot zoomable"
+                    onclick="openModal(this.src)">
+                  <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="audit-trail-container">
+          <h3 class="label-text audit-trail-header">
+            <i class="fas fa-history"></i> Observation History &amp; Audit Trail
+          </h3>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action / Note</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Oct 5, 2026</td>
+                <td><span class="status-badge status-new">New</span></td>
+                <td>Identified during TC-CH-001 execution. Charges API rejected Card Token with EOL error.</td>
+                <td>Marie-Jo A.</td>
+              </tr>
+              <tr>
+                <td>Oct 5, 2026</td>
+                <td><span class="status-badge status-todo">Observation</span></td>
+                <td>API Policy setting enabled and key regenerated — error persisted. TC-CH-001 and TC-CH-002 marked Blocked. Charge creation verified via TC-PI-001 instead.</td>
+                <td>Marie-Jo A.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </article>
 
     </main>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="evidenceModal" class="modal" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg" alt="Evidence screenshot enlarged">
   </div>
 
   <a href="#" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></a>
