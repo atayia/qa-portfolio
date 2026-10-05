@@ -92,6 +92,25 @@
           <div class="cell cell-left">Notes</div>
           <div class="cell">Test card <code style="color:var(--accent);">4242 4242 4242 4242</code> — always succeeds. Save <code style="color:var(--accent);">id</code> to Postman env.</div>
         </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 200 OK, amount &amp; currency</h4>
+                <img src="screenshots_stripe/tc-pi-001-a.png" alt="TC-PI-001 response 200 OK" class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Response — status: "succeeded"</h4>
+                <img src="screenshots_stripe/tc-pi-001-b.png" alt="TC-PI-001 status succeeded" class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
 
       <div class="tc-separator"></div>
@@ -148,6 +167,19 @@
           <div class="cell cell-left">Notes</div>
           <div class="cell">Test card <code style="color:var(--accent);">4000 0000 0000 0002</code>.</div>
         </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 402, card_declined, generic_decline</h4>
+                <img src="screenshots_stripe/tc-pi-002-a.png" alt="TC-PI-002 response 402 card_declined generic_decline"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
 
       <div class="tc-separator"></div>
@@ -198,6 +230,19 @@
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
           <div class="cell">Test card <code style="color:var(--accent);">4000 0000 0000 9995</code>.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 402, insufficient_funds</h4>
+                <img src="screenshots_stripe/tc-pi-003-a.png" alt="TC-PI-003 response 402 insufficient_funds"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -264,6 +309,25 @@
             Captured in <a href="#TC-PI-005"class="back-link">TC-PI-005</a>.
           </div>
         </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 200 OK, requires_capture</h4>
+                <img src="screenshots_stripe/tc-pi-004-a.png" alt="TC-PI-004 response 200 OK requires_capture"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Response — status: "requires_capture"</h4>
+                <img src="screenshots_stripe/tc-pi-004-b.png" alt="TC-PI-004 status requires_capture"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
 
       <div class="tc-separator"></div>
@@ -323,6 +387,25 @@
           <div class="cell cell-left">Notes</div>
           <div class="cell">Completes the manual capture flow started in TC-PI-004. 
             Confirms funds are fully captured and no longer held.
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 200 OK, amount_received: 2000</h4>
+                <img src="screenshots_stripe/tc-pi-005-a.png" alt="TC-PI-005 response 200 OK amount_received 2000"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Response — status: "succeeded"</h4>
+                <img src="screenshots_stripe/tc-pi-005-b.png" alt="TC-PI-005 status succeeded" class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
           </div>
         </div>
       </article>
