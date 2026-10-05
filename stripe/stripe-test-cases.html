@@ -78,11 +78,15 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code> &bull;
+            <code style="color:var(--accent);">currency: "usd"</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
@@ -131,11 +135,14 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 402 &bull; <code style="color:var(--accent);">error.code: "card_declined"</code> &bull;
+            <code style="color:var(--accent);">error.decline_code: "generic_decline"</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
@@ -181,11 +188,12 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">HTTP 402 &bull; <code style="color:var(--accent);">error.decline_code: "insufficient_funds"</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
@@ -240,18 +248,85 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "requires_capture"</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code> &bull;
+            <code style="color:var(--accent);">capture_method: "manual"</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Common in e-commerce for pre-authorization flows (e.g. hotel holds, ride-sharing). Save <code style="color:var(--accent);">id</code> to Postman env — a follow-up capture request (<code style="color:var(--accent);">POST /v1/payment_intents/:id/capture</code>) can be added as TC-PI-005.</div>
+          <div class="cell">Common in e-commerce for pre-authorization flows (e.g. hotel holds, ride-sharing). 
+            Captured in <a href="#TC-PI-005"class="back-link">TC-PI-005</a>.
+          </div>
         </div>
       </article>
 
+      <div class="tc-separator"></div>
+
+
+      <!-- TC-PI-005 -->
+      <article class="report-section tc-block" id="TC-PI-005">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-005 &mdash; PaymentIntent Manual Capture
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents/:id/capture</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify a previously authorized PaymentIntent can be captured, 
+            transitioning status to "succeeded" and amount_received to 2000.
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-01" class="back-link">REQ-STR-01</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">TC-PI-004 executed; <code style="color:var(--accent);">{{payment_intent_id_manual}}</code> 
+            set in Postman environment.
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">No body required — PaymentIntent ID passed in the URL.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull; <code
+              style="color:var(--accent);">amount_received: 2000</code> &bull; <code
+              style="color:var(--accent);">amount_capturable: 0</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull; <code
+              style="color:var(--accent);">amount_received: 2000</code> &bull; <code
+              style="color:var(--accent);">amount_capturable: 0</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Completes the manual capture flow started in TC-PI-004. 
+            Confirms funds are fully captured and no longer held.
+          </div>
+        </div>
+      </article>
+      
       <div class="tc-separator"></div>
 
 
