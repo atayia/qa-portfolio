@@ -570,13 +570,13 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Preconditions</div>
-          <div class="cell">TC-CH-001 executed; <code style="color:var(--accent);">{{charge_id}}</code> set in Postman environment.</div>
+          <div class="cell">TC-PI-001 executed; <code style="color:var(--accent);">{{payment_intent_id}}</code> set in Postman environment.</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Request Body</div>
           <div class="cell">
             <pre class="code-block">{
-  "charge": "{{charge_id}}"
+  "payment_intent": "{{payment_intent_id}}"
 }</pre>
           </div>
         </div>
@@ -584,21 +584,47 @@
           <div class="cell cell-left">Expected Result</div>
           <div class="cell">
             HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
-            <code style="color:var(--accent);">amount: 1500</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code> &bull;
             charge <code style="color:var(--accent);">refunded: true</code>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code> &bull;
+            charge <code style="color:var(--accent);">refunded: true</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Verify the charge object afterwards via GET to confirm <code style="color:var(--accent);">refunded: true</code>.</div>
+          <div class="cell">Full refund confirmed via refund response <code style="color:var(--accent);">status: "succeeded"</code> and <code
+            style="color:var(--accent);">amount: 2000</code>. Charge object verification via <code
+            style="color:var(--accent);">GET /v1/charges/:id</code> skipped — Charges API blocked per <a
+            href="stripe-bug-reports.html#STR-OBS-001" class="back-link">STR-OBS-001</a>.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 200 OK, refund id &amp; amount</h4>
+                <img src="screenshots_stripe/tc-rf-001-a.png" alt="TC-RF-001 response 200 OK refund id amount 2000"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Response — status: "succeeded"</h4>
+                <img src="screenshots_stripe/tc-rf-001-b.png" alt="TC-RF-001 status succeeded" class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -630,7 +656,7 @@
           <div class="cell cell-left">Request Body</div>
           <div class="cell">
             <pre class="code-block">{
-  "charge": "{{charge_id}}",
+  "payment_intent": "{{payment_intent_id}}",
   "amount": 500
 }</pre>
           </div>
@@ -638,7 +664,7 @@
         <div class="tc-row-item">
           <div class="cell cell-left">Expected Result</div>
           <div class="cell">
-            HTTP 200 &bull; <code style="color:var(--accent);">amount: 500</code> &bull;
+            HTTP 200 &bull; <code style="color:var(--accent);">amount: 2000</code> &bull;
             charge <code style="color:var(--accent);">amount_refunded: 500</code> &bull;
             charge <code style="color:var(--accent);">refunded: false</code>
           </div>
