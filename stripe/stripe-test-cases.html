@@ -656,7 +656,7 @@
           <div class="cell cell-left">Request Body</div>
           <div class="cell">
             <pre class="code-block">{
-  "payment_intent": "{{payment_intent_id}}",
+  "payment_intent": "{{payment_intent_id_partial}}",
   "amount": 500
 }</pre>
           </div>
@@ -671,15 +671,44 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 200 &bull; <code style="color:var(--accent);">amount: 2000</code> &bull;
+            charge <code style="color:var(--accent);">amount_refunded: 500</code> &bull;
+            charge <code style="color:var(--accent);">refunded: false</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
           <div class="cell">Verify <code style="color:var(--accent);">refunded: false</code> is explicit in the charge object — not absent.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 200 OK, refund amount: 500</h4>
+                <img src="screenshots_stripe/tc-rf-002-a.png" alt="TC-RF-002 refund response 200 OK amount 500"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>GET Charge — amount: 2000, amount_refunded: 500</h4>
+                <img src="screenshots_stripe/tc-rf-002-b.png" alt="TC-RF-002 charge GET showing amount 2000 amount_refunded 500"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>GET Charge — refunded: false, status: succeeded</h4>
+                <img src="screenshots_stripe/tc-rf-002-c.png" alt="TC-RF-002 charge GET showing refunded false"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
