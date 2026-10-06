@@ -879,20 +879,40 @@
           <div class="cell cell-left">Expected Result</div>
           <div class="cell">
             HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
-            <code style="color:var(--accent);">error.param: "amount"</code>
+            <code style="color:var(--accent);">error.param: "amount"</code> &bull;
+            <code style="color:var(--accent);">error.code: "parameter_invalid_integer"</code>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "amount"</code> &bull; 
+            <code style="color:var(--accent);">error.code: "parameter_invalid_integer"</code>
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Stripe minimum charge is $0.50 USD (50 cents). Log the exact message for documentation.</div>
+          <div class="cell">Stripe minimum charge is $0.50 USD (50 cents). Actual error code returned was <code
+            style="color:var(--accent);">parameter_invalid_integer</code> rather than a generic validation error — Stripe
+          validates the integer value before checking the minimum threshold.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 Bad Request, invalid amount</h4>
+                <img src="screenshots_stripe/tc-er-001-a.png" alt="TC-ER-001 response 400 invalid amount parameter"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -935,15 +955,31 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "currency"</code> &bull; message: "Invalid currency: xyz"
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Verified</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
           <div class="cell">Also test with a real but unsupported currency (e.g. <code style="color:var(--accent);">bdt</code>) if account restrictions allow.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 Bad Request, invalid currency</h4>
+                <img src="screenshots_stripe/tc-er-002-a.png" alt="TC-ER-002 response 400 invalid currency xyz"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 

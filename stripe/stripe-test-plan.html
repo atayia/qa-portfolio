@@ -60,7 +60,7 @@
             Base URL: <code style="color:var(--accent);">https://api.stripe.com/v1</code><br>
             Auth: Bearer token — Stripe test secret key (<code style="color:var(--accent);">sk_test_…</code>)<br>
             API Version header: <code style="color:var(--accent);">Stripe-Version: 2024-06-20</code><br>
-            Tool: Postman (Desktop) with environment file for key and variable management
+            Tool: Postman (Web &amp; Desktop) with environment file for key and variable management
           </div>
         </div>
 
@@ -92,16 +92,32 @@
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Out of Scope</span></div>
           <div class="cell cell-right">
-            Webhooks, Stripe Connect, Subscriptions, Invoices, Radar (fraud rules),
-            and any live-mode transaction processing.
+            Webhooks, Stripe Connect, Subscriptions, Invoices, Radar (fraud rules), direct Charges API creation via Card Tokens (EOL
+            — see <a href="stripe-bug-reports.html#STR-OBS-001" class="back-link">STR-OBS-001</a>), and any live-mode transaction
+            processing.
           </div>
         </div>
 
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Exit Criteria</span></div>
           <div class="cell cell-right">
-            100% of test cases executed; all High-risk scenarios verified;
-            all identified contract deviations documented in Bug Reports.
+            ✓ 100% of in-scope test cases executed; all High-risk scenarios verified; all contract deviations documented in Bug
+            Reports. See Future Scope (v2) for planned extensions.
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Future Scope (v2)</span></div>
+          <div class="cell cell-right">
+            <ul class="standard-list">
+              <li><strong>Postman Scripts</strong> — automate assertions for all existing test cases using <code
+                  style="color:var(--accent);">pm.expect()</code></li>
+              <li><strong>Customer API</strong> — create, retrieve, and delete customer objects</li>
+              <li><strong>Payment Failure Scenarios</strong> — expired card, incorrect CVC, do not honor</li>
+              <li><strong>Webhook Testing</strong> — validate <code style="color:var(--accent);">payment_intent.succeeded</code>
+                and <code style="color:var(--accent);">charge.refunded</code> event delivery</li>
+              <li><strong>Charges API Migration</strong> — retest TC-CH-001/002 once Card Token EOL policy is resolved</li>
+            </ul>
           </div>
         </div>
 
@@ -112,7 +128,7 @@
               <li><a href="stripe-requirements.html" class="back-link">API Contract (RTM)</a></li>
               <li><a href="stripe-test-cases.html" class="back-link">Test Cases</a></li>
               <li><a href="stripe-bug-reports.html" class="back-link">Bug Reports</a></li>
-              <li>Postman Collection export (coming soon)</li>
+              <li>Postman Collection export (v2)</li>
             </ul>
           </div>
         </div>
