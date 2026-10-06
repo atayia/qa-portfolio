@@ -567,13 +567,15 @@ body {
 .evidence-area {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
+  width: 100%;
 }
 
 .evidence-box {
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 }
 
 .evidence-box h4 {

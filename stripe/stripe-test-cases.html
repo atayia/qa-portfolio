@@ -742,7 +742,8 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Preconditions</div>
-          <div class="cell">Remove the <code style="color:var(--accent);">Authorization</code> header from the request — do not leave it empty, remove it entirely.</div>
+          <div class="cell">In the request Authorization tab, change Auth type to <code style="color:var(--accent);">No Auth</code> — removes all
+          credentials from the request..</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Expected Result</div>
@@ -750,15 +751,28 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">HTTP 401 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Verified</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
           <div class="cell">Document the exact error message — Stripe's auth errors are part of the public contract.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 401 Unauthorized, no API key</h4>
+                <img src="screenshots_stripe/tc-au-001-a.png" alt="TC-AU-001 response 401 Unauthorized no API key provided"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -768,7 +782,7 @@
       <article class="report-section tc-block" id="TC-AU-002">
         <div class="tc-block-title">
           <span class="method-pill method-post">POST</span>
-          TC-AU-002 &mdash; Live Key Against Test Resource
+          TC-AU-002 &mdash; Invalid API Key Format
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Endpoint</div>
@@ -776,28 +790,51 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Objective</div>
-          <div class="cell">Verify the API rejects a live-mode key when used with test-mode card tokens and returns a descriptive error.</div>
+          <div class="cell">Verify the API rejects an invalid API key format with HTTP 401 and a descriptive error message.</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Linked Requirement</div>
           <div class="cell"><a href="stripe-requirements.html#REQ-STR-05" class="back-link">REQ-STR-05</a></div>
         </div>
         <div class="tc-row-item">
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell">Set Bearer token to an invalid live-format key (e.g. <code style="color:var(--accent);">sk_live_invalidkeytest</code>)
+          in the request Authorization tab.</div>
+        </div>
+        <div class="tc-row-item">
           <div class="cell cell-left">Expected Result</div>
-          <div class="cell">HTTP 400 or 402 &bull; error explicitly referencing test/live mode mismatch</div>
+          <div class="cell">HTTP 401 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull; message identifies
+          the invalid key</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
-          <div class="cell status-pending-text">— Pending execution —</div>
+          <div class="cell">HTTP 401 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull; message identifies
+          the invalid key</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Status</div>
-          <div class="cell"><span class="status-badge status-todo">To Do</span></div>
+          <div class="cell"><span class="status-badge verified">Verified</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Log the exact error message; Stripe should make the mode mismatch explicit in the error body.</div>
-        </div>
+          <div class="cell">True test/live mode mismatch testing requires an active live Stripe account which is out of scope for this audit.
+          Invalid key format rejection confirmed instead — demonstrates Stripe's auth layer correctly rejects malformed or
+          unrecognized keys regardless of mode prefix.
+          </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+            <div class="cell cell-right">
+              <div class="evidence-area">
+                <div class="evidence-box">
+                  <h4>Response — 401 Unauthorized, invalid API key</h4>
+                  <img src="screenshots_stripe/tc-au-002-a.png" alt="TC-AU-002 response 401 invalid API key format"
+                    class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                  <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+                </div>
+              </div>
+            </div>
+          </div>
       </article>
 
       <div class="tc-separator"></div>
