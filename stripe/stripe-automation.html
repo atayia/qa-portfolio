@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Automation | Stripe Project | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body id="top">
+
+  <div class="wrapper">
+    <header class="intro-container bug-header">
+      <a href="stripe.html" class="back-link">← STRIPE HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">API Automation</span></h1>
+      <p class="deliverable-subtitle">Postman Script Automation — Stripe Payments API v2</p>
+
+      <nav class="project-menu">
+        <a href="stripe-requirements.html" class="menu-link">API Contract</a>
+        <a href="stripe-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="stripe-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="stripe-automation.html" class="menu-link active">Automation</a>
+        <a href="stripe-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- OVERVIEW -->
+      <section class="hub-section">
+        <h2 class="hub-section-title">Automation Overview</h2>
+        <p>
+          Manual test cases from v1 were extended with Postman <code style="color:var(--accent);">pm.test()</code>
+          and <code style="color:var(--accent);">pm.expect()</code> assertions, automating response verification
+          for all in-scope test cases. Each request is structured as a standalone test case with its own
+          body, scripts, and saved example response.
+        </p>
+        <p style="font-size:0.85rem; color:var(--muted); margin-top:0.75rem;">
+          TC-RF-003 (Double Refund Attempt) was discovered during automation execution — not part of the
+          original manual scope. Demonstrates exploratory testing instinct during automation runs.
+        </p>
+
+        <div class="hub-metadata-grid" style="margin-top:1.5rem;">
+          <div>
+            <span class="metadata-label">Tool</span>
+            <span class="metadata-value">Postman Scripts (pm.test / pm.expect)</span>
+          </div>
+          <div>
+            <span class="metadata-label">Collection</span>
+            <span class="metadata-value">
+              <a href="stripe-collection.json" style="color:var(--accent);">
+                <i class="fas fa-file-export" style="margin-right:4px;"></i>Download v2.1
+              </a>
+            </span>
+          </div>
+          <div>
+            <span class="metadata-label">Total Automated</span>
+            <span class="metadata-value">12 test cases</span>
+          </div>
+          <div>
+            <span class="metadata-label">Passed</span>
+            <span class="metadata-value" style="color:#22c55e;">12</span>
+          </div>
+          <div>
+            <span class="metadata-label">Failed</span>
+            <span class="metadata-value" style="color:#ef4444;">0</span>
+          </div>
+          <div>
+            <span class="metadata-label">Blocked</span>
+            <span class="metadata-value" style="color:#ef4444;">2 (TC-CH-001, TC-CH-002)</span>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- PAYMENT INTENTS -->
+      <h2 class="section-heading" id="payment-intents">
+        <i class="fas fa-bolt"></i> Payment Intents
+      </h2>
+
+      <!-- TC-PI-001 -->
+      <article class="report-section tc-block" id="auto-TC-PI-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-001 &mdash; Create PaymentIntent — Happy Path
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-PI-001" class="back-link">TC-PI-001</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 200", function () {
+  pm.expect(pm.response.code).to.equal(200);
+});
+pm.test("Status is succeeded", function () {
+  const json = pm.response.json();
+  pm.expect(json.status).to.equal("succeeded");
+});
+pm.test("Amount is 2000", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount).to.equal(2000);
+});
+pm.test("Currency is usd", function () {
+  const json = pm.response.json();
+  pm.expect(json.currency).to.equal("usd");
+});
+// Auto-save payment_intent_id for chained requests
+const json = pm.response.json();
+pm.environment.set("payment_intent_id", json.id);</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-pi-001-auto.png" alt="TC-PI-001 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-PI-002 -->
+      <article class="report-section tc-block" id="auto-TC-PI-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-002 &mdash; Create PaymentIntent — Generic Decline
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-PI-002" class="back-link">TC-PI-002</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 402", function () {
+  pm.expect(pm.response.code).to.equal(402);
+});
+pm.test("Error code is card_declined", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.code).to.equal("card_declined");
+});
+pm.test("Decline code is generic_decline", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.decline_code).to.equal("generic_decline");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">3 / 3 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 3/3 Passed</h4>
+                <img src="screenshots_stripe/tc-pi-002-auto.png" alt="TC-PI-002 automation 3 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-PI-003 -->
+      <article class="report-section tc-block" id="auto-TC-PI-003">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-003 &mdash; Create PaymentIntent — Insufficient Funds
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-PI-003" class="back-link">TC-PI-003</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 402", function () {
+  pm.expect(pm.response.code).to.equal(402);
+});
+pm.test("Error code is card_declined", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.code).to.equal("card_declined");
+});
+pm.test("Decline code is insufficient_funds", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.decline_code).to.equal("insufficient_funds");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">3 / 3 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 3/3 Passed</h4>
+                <img src="screenshots_stripe/tc-pi-003-auto.png" alt="TC-PI-003 automation 3 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-PI-004 -->
+      <article class="report-section tc-block" id="auto-TC-PI-004">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-004 &mdash; PaymentIntent Authorization Only (Manual Capture)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-PI-004" class="back-link">TC-PI-004</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 200", function () {
+  pm.expect(pm.response.code).to.equal(200);
+});
+pm.test("Status is requires_capture", function () {
+  const json = pm.response.json();
+  pm.expect(json.status).to.equal("requires_capture");
+});
+pm.test("Capture method is manual", function () {
+  const json = pm.response.json();
+  pm.expect(json.capture_method).to.equal("manual");
+});
+pm.test("Amount is 2000", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount).to.equal(2000);
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-pi-004-auto.png" alt="TC-PI-004 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-PI-005 -->
+      <article class="report-section tc-block" id="auto-TC-PI-005">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-PI-005 &mdash; PaymentIntent Manual Capture
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-PI-005" class="back-link">TC-PI-005</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 200", function () {
+  pm.expect(pm.response.code).to.equal(200);
+});
+pm.test("Status is succeeded", function () {
+  const json = pm.response.json();
+  pm.expect(json.status).to.equal("succeeded");
+});
+pm.test("Amount received is 2000", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount_received).to.equal(2000);
+});
+pm.test("Amount capturable is 0", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount_capturable).to.equal(0);
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-pi-005-auto.png" alt="TC-PI-005 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- REFUNDS -->
+      <h2 class="section-heading" id="refunds">
+        <i class="fas fa-rotate"></i> Refunds
+      </h2>
+
+      <!-- TC-RF-001 -->
+      <article class="report-section tc-block" id="auto-TC-RF-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-RF-001 &mdash; Full Refund
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-RF-001" class="back-link">TC-RF-001</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 200", function () {
+  pm.expect(pm.response.code).to.equal(200);
+});
+pm.test("Status is succeeded", function () {
+  const json = pm.response.json();
+  pm.expect(json.status).to.equal("succeeded");
+});
+pm.test("Amount is 2000", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount).to.equal(2000);
+});
+pm.test("Object is refund", function () {
+  const json = pm.response.json();
+  pm.expect(json.object).to.equal("refund");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-rf-001-auto.png" alt="TC-RF-001 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-RF-002 -->
+      <article class="report-section tc-block" id="auto-TC-RF-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          <span class="method-pill method-get">GET</span>
+          TC-RF-002 &mdash; Partial Refund
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-RF-002" class="back-link">TC-RF-002</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">POST Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 200", function () {
+  pm.expect(pm.response.code).to.equal(200);
+});
+pm.test("Object is refund", function () {
+  const json = pm.response.json();
+  pm.expect(json.object).to.equal("refund");
+});
+pm.test("Refund amount is 500", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount).to.equal(500);
+});
+pm.test("Status is succeeded", function () {
+  const json = pm.response.json();
+  pm.expect(json.status).to.equal("succeeded");
+});
+// Save charge ID for GET verification
+const json = pm.response.json();
+pm.environment.set("charge_id_partial", json.charge);</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">GET Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Amount refunded is 500", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount_refunded).to.equal(500);
+});
+pm.test("Charge is not fully refunded", function () {
+  const json = pm.response.json();
+  pm.expect(json.refunded).to.equal(false);
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">6 / 6 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>POST — Refund Created</h4>
+                <img src="screenshots_stripe/tc-rf-002-auto.png" alt="TC-RF-002 POST automation passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>GET — Charge Verification</h4>
+                <img src="screenshots_stripe/tc-rf-002b-auto.png" alt="TC-RF-002 GET charge verification passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-RF-003 -->
+      <article class="report-section tc-block" id="auto-TC-RF-003">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-RF-003 &mdash; Double Refund Attempt
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-RF-003" class="back-link">TC-RF-003</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Discovery</div>
+          <div class="cell cell-right">Discovered during automation execution — not part of original manual scope. Demonstrates exploratory testing during automation runs.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 400", function () {
+  pm.expect(pm.response.code).to.equal(400);
+});
+pm.test("Error code is charge_already_refunded", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.code).to.equal("charge_already_refunded");
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">3 / 3 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 charge_already_refunded</h4>
+                <img src="screenshots_stripe/tc-rf-003-auto-a.png" alt="TC-RF-003 response body charge already refunded" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Test Results — 3/3 Passed</h4>
+                <img src="screenshots_stripe/tc-rf-003-auto-b.png" alt="TC-RF-003 automation 3 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- AUTH & SECURITY -->
+      <h2 class="section-heading" id="auth">
+        <i class="fas fa-shield-halved"></i> Auth &amp; Security
+      </h2>
+
+      <!-- TC-AU-001 -->
+      <article class="report-section tc-block" id="auto-TC-AU-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-AU-001 &mdash; Missing API Key
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-AU-001" class="back-link">TC-AU-001</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 401", function () {
+  pm.expect(pm.response.code).to.equal(401);
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});
+pm.test("Error message mentions API key", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.message).to.include("API key");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">3 / 3 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 3/3 Passed</h4>
+                <img src="screenshots_stripe/tc-au-001-auto.png" alt="TC-AU-001 automation 3 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-AU-002 -->
+      <article class="report-section tc-block" id="auto-TC-AU-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-AU-002 &mdash; Invalid API Key Format
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-AU-002" class="back-link">TC-AU-002</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 401", function () {
+  pm.expect(pm.response.code).to.equal(401);
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});
+pm.test("Error message mentions invalid API Key", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.message).to.include("invalid API Key");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">3 / 3 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 3/3 Passed</h4>
+                <img src="screenshots_stripe/tc-au-002-auto.png" alt="TC-AU-002 automation 3 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+
+      <!-- ERROR HANDLING -->
+      <h2 class="section-heading" id="errors">
+        <i class="fas fa-triangle-exclamation"></i> Error Handling
+      </h2>
+
+      <!-- TC-ER-001 -->
+      <article class="report-section tc-block" id="auto-TC-ER-001">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-001 &mdash; Invalid Amount (Zero)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-ER-001" class="back-link">TC-ER-001</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 400", function () {
+  pm.expect(pm.response.code).to.equal(400);
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});
+pm.test("Error param is amount", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.param).to.equal("amount");
+});
+pm.test("Error code is parameter_invalid_integer", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.code).to.equal("parameter_invalid_integer");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-er-001-auto.png" alt="TC-ER-001 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
+
+      <!-- TC-ER-002 -->
+      <article class="report-section tc-block" id="auto-TC-ER-002">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-002 &mdash; Invalid Currency Code
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-ER-002" class="back-link">TC-ER-002</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 400", function () {
+  pm.expect(pm.response.code).to.equal(400);
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});
+pm.test("Error param is currency", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.param).to.equal("currency");
+});
+pm.test("Error message mentions invalid currency", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.message).to.include("Invalid currency");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-er-002-auto.png" alt="TC-ER-002 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="evidenceModal" class="modal" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg" alt="Evidence screenshot enlarged">
+  </div>
+
+  <a href="#" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" aria-label="Jump to bottom"><i class="fas fa-chevron-down"></i></a>
+
+  <footer id="footer-bottom"></footer>
+
+  <script src="../scripts.js"></script>
+
+</body>
+</html>
