@@ -1,0 +1,3514 @@
+{
+  "info": {
+    "_postman_id": "cc60bfa8-837e-4e38-ab79-756176e1c0fa",
+    "name": "Core Payments - Implementation Guide",
+    "description": "This collection is meant to be used alongside the Stripe [Implementation Guides documentation](https://stripe.com/docs/implementation-guides/core-payments).\n\nBefore getting started, you will want to be sure to populate the {{secret_key}} collection variable with the one that can be found in your [Stripe Dashboard Test API Key Settings](https://dashboard.stripe.com/test/apikeys).\n\nYou will notice that in some cases this collection will save certain ID's as variables for you to make chaining requests easier.  For example, the example of refunding a charge will save the ID of the charge to use in the refund request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "38813940"
+  },
+  "item": [
+    {
+      "name": "Payments with Auto Capture",
+      "item": [
+        {
+          "name": "Create PaymentIntent Capture Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n\npm.test(\"Status is requires_capture\", function () {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"requires_capture\");\n});\n\npm.test(\"Capture method is manual\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.capture_method).to.equal(\"manual\");\n});\n\npm.test(\"Amount is 2000\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual"
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        },
+        {
+          "name": "TC-PI-001 — Create PaymentIntent Happy Path",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n\npm.test(\"Status is succeeded\", function () {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount is 2000\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});\n\npm.test(\"Currency is usd\", function () {\n    const json = pm.response.json();\n    pm.expect(json.currency).to.equal(\"usd\");\n});\n\nconst json = pm.response.json();\npm.environment.set(\"payment_intent_id\", json.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-PI-001",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 10:42:56 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "1982"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=QGvva2PBNPXShdwCCsU_ft_bvDgqzCP7dpPpE3OXAVuGz3MWfJRTEnFUr06zADQVkzXqfXUBiSoY1tgi; report-to csp"
+                },
+                {
+                  "key": "idempotency-key",
+                  "value": "fb5256aa-9b8a-4f24-a62e-3dc0af5cfd6f"
+                },
+                {
+                  "key": "original-request",
+                  "value": "req_nTfvJ5GGLNq8uz"
+                },
+                {
+                  "key": "report-to",
+                  "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=QGvva2PBNPXShdwCCsU_ft_bvDgqzCP7dpPpE3OXAVuGz3MWfJRTEnFUr06zADQVkzXqfXUBiSoY1tgi&t=1\"}],\"include_subdomains\":true}"
+                },
+                {
+                  "key": "reporting-endpoints",
+                  "value": "csp=\"https://q.stripe.com/csp-report-v2?q=QGvva2PBNPXShdwCCsU_ft_bvDgqzCP7dpPpE3OXAVuGz3MWfJRTEnFUr06zADQVkzXqfXUBiSoY1tgi&t=1\""
+                },
+                {
+                  "key": "request-id",
+                  "value": "req_nTfvJ5GGLNq8uz"
+                },
+                {
+                  "key": "stripe-should-retry",
+                  "value": "false"
+                },
+                {
+                  "key": "stripe-version",
+                  "value": "2026-08-26.dahlia"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-stripe-priority-routing-enabled",
+                  "value": "true"
+                },
+                {
+                  "key": "x-stripe-routing-context-priority-tier",
+                  "value": "api-testmode"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "3c3"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"pi_3UNsJIPJJILmdXdP2q7MhYLn\",\n  \"object\": \"payment_intent\",\n  \"allowed_payment_method_types\": null,\n  \"amount\": 2000,\n  \"amount_capturable\": 0,\n  \"amount_details\": {\n    \"tip\": {}\n  },\n  \"amount_received\": 2000,\n  \"application\": null,\n  \"application_fee_amount\": null,\n  \"automatic_payment_methods\": {\n    \"allow_redirects\": \"always\",\n    \"enabled\": true\n  },\n  \"canceled_at\": null,\n  \"cancellation_reason\": null,\n  \"capture_method\": \"automatic_async\",\n  \"client_secret\": \"pi_3UNsJIPJJILmdXdP2q7MhYLn_secret_Ui0SGNV1ixaUvqGStwBOBAcdQ\",\n  \"confirmation_method\": \"automatic\",\n  \"created\": 1791369776,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"customer_account\": null,\n  \"description\": \"Automatic Capture Payment Intent\",\n  \"excluded_payment_method_types\": null,\n  \"last_payment_error\": null,\n  \"latest_charge\": \"ch_3UNsJIPJJILmdXdP2MUPRzRA\",\n  \"livemode\": false,\n  \"managed_payments\": {\n    \"enabled\": false\n  },\n  \"metadata\": {},\n  \"next_action\": null,\n  \"on_behalf_of\": null,\n  \"payment_method\": \"pm_1UNsJIPJJILmdXdPqwFLbwvf\",\n  \"payment_method_configuration_details\": {\n    \"id\": \"pmc_1ULrccPJJILmdXdPxTpQZyA7\",\n    \"parent\": null\n  },\n  \"payment_method_options\": {\n    \"amazon_pay\": {\n      \"express_checkout_element_session_id\": null\n    },\n    \"card\": {\n      \"installments\": null,\n      \"mandate_options\": null,\n      \"network\": null,\n      \"request_three_d_secure\": \"automatic\"\n    },\n    \"cashapp\": {},\n    \"klarna\": {\n      \"preferred_locale\": null\n    },\n    \"link\": {\n      \"persistent_token\": null\n    }\n  },\n  \"payment_method_types\": [\n    \"card\",\n    \"klarna\",\n    \"link\",\n    \"cashapp\",\n    \"amazon_pay\"\n  ],\n  \"payment_record\": null,\n  \"processing\": null,\n  \"receipt_email\": null,\n  \"review\": null,\n  \"setup_future_usage\": null,\n  \"shared_payment_granted_token\": null,\n  \"shipping\": null,\n  \"source\": null,\n  \"statement_descriptor\": null,\n  \"statement_descriptor_suffix\": null,\n  \"status\": \"succeeded\",\n  \"transfer_data\": null,\n  \"transfer_group\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "TC-PI-002 — Create PaymentIntent Generic Decline",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 402\", function () {\n    pm.expect(pm.response.code).to.equal(402);\n});\n\npm.test(\"Error code is card_declined\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.code).to.equal(\"card_declined\");\n});\n\npm.test(\"Decline code is generic_decline\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.decline_code).to.equal(\"generic_decline\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa_chargeDeclined",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-PI-002",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa_chargeDeclined",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 10:42:07 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "6080"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=9cST8B7acWORBupK-pd2IVSe8HctYLdtly-09ykRbFXKeVl-xQWFB9NcaQ7uIyScHerOhAYMAWhbzMns; report-to csp"
+                },
+                {
+                  "key": "idempotency-key",
+                  "value": "be2d2d67-6c4e-47f5-a534-48fc6439bf60"
+                },
+                {
+                  "key": "original-request",
+                  "value": "req_7mVjRu8GSstuvm"
+                },
+                {
+                  "key": "report-to",
+                  "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=9cST8B7acWORBupK-pd2IVSe8HctYLdtly-09ykRbFXKeVl-xQWFB9NcaQ7uIyScHerOhAYMAWhbzMns&t=1\"}],\"include_subdomains\":true}"
+                },
+                {
+                  "key": "reporting-endpoints",
+                  "value": "csp=\"https://q.stripe.com/csp-report-v2?q=9cST8B7acWORBupK-pd2IVSe8HctYLdtly-09ykRbFXKeVl-xQWFB9NcaQ7uIyScHerOhAYMAWhbzMns&t=1\""
+                },
+                {
+                  "key": "request-id",
+                  "value": "req_7mVjRu8GSstuvm"
+                },
+                {
+                  "key": "stripe-should-retry",
+                  "value": "false"
+                },
+                {
+                  "key": "stripe-version",
+                  "value": "2026-08-26.dahlia"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-stripe-priority-routing-enabled",
+                  "value": "true"
+                },
+                {
+                  "key": "x-stripe-routing-context-priority-tier",
+                  "value": "api-testmode"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "3c3"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"advice_code\": \"try_again_later\",\n    \"charge\": \"ch_3UNsIUPJJILmdXdP0W1bp2WX\",\n    \"code\": \"card_declined\",\n    \"decline_code\": \"generic_decline\",\n    \"doc_url\": \"https://stripe.com/docs/error-codes/card-declined\",\n    \"message\": \"Your card was declined.\",\n    \"network_decline_code\": \"01\",\n    \"payment_intent\": {\n      \"id\": \"pi_3UNsIUPJJILmdXdP0IqoskXl\",\n      \"object\": \"payment_intent\",\n      \"allowed_payment_method_types\": null,\n      \"amount\": 2000,\n      \"amount_capturable\": 0,\n      \"amount_details\": {\n        \"tip\": {}\n      },\n      \"amount_received\": 0,\n      \"application\": null,\n      \"application_fee_amount\": null,\n      \"automatic_payment_methods\": {\n        \"allow_redirects\": \"always\",\n        \"enabled\": true\n      },\n      \"canceled_at\": null,\n      \"cancellation_reason\": null,\n      \"capture_method\": \"automatic_async\",\n      \"client_secret\": \"pi_3UNsIUPJJILmdXdP0IqoskXl_secret_xWgQnf1dHrXsQ5FRafBp5m0uW\",\n      \"confirmation_method\": \"automatic\",\n      \"created\": 1791369726,\n      \"currency\": \"usd\",\n      \"customer\": null,\n      \"customer_account\": null,\n      \"description\": \"Automatic Capture Payment Intent\",\n      \"excluded_payment_method_types\": null,\n      \"last_payment_error\": {\n        \"advice_code\": \"try_again_later\",\n        \"charge\": \"ch_3UNsIUPJJILmdXdP0W1bp2WX\",\n        \"code\": \"card_declined\",\n        \"decline_code\": \"generic_decline\",\n        \"doc_url\": \"https://stripe.com/docs/error-codes/card-declined\",\n        \"message\": \"Your card was declined.\",\n        \"network_decline_code\": \"01\",\n        \"payment_method\": {\n          \"id\": \"pm_1UNsIUPJJILmdXdPWMNPlJEc\",\n          \"object\": \"payment_method\",\n          \"allow_redisplay\": \"unspecified\",\n          \"billing_details\": {\n            \"address\": {\n              \"city\": null,\n              \"country\": null,\n              \"line1\": null,\n              \"line2\": null,\n              \"postal_code\": null,\n              \"state\": null\n            },\n            \"email\": null,\n            \"name\": null,\n            \"phone\": null,\n            \"tax_id\": null\n          },\n          \"card\": {\n            \"brand\": \"visa\",\n            \"checks\": {\n              \"address_line1_check\": null,\n              \"address_postal_code_check\": null,\n              \"cvc_check\": \"pass\"\n            },\n            \"country\": \"US\",\n            \"display_brand\": \"visa\",\n            \"exp_month\": 10,\n            \"exp_year\": 2027,\n            \"fingerprint\": \"p4rOyQhOG2cOBOqT\",\n            \"funding\": \"credit\",\n            \"generated_from\": null,\n            \"last4\": \"0002\",\n            \"networks\": {\n              \"available\": [\n                \"visa\"\n              ],\n              \"preferred\": null\n            },\n            \"regulated_status\": \"unregulated\",\n            \"three_d_secure_usage\": {\n              \"supported\": true\n            },\n            \"wallet\": null\n          },\n          \"created\": 1791369726,\n          \"customer\": null,\n          \"customer_account\": null,\n          \"livemode\": false,\n          \"metadata\": {},\n          \"shared_payment_granted_token\": null,\n          \"type\": \"card\"\n        },\n        \"payment_method_type\": \"card\",\n        \"type\": \"card_error\"\n      },\n      \"latest_charge\": \"ch_3UNsIUPJJILmdXdP0W1bp2WX\",\n      \"livemode\": false,\n      \"managed_payments\": {\n        \"enabled\": false\n      },\n      \"metadata\": {},\n      \"next_action\": null,\n      \"on_behalf_of\": null,\n      \"payment_method\": null,\n      \"payment_method_configuration_details\": {\n        \"id\": \"pmc_1ULrccPJJILmdXdPxTpQZyA7\",\n        \"parent\": null\n      },\n      \"payment_method_options\": {\n        \"amazon_pay\": {\n          \"express_checkout_element_session_id\": null\n        },\n        \"card\": {\n          \"installments\": null,\n          \"mandate_options\": null,\n          \"network\": null,\n          \"request_three_d_secure\": \"automatic\"\n        },\n        \"cashapp\": {},\n        \"klarna\": {\n          \"preferred_locale\": null\n        },\n        \"link\": {\n          \"persistent_token\": null\n        }\n      },\n      \"payment_method_types\": [\n        \"card\",\n        \"klarna\",\n        \"link\",\n        \"cashapp\",\n        \"amazon_pay\"\n      ],\n      \"payment_record\": null,\n      \"processing\": null,\n      \"receipt_email\": null,\n      \"review\": null,\n      \"setup_future_usage\": null,\n      \"shared_payment_granted_token\": null,\n      \"shipping\": null,\n      \"source\": null,\n      \"statement_descriptor\": null,\n      \"statement_descriptor_suffix\": null,\n      \"status\": \"requires_payment_method\",\n      \"transfer_data\": null,\n      \"transfer_group\": null\n    },\n    \"payment_method\": {\n      \"id\": \"pm_1UNsIUPJJILmdXdPWMNPlJEc\",\n      \"object\": \"payment_method\",\n      \"allow_redisplay\": \"unspecified\",\n      \"billing_details\": {\n        \"address\": {\n          \"city\": null,\n          \"country\": null,\n          \"line1\": null,\n          \"line2\": null,\n          \"postal_code\": null,\n          \"state\": null\n        },\n        \"email\": null,\n        \"name\": null,\n        \"phone\": null,\n        \"tax_id\": null\n      },\n      \"card\": {\n        \"brand\": \"visa\",\n        \"checks\": {\n          \"address_line1_check\": null,\n          \"address_postal_code_check\": null,\n          \"cvc_check\": \"pass\"\n        },\n        \"country\": \"US\",\n        \"display_brand\": \"visa\",\n        \"exp_month\": 10,\n        \"exp_year\": 2027,\n        \"fingerprint\": \"p4rOyQhOG2cOBOqT\",\n        \"funding\": \"credit\",\n        \"generated_from\": null,\n        \"last4\": \"0002\",\n        \"networks\": {\n          \"available\": [\n            \"visa\"\n          ],\n          \"preferred\": null\n        },\n        \"regulated_status\": \"unregulated\",\n        \"three_d_secure_usage\": {\n          \"supported\": true\n        },\n        \"wallet\": null\n      },\n      \"created\": 1791369726,\n      \"customer\": null,\n      \"customer_account\": null,\n      \"livemode\": false,\n      \"metadata\": {},\n      \"shared_payment_granted_token\": null,\n      \"type\": \"card\"\n    },\n    \"request_log_url\": \"https://dashboard.stripe.com/acct_1ULrc6PJJILmdXdP/test/workbench/logs?object=req_7mVjRu8GSstuvm\",\n    \"type\": \"card_error\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "TC-PI-003 — Create PaymentIntent Insufficient Funds",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 402\", function () {\n    pm.expect(pm.response.code).to.equal(402);\n});\n\npm.test(\"Error code is card_declined\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.code).to.equal(\"card_declined\");\n});\n\npm.test(\"Decline code is insufficient_funds\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.decline_code).to.equal(\"insufficient_funds\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa_chargeDeclinedInsufficientFunds",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-PI-003",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa_chargeDeclinedInsufficientFunds",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 10:38:51 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "6292"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=ESnquE4-fuyvNTxzVqEFlCvnLEOhnsbi5QwdsJpGRC0PYkoZd_mDHsHcETC9HXk79WyTKcwyCDZoNzDD; report-to csp"
+                },
+                {
+                  "key": "idempotency-key",
+                  "value": "5fdfa4c4-88c1-45d5-a1b2-b9441a5353a5"
+                },
+                {
+                  "key": "original-request",
+                  "value": "req_M1iDH6CewHHStf"
+                },
+                {
+                  "key": "report-to",
+                  "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=ESnquE4-fuyvNTxzVqEFlCvnLEOhnsbi5QwdsJpGRC0PYkoZd_mDHsHcETC9HXk79WyTKcwyCDZoNzDD&t=1\"}],\"include_subdomains\":true}"
+                },
+                {
+                  "key": "reporting-endpoints",
+                  "value": "csp=\"https://q.stripe.com/csp-report-v2?q=ESnquE4-fuyvNTxzVqEFlCvnLEOhnsbi5QwdsJpGRC0PYkoZd_mDHsHcETC9HXk79WyTKcwyCDZoNzDD&t=1\""
+                },
+                {
+                  "key": "request-id",
+                  "value": "req_M1iDH6CewHHStf"
+                },
+                {
+                  "key": "stripe-should-retry",
+                  "value": "false"
+                },
+                {
+                  "key": "stripe-version",
+                  "value": "2026-08-26.dahlia"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-stripe-priority-routing-enabled",
+                  "value": "true"
+                },
+                {
+                  "key": "x-stripe-routing-context-priority-tier",
+                  "value": "api-testmode"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "3c3"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"advice_code\": \"try_again_later\",\n    \"charge\": \"ch_3UNsFKPJJILmdXdP2Of1Ycbo\",\n    \"code\": \"card_declined\",\n    \"decline_code\": \"insufficient_funds\",\n    \"doc_url\": \"https://stripe.com/docs/error-codes/card-declined\",\n    \"message\": \"Your card has insufficient funds. Use a different payment method to complete this purchase.\",\n    \"network_advice_code\": \"02\",\n    \"network_decline_code\": \"51\",\n    \"payment_intent\": {\n      \"id\": \"pi_3UNsFKPJJILmdXdP24vnWzFT\",\n      \"object\": \"payment_intent\",\n      \"allowed_payment_method_types\": null,\n      \"amount\": 2000,\n      \"amount_capturable\": 0,\n      \"amount_details\": {\n        \"tip\": {}\n      },\n      \"amount_received\": 0,\n      \"application\": null,\n      \"application_fee_amount\": null,\n      \"automatic_payment_methods\": {\n        \"allow_redirects\": \"always\",\n        \"enabled\": true\n      },\n      \"canceled_at\": null,\n      \"cancellation_reason\": null,\n      \"capture_method\": \"automatic_async\",\n      \"client_secret\": \"pi_3UNsFKPJJILmdXdP24vnWzFT_secret_PNRLJj7lOjESJnDFfxb7Y70lJ\",\n      \"confirmation_method\": \"automatic\",\n      \"created\": 1791369530,\n      \"currency\": \"usd\",\n      \"customer\": null,\n      \"customer_account\": null,\n      \"description\": \"Automatic Capture Payment Intent\",\n      \"excluded_payment_method_types\": null,\n      \"last_payment_error\": {\n        \"advice_code\": \"try_again_later\",\n        \"charge\": \"ch_3UNsFKPJJILmdXdP2Of1Ycbo\",\n        \"code\": \"card_declined\",\n        \"decline_code\": \"insufficient_funds\",\n        \"doc_url\": \"https://stripe.com/docs/error-codes/card-declined\",\n        \"message\": \"Your card has insufficient funds. Use a different payment method to complete this purchase.\",\n        \"network_advice_code\": \"02\",\n        \"network_decline_code\": \"51\",\n        \"payment_method\": {\n          \"id\": \"pm_1UNsFKPJJILmdXdPB8pVdjvz\",\n          \"object\": \"payment_method\",\n          \"allow_redisplay\": \"unspecified\",\n          \"billing_details\": {\n            \"address\": {\n              \"city\": null,\n              \"country\": null,\n              \"line1\": null,\n              \"line2\": null,\n              \"postal_code\": null,\n              \"state\": null\n            },\n            \"email\": null,\n            \"name\": null,\n            \"phone\": null,\n            \"tax_id\": null\n          },\n          \"card\": {\n            \"brand\": \"visa\",\n            \"checks\": {\n              \"address_line1_check\": null,\n              \"address_postal_code_check\": null,\n              \"cvc_check\": \"pass\"\n            },\n            \"country\": \"US\",\n            \"display_brand\": \"visa\",\n            \"exp_month\": 10,\n            \"exp_year\": 2027,\n            \"fingerprint\": \"ipud0EfkQG4tXt5g\",\n            \"funding\": \"credit\",\n            \"generated_from\": null,\n            \"last4\": \"9995\",\n            \"networks\": {\n              \"available\": [\n                \"visa\"\n              ],\n              \"preferred\": null\n            },\n            \"regulated_status\": \"unregulated\",\n            \"three_d_secure_usage\": {\n              \"supported\": true\n            },\n            \"wallet\": null\n          },\n          \"created\": 1791369530,\n          \"customer\": null,\n          \"customer_account\": null,\n          \"livemode\": false,\n          \"metadata\": {},\n          \"shared_payment_granted_token\": null,\n          \"type\": \"card\"\n        },\n        \"payment_method_type\": \"card\",\n        \"type\": \"card_error\"\n      },\n      \"latest_charge\": \"ch_3UNsFKPJJILmdXdP2Of1Ycbo\",\n      \"livemode\": false,\n      \"managed_payments\": {\n        \"enabled\": false\n      },\n      \"metadata\": {},\n      \"next_action\": null,\n      \"on_behalf_of\": null,\n      \"payment_method\": null,\n      \"payment_method_configuration_details\": {\n        \"id\": \"pmc_1ULrccPJJILmdXdPxTpQZyA7\",\n        \"parent\": null\n      },\n      \"payment_method_options\": {\n        \"amazon_pay\": {\n          \"express_checkout_element_session_id\": null\n        },\n        \"card\": {\n          \"installments\": null,\n          \"mandate_options\": null,\n          \"network\": null,\n          \"request_three_d_secure\": \"automatic\"\n        },\n        \"cashapp\": {},\n        \"klarna\": {\n          \"preferred_locale\": null\n        },\n        \"link\": {\n          \"persistent_token\": null\n        }\n      },\n      \"payment_method_types\": [\n        \"card\",\n        \"klarna\",\n        \"link\",\n        \"cashapp\",\n        \"amazon_pay\"\n      ],\n      \"payment_record\": null,\n      \"processing\": null,\n      \"receipt_email\": null,\n      \"review\": null,\n      \"setup_future_usage\": null,\n      \"shared_payment_granted_token\": null,\n      \"shipping\": null,\n      \"source\": null,\n      \"statement_descriptor\": null,\n      \"statement_descriptor_suffix\": null,\n      \"status\": \"requires_payment_method\",\n      \"transfer_data\": null,\n      \"transfer_group\": null\n    },\n    \"payment_method\": {\n      \"id\": \"pm_1UNsFKPJJILmdXdPB8pVdjvz\",\n      \"object\": \"payment_method\",\n      \"allow_redisplay\": \"unspecified\",\n      \"billing_details\": {\n        \"address\": {\n          \"city\": null,\n          \"country\": null,\n          \"line1\": null,\n          \"line2\": null,\n          \"postal_code\": null,\n          \"state\": null\n        },\n        \"email\": null,\n        \"name\": null,\n        \"phone\": null,\n        \"tax_id\": null\n      },\n      \"card\": {\n        \"brand\": \"visa\",\n        \"checks\": {\n          \"address_line1_check\": null,\n          \"address_postal_code_check\": null,\n          \"cvc_check\": \"pass\"\n        },\n        \"country\": \"US\",\n        \"display_brand\": \"visa\",\n        \"exp_month\": 10,\n        \"exp_year\": 2027,\n        \"fingerprint\": \"ipud0EfkQG4tXt5g\",\n        \"funding\": \"credit\",\n        \"generated_from\": null,\n        \"last4\": \"9995\",\n        \"networks\": {\n          \"available\": [\n            \"visa\"\n          ],\n          \"preferred\": null\n        },\n        \"regulated_status\": \"unregulated\",\n        \"three_d_secure_usage\": {\n          \"supported\": true\n        },\n        \"wallet\": null\n      },\n      \"created\": 1791369530,\n      \"customer\": null,\n      \"customer_account\": null,\n      \"livemode\": false,\n      \"metadata\": {},\n      \"shared_payment_granted_token\": null,\n      \"type\": \"card\"\n    },\n    \"request_log_url\": \"https://dashboard.stripe.com/acct_1ULrc6PJJILmdXdP/test/workbench/logs?object=req_M1iDH6CewHHStf\",\n    \"type\": \"card_error\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "TC-PI-004 — PaymentIntent Manual Capture",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n\npm.test(\"Status is requires_capture\", function () {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"requires_capture\");\n});\n\npm.test(\"Capture method is manual\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.capture_method).to.equal(\"manual\");\n});\n\npm.test(\"Amount is 2000\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual"
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-PI-004",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 10:23:34 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "1980"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=7sudZzK_5UlxgWWgd9WC52HTntQOyVxFLJqaePiz03jF--WpnBgOY1__RD7KvZMFJnkng4J0UwqvDhK1; report-to csp"
+                },
+                {
+                  "key": "idempotency-key",
+                  "value": "87543c73-c2f8-47cc-9894-273e31d14825"
+                },
+                {
+                  "key": "original-request",
+                  "value": "req_V3Yie1iZtWXi9l"
+                },
+                {
+                  "key": "report-to",
+                  "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=7sudZzK_5UlxgWWgd9WC52HTntQOyVxFLJqaePiz03jF--WpnBgOY1__RD7KvZMFJnkng4J0UwqvDhK1&t=1\"}],\"include_subdomains\":true}"
+                },
+                {
+                  "key": "reporting-endpoints",
+                  "value": "csp=\"https://q.stripe.com/csp-report-v2?q=7sudZzK_5UlxgWWgd9WC52HTntQOyVxFLJqaePiz03jF--WpnBgOY1__RD7KvZMFJnkng4J0UwqvDhK1&t=1\""
+                },
+                {
+                  "key": "request-id",
+                  "value": "req_V3Yie1iZtWXi9l"
+                },
+                {
+                  "key": "stripe-should-retry",
+                  "value": "false"
+                },
+                {
+                  "key": "stripe-version",
+                  "value": "2026-08-26.dahlia"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-stripe-priority-routing-enabled",
+                  "value": "true"
+                },
+                {
+                  "key": "x-stripe-routing-context-priority-tier",
+                  "value": "api-testmode"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "3c3"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"pi_3UNs0XPJJILmdXdP25HKUwR8\",\n  \"object\": \"payment_intent\",\n  \"allowed_payment_method_types\": null,\n  \"amount\": 2000,\n  \"amount_capturable\": 2000,\n  \"amount_details\": {\n    \"tip\": {}\n  },\n  \"amount_received\": 0,\n  \"application\": null,\n  \"application_fee_amount\": null,\n  \"automatic_payment_methods\": {\n    \"allow_redirects\": \"always\",\n    \"enabled\": true\n  },\n  \"canceled_at\": null,\n  \"cancellation_reason\": null,\n  \"capture_method\": \"manual\",\n  \"client_secret\": \"pi_3UNs0XPJJILmdXdP25HKUwR8_secret_28E5aHfPDMYmqL45YCLcjemkz\",\n  \"confirmation_method\": \"automatic\",\n  \"created\": 1791368613,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"customer_account\": null,\n  \"description\": \"Automatic Capture Payment Intent\",\n  \"excluded_payment_method_types\": null,\n  \"last_payment_error\": null,\n  \"latest_charge\": \"ch_3UNs0XPJJILmdXdP2qKAryuF\",\n  \"livemode\": false,\n  \"managed_payments\": {\n    \"enabled\": false\n  },\n  \"metadata\": {},\n  \"next_action\": null,\n  \"on_behalf_of\": null,\n  \"payment_method\": \"pm_1UNs0XPJJILmdXdP1bJJUdIu\",\n  \"payment_method_configuration_details\": {\n    \"id\": \"pmc_1ULrccPJJILmdXdPxTpQZyA7\",\n    \"parent\": null\n  },\n  \"payment_method_options\": {\n    \"amazon_pay\": {\n      \"express_checkout_element_session_id\": null\n    },\n    \"card\": {\n      \"installments\": null,\n      \"mandate_options\": null,\n      \"network\": null,\n      \"request_three_d_secure\": \"automatic\"\n    },\n    \"cashapp\": {},\n    \"klarna\": {\n      \"preferred_locale\": null\n    },\n    \"link\": {\n      \"persistent_token\": null\n    }\n  },\n  \"payment_method_types\": [\n    \"card\",\n    \"klarna\",\n    \"link\",\n    \"cashapp\",\n    \"amazon_pay\"\n  ],\n  \"payment_record\": null,\n  \"processing\": null,\n  \"receipt_email\": null,\n  \"review\": null,\n  \"setup_future_usage\": null,\n  \"shared_payment_granted_token\": null,\n  \"shipping\": null,\n  \"source\": null,\n  \"statement_descriptor\": null,\n  \"statement_descriptor_suffix\": null,\n  \"status\": \"requires_capture\",\n  \"transfer_data\": null,\n  \"transfer_group\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "TC-PI-005 — Capture PaymentIntent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n\npm.test(\"Status is succeeded\", function () {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount received is 2000\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount_received).to.equal(2000);\n});\n\npm.test(\"Amount capturable is 0\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount_capturable).to.equal(0);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000",
+                  "disabled": true
+                },
+                {
+                  "key": "currency",
+                  "value": "usd",
+                  "disabled": true
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing",
+                  "disabled": true
+                },
+                {
+                  "key": "confirm",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return",
+                  "disabled": true
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent",
+                  "disabled": true
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents/{{payment_intent_id_manual}}/capture",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents",
+                "{{payment_intent_id_manual}}",
+                "capture"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-PI-005",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000",
+                      "disabled": true
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd",
+                      "disabled": true
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing",
+                      "disabled": true
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true",
+                      "disabled": true
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return",
+                      "disabled": true
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent",
+                      "disabled": true
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents/{{payment_intent_id_manual}}/capture",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents",
+                    "{{payment_intent_id_manual}}",
+                    "capture"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 10:35:32 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "1973"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=5xzorMFU2XugVFPp5KQuY7XU_hrMV8S8TjOHrmOxglrAdvGwSXGXqUTFvvbmObO7XKaEgDuV-xsHfBtz; report-to csp"
+                },
+                {
+                  "key": "idempotency-key",
+                  "value": "ee72c60c-2d2b-4b50-8f61-71cce081bdcb"
+                },
+                {
+                  "key": "original-request",
+                  "value": "req_FWPCxuwSbv6q2I"
+                },
+                {
+                  "key": "report-to",
+                  "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=5xzorMFU2XugVFPp5KQuY7XU_hrMV8S8TjOHrmOxglrAdvGwSXGXqUTFvvbmObO7XKaEgDuV-xsHfBtz&t=1\"}],\"include_subdomains\":true}"
+                },
+                {
+                  "key": "reporting-endpoints",
+                  "value": "csp=\"https://q.stripe.com/csp-report-v2?q=5xzorMFU2XugVFPp5KQuY7XU_hrMV8S8TjOHrmOxglrAdvGwSXGXqUTFvvbmObO7XKaEgDuV-xsHfBtz&t=1\""
+                },
+                {
+                  "key": "request-id",
+                  "value": "req_FWPCxuwSbv6q2I"
+                },
+                {
+                  "key": "stripe-should-retry",
+                  "value": "false"
+                },
+                {
+                  "key": "stripe-version",
+                  "value": "2026-08-26.dahlia"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-stripe-priority-routing-enabled",
+                  "value": "true"
+                },
+                {
+                  "key": "x-stripe-routing-context-priority-tier",
+                  "value": "api-testmode"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "3c3"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"pi_3UNsBOPJJILmdXdP0sUptcvI\",\n  \"object\": \"payment_intent\",\n  \"allowed_payment_method_types\": null,\n  \"amount\": 2000,\n  \"amount_capturable\": 0,\n  \"amount_details\": {\n    \"tip\": {}\n  },\n  \"amount_received\": 2000,\n  \"application\": null,\n  \"application_fee_amount\": null,\n  \"automatic_payment_methods\": {\n    \"allow_redirects\": \"always\",\n    \"enabled\": true\n  },\n  \"canceled_at\": null,\n  \"cancellation_reason\": null,\n  \"capture_method\": \"manual\",\n  \"client_secret\": \"pi_3UNsBOPJJILmdXdP0sUptcvI_secret_6KP799kjjlVua9FhdAOfdaAMy\",\n  \"confirmation_method\": \"automatic\",\n  \"created\": 1791369286,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"customer_account\": null,\n  \"description\": \"Automatic Capture Payment Intent\",\n  \"excluded_payment_method_types\": null,\n  \"last_payment_error\": null,\n  \"latest_charge\": \"ch_3UNsBOPJJILmdXdP0ooywCNM\",\n  \"livemode\": false,\n  \"managed_payments\": {\n    \"enabled\": false\n  },\n  \"metadata\": {},\n  \"next_action\": null,\n  \"on_behalf_of\": null,\n  \"payment_method\": \"pm_1UNsBOPJJILmdXdPklFpOC3q\",\n  \"payment_method_configuration_details\": {\n    \"id\": \"pmc_1ULrccPJJILmdXdPxTpQZyA7\",\n    \"parent\": null\n  },\n  \"payment_method_options\": {\n    \"amazon_pay\": {\n      \"express_checkout_element_session_id\": null\n    },\n    \"card\": {\n      \"installments\": null,\n      \"mandate_options\": null,\n      \"network\": null,\n      \"request_three_d_secure\": \"automatic\"\n    },\n    \"cashapp\": {},\n    \"klarna\": {\n      \"preferred_locale\": null\n    },\n    \"link\": {\n      \"persistent_token\": null\n    }\n  },\n  \"payment_method_types\": [\n    \"card\",\n    \"klarna\",\n    \"link\",\n    \"cashapp\",\n    \"amazon_pay\"\n  ],\n  \"payment_record\": null,\n  \"processing\": null,\n  \"receipt_email\": null,\n  \"review\": null,\n  \"setup_future_usage\": null,\n  \"shared_payment_granted_token\": null,\n  \"shipping\": null,\n  \"source\": null,\n  \"statement_descriptor\": null,\n  \"statement_descriptor_suffix\": null,\n  \"status\": \"succeeded\",\n  \"transfer_data\": null,\n  \"transfer_group\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create a PaymentIntent Fake live",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual"
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-AU-001",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Tue, 06 Oct 2026 13:01:11 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "342"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "www-authenticate",
+                  "value": "Basic realm=\"Stripe\""
+                },
+                {
+                  "key": "x-robots-tag",
+                  "value": "none"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "383"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"message\": \"You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/.\",\n    \"type\": \"invalid_request_error\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create a Charge",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "1500"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "source",
+                  "value": "tok_visa"
+                },
+                {
+                  "key": "description",
+                  "value": "TC-CH-001 test charge"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/charges",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "charges"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nCharges: https://stripe.com/docs/api/charges/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        },
+        {
+          "name": "Manual PaymentIntent Capture",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents/{{payment_intent_id_manual}}/capture",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents",
+                "{{payment_intent_id_manual}}",
+                "capture"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "This folder contains examples of how to create simple charges that are automatically captured.  \n\nThe documentation that corresponds with it can be found [here](https://stripe.com/docs/implementation-guides/core-payments/server-side-integration)."
+    },
+    {
+      "name": "Refunds",
+      "item": [
+        {
+          "name": "v1/payment_intent Refunds",
+          "item": [
+            {
+              "name": "Create a PaymentIntent (To be Refunded)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = JSON.parse(responseBody);\n//save the network transaction id to a cVar so it can be used in the next step. \npm.collectionVariables.set(\"refund_payment_intent_id\", jsonData.id);\nconsole.log(\"Payment Intent Id\" + jsonData.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    },
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "automatic"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa"
+                    },
+                    {
+                      "key": "description",
+                      "value": "PaymentIntent to be Refunded"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                },
+                "description": "In this step, we are creating a PaymentIntent which we will then turn around and refund in the next step. \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds. \n\n#### Note\nThe ID of the PaymentIntent will be saved as a collection variable to be used in the refund step."
+              },
+              "response": []
+            },
+            {
+              "name": "pre TC-RF-002 -partial PI creation",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const json = pm.response.json();\npm.environment.set(\"payment_intent_id_partial\", json.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    },
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "automatic"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa"
+                    },
+                    {
+                      "key": "description",
+                      "value": "PaymentIntent to be Refunded"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                },
+                "description": "In this step, we are creating a PaymentIntent which we will then turn around and refund in the next step. \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds. \n\n#### Note\nThe ID of the PaymentIntent will be saved as a collection variable to be used in the refund step."
+              },
+              "response": []
+            },
+            {
+              "name": "Refund a Payment Intent",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function() {\n    pm.expect(pm.response.code).to.equal(200);\n})\n\npm.test(\"Status is succeeded\", function() {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount is 2000\", function() {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});\n\npm.test(\"Object is refund\", function() {\n    const json = pm.response.json();\n    pm.expect(json.object).to.equal(\"refund\");\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "payment_intent",
+                      "value": "{{payment_intent_id}}"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "500",
+                      "description": "If you would like to refund a portion of the charge, use this param",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/refunds",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "refunds"
+                  ]
+                },
+                "description": "In this step we use the ID of the PaymentIntent in order to process a refund.  \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds."
+              },
+              "response": []
+            },
+            {
+              "name": "TC-RF-003 — Double Refund Attempt",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error code is charge_already_refunded\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.code).to.equal(\"charge_already_refunded\");\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "payment_intent",
+                      "value": "{{payment_intent_id}}"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "500",
+                      "description": "If you would like to refund a portion of the charge, use this param",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/refunds",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "refunds"
+                  ]
+                },
+                "description": "In this step we use the ID of the PaymentIntent in order to process a refund.  \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds."
+              },
+              "response": []
+            },
+            {
+              "name": "TC-RF-002 — Partial Refund",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function() {\n    pm.expect(pm.response.code).to.equal(200);\n})\n\npm.test(\"Status is succeeded\", function() {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount is 500\", function() {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(500);\n});\n\npm.test(\"Object is refund\", function() {\n    const json = pm.response.json();\n    pm.expect(json.object).to.equal(\"refund\");\n});\n\nconst json = pm.response.json();\npm.environment.set(\"charge_id_partial\", json.charge);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "payment_intent",
+                      "value": "{{payment_intent_id_partial}}"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "500",
+                      "description": "If you would like to refund a portion of the charge, use this param"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/refunds",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "refunds"
+                  ]
+                },
+                "description": "In this step we use the ID of the PaymentIntent in order to process a refund.  \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds."
+              },
+              "response": []
+            },
+            {
+              "name": "TC-RF-001 — Full Refund",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function() {\n    pm.expect(pm.response.code).to.equal(200);\n})\n\npm.test(\"Status is succeeded\", function() {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount is 2000\", function() {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});\n\npm.test(\"Object is refund\", function() {\n    const json = pm.response.json();\n    pm.expect(json.object).to.equal(\"refund\");\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "payment_intent",
+                      "value": "{{payment_intent_id}}"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "500",
+                      "description": "If you would like to refund a portion of the charge, use this param",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/refunds",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "refunds"
+                  ]
+                },
+                "description": "In this step we use the ID of the PaymentIntent in order to process a refund.  \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds."
+              },
+              "response": [
+                {
+                  "name": "TC-RF-001",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "payment_intent",
+                          "value": "{{payment_intent_id}}"
+                        },
+                        {
+                          "key": "amount",
+                          "value": "500",
+                          "description": "If you would like to refund a portion of the charge, use this param",
+                          "disabled": true
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "https://api.stripe.com/v1/refunds",
+                      "protocol": "https",
+                      "host": [
+                        "api",
+                        "stripe",
+                        "com"
+                      ],
+                      "path": [
+                        "v1",
+                        "refunds"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "server",
+                      "value": "nginx"
+                    },
+                    {
+                      "key": "date",
+                      "value": "Wed, 07 Oct 2026 10:52:24 GMT"
+                    },
+                    {
+                      "key": "content-type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "content-length",
+                      "value": "714"
+                    },
+                    {
+                      "key": "connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "access-control-allow-credentials",
+                      "value": "true"
+                    },
+                    {
+                      "key": "access-control-allow-methods",
+                      "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                    },
+                    {
+                      "key": "access-control-allow-origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "access-control-expose-headers",
+                      "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                    },
+                    {
+                      "key": "access-control-max-age",
+                      "value": "300"
+                    },
+                    {
+                      "key": "cache-control",
+                      "value": "no-cache, no-store"
+                    },
+                    {
+                      "key": "content-security-policy",
+                      "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=p4Ay1QI8R30pCBghaLjpAX8xnGhEUUjuZOZwMasMXEN5CdSzRy9lTwpkP37KOjt3D9E-VFxR7045si66; report-to csp"
+                    },
+                    {
+                      "key": "idempotency-key",
+                      "value": "14815d64-c49e-4da5-9220-b559695ad233"
+                    },
+                    {
+                      "key": "original-request",
+                      "value": "req_aAtBZKAuwnMCJT"
+                    },
+                    {
+                      "key": "report-to",
+                      "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=p4Ay1QI8R30pCBghaLjpAX8xnGhEUUjuZOZwMasMXEN5CdSzRy9lTwpkP37KOjt3D9E-VFxR7045si66&t=1\"}],\"include_subdomains\":true}"
+                    },
+                    {
+                      "key": "reporting-endpoints",
+                      "value": "csp=\"https://q.stripe.com/csp-report-v2?q=p4Ay1QI8R30pCBghaLjpAX8xnGhEUUjuZOZwMasMXEN5CdSzRy9lTwpkP37KOjt3D9E-VFxR7045si66&t=1\""
+                    },
+                    {
+                      "key": "request-id",
+                      "value": "req_aAtBZKAuwnMCJT"
+                    },
+                    {
+                      "key": "stripe-should-retry",
+                      "value": "false"
+                    },
+                    {
+                      "key": "stripe-version",
+                      "value": "2026-08-26.dahlia"
+                    },
+                    {
+                      "key": "vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "x-stripe-priority-routing-enabled",
+                      "value": "true"
+                    },
+                    {
+                      "key": "x-stripe-routing-context-priority-tier",
+                      "value": "api-testmode"
+                    },
+                    {
+                      "key": "x-wc",
+                      "value": "3c3"
+                    },
+                    {
+                      "key": "strict-transport-security",
+                      "value": "max-age=63072000; includeSubDomains; preload"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"re_3UNsQVPJJILmdXdP1F8VBuHL\",\n  \"object\": \"refund\",\n  \"amount\": 2000,\n  \"balance_transaction\": \"txn_3UNsQVPJJILmdXdP1vyKIRL2\",\n  \"charge\": \"ch_3UNsQVPJJILmdXdP1IhYazY1\",\n  \"created\": 1791370343,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"customer_account\": null,\n  \"destination_details\": {\n    \"card\": {\n      \"reference_status\": \"pending\",\n      \"reference_type\": \"acquirer_reference_number\",\n      \"type\": \"refund\"\n    },\n    \"type\": \"card\"\n  },\n  \"metadata\": {},\n  \"payment_intent\": \"pi_3UNsQVPJJILmdXdP1cp9gM7V\",\n  \"payment_method\": \"pm_1UNsQVPJJILmdXdPhFcKfTih\",\n  \"reason\": null,\n  \"receipt_number\": null,\n  \"source_transfer_reversal\": null,\n  \"status\": \"succeeded\",\n  \"transfer_reversal\": null\n}"
+                }
+              ]
+            },
+            {
+              "name": "TC-RF-002b",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Amount refunded is 500\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount_refunded).to.equal(500);\n});\n\npm.test(\"Charge is not fully refunded\", function () {\n    const json = pm.response.json();\n    pm.expect(json.refunded).to.equal(false);\n});\n"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api.stripe.com/v1/charges/{{charge_id_partial}}",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "charges",
+                    "{{charge_id_partial}}"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "TC-RF-002b",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "https://api.stripe.com/v1/charges/ch_3UNXUbPJJILmdXdP2CP51BkC",
+                      "protocol": "https",
+                      "host": [
+                        "api",
+                        "stripe",
+                        "com"
+                      ],
+                      "path": [
+                        "v1",
+                        "charges",
+                        "ch_3UNXUbPJJILmdXdP2CP51BkC"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "server",
+                      "value": "nginx"
+                    },
+                    {
+                      "key": "date",
+                      "value": "Wed, 07 Oct 2026 11:07:22 GMT"
+                    },
+                    {
+                      "key": "content-type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "content-length",
+                      "value": "3029"
+                    },
+                    {
+                      "key": "connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "access-control-allow-credentials",
+                      "value": "true"
+                    },
+                    {
+                      "key": "access-control-allow-methods",
+                      "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                    },
+                    {
+                      "key": "access-control-allow-origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "access-control-expose-headers",
+                      "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                    },
+                    {
+                      "key": "access-control-max-age",
+                      "value": "300"
+                    },
+                    {
+                      "key": "cache-control",
+                      "value": "no-cache, no-store"
+                    },
+                    {
+                      "key": "content-security-policy",
+                      "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=kEtqF7fR5uMiEuI8pElsT3yQzbHt_EsPdkJwBS6EcXmrosLghEfeY9zkGCduR8UwE1M7qnGQaiZ6i48r; report-to csp"
+                    },
+                    {
+                      "key": "report-to",
+                      "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=kEtqF7fR5uMiEuI8pElsT3yQzbHt_EsPdkJwBS6EcXmrosLghEfeY9zkGCduR8UwE1M7qnGQaiZ6i48r&t=1\"}],\"include_subdomains\":true}"
+                    },
+                    {
+                      "key": "reporting-endpoints",
+                      "value": "csp=\"https://q.stripe.com/csp-report-v2?q=kEtqF7fR5uMiEuI8pElsT3yQzbHt_EsPdkJwBS6EcXmrosLghEfeY9zkGCduR8UwE1M7qnGQaiZ6i48r&t=1\""
+                    },
+                    {
+                      "key": "request-id",
+                      "value": "req_Zb3ZbkREzeKLCX"
+                    },
+                    {
+                      "key": "stripe-version",
+                      "value": "2026-08-26.dahlia"
+                    },
+                    {
+                      "key": "vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "x-stripe-priority-routing-enabled",
+                      "value": "true"
+                    },
+                    {
+                      "key": "x-stripe-routing-context-priority-tier",
+                      "value": "api-testmode"
+                    },
+                    {
+                      "key": "x-wc",
+                      "value": "3c3"
+                    },
+                    {
+                      "key": "strict-transport-security",
+                      "value": "max-age=63072000; includeSubDomains; preload"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"ch_3UNXUbPJJILmdXdP2CP51BkC\",\n  \"object\": \"charge\",\n  \"amount\": 2000,\n  \"amount_captured\": 2000,\n  \"amount_refunded\": 500,\n  \"application\": null,\n  \"application_fee\": null,\n  \"application_fee_amount\": null,\n  \"balance_transaction\": \"txn_3UNXUbPJJILmdXdP2hUzePv5\",\n  \"billing_details\": {\n    \"address\": {\n      \"city\": null,\n      \"country\": null,\n      \"line1\": null,\n      \"line2\": null,\n      \"postal_code\": null,\n      \"state\": null\n    },\n    \"email\": null,\n    \"name\": null,\n    \"phone\": null,\n    \"tax_id\": null\n  },\n  \"calculated_statement_descriptor\": \"Stripe\",\n  \"captured\": true,\n  \"created\": 1791289754,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"description\": \"PaymentIntent to be Refunded\",\n  \"destination\": null,\n  \"dispute\": null,\n  \"disputed\": false,\n  \"failure_balance_transaction\": null,\n  \"failure_code\": null,\n  \"failure_message\": null,\n  \"fraud_details\": {},\n  \"livemode\": false,\n  \"metadata\": {},\n  \"on_behalf_of\": null,\n  \"order\": null,\n  \"outcome\": {\n    \"advice_code\": null,\n    \"network_advice_code\": null,\n    \"network_decline_code\": null,\n    \"network_status\": \"approved_by_network\",\n    \"reason\": null,\n    \"risk_level\": \"normal\",\n    \"risk_score\": 24,\n    \"seller_message\": \"Payment complete.\",\n    \"type\": \"authorized\"\n  },\n  \"paid\": true,\n  \"payment_intent\": \"pi_3UNXUbPJJILmdXdP2aRq6GbU\",\n  \"payment_method\": \"pm_1UNXUbPJJILmdXdP05zcGuWA\",\n  \"payment_method_details\": {\n    \"card\": {\n      \"amount_authorized\": 2000,\n      \"authorization_code\": \"353190\",\n      \"brand\": \"visa\",\n      \"checks\": {\n        \"address_line1_check\": null,\n        \"address_postal_code_check\": null,\n        \"cvc_check\": \"pass\"\n      },\n      \"country\": \"US\",\n      \"electronic_commerce_indicator\": \"07\",\n      \"exp_month\": 10,\n      \"exp_year\": 2027,\n      \"extended_authorization\": {\n        \"status\": \"disabled\"\n      },\n      \"fingerprint\": \"SKjMo25DosXoXh07\",\n      \"funding\": \"credit\",\n      \"incremental_authorization\": {\n        \"status\": \"unavailable\"\n      },\n      \"installments\": null,\n      \"last4\": \"4242\",\n      \"mandate\": null,\n      \"multicapture\": {\n        \"status\": \"unavailable\"\n      },\n      \"network\": \"visa\",\n      \"network_token\": {\n        \"used\": false\n      },\n      \"network_transaction_id\": \"837510677111505\",\n      \"overcapture\": {\n        \"maximum_amount_capturable\": 2000,\n        \"status\": \"unavailable\"\n      },\n      \"regulated_status\": \"unregulated\",\n      \"three_d_secure\": null,\n      \"transaction_link_id\": null,\n      \"wallet\": null\n    },\n    \"type\": \"card\"\n  },\n  \"radar_options\": {},\n  \"receipt_email\": null,\n  \"receipt_number\": null,\n  \"receipt_url\": \"https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xVUxyYzZQSkpJTG1kWGRQKOrPmNYGMgY3PM9uJcw6LBb1Z2YDgqUbTb6vFEB225vwBbgHLv5VC4JQUJu_e1QQKFq1de9Nud40YMLG\",\n  \"refunded\": false,\n  \"review\": null,\n  \"shipping\": null,\n  \"source\": null,\n  \"source_transfer\": null,\n  \"statement_descriptor\": null,\n  \"statement_descriptor_suffix\": null,\n  \"status\": \"succeeded\",\n  \"transfer_data\": null,\n  \"transfer_group\": null\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "v1/charges Refunds",
+          "item": [
+            {
+              "name": "Create a Charge (To Be Refunded)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = JSON.parse(responseBody);",
+                      "//save the network transaction id to a cVar so it can be used in the next step. ",
+                      "pm.collectionVariables.set(\"refund_charge_id\", jsonData.id);",
+                      "console.log(\"Charge Id\" + jsonData.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "10500",
+                      "type": "text"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd",
+                      "type": "text"
+                    },
+                    {
+                      "key": "source",
+                      "value": "tok_visa",
+                      "type": "text"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Charge",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/charges",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "charges"
+                  ]
+                },
+                "description": "In this step, we are creating a Charge which we will then turn around and refund in the next step. \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds. \n\n#### Note\nThe ID of the Charge will be saved as a collection variable to be used in the refund step."
+              },
+              "response": []
+            },
+            {
+              "name": "Refund a Charge",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "500",
+                      "description": "If you would like to refund a portion of the charge, use this param",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "charge",
+                      "value": "{{refund_charge_id}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/refunds",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "refunds"
+                  ]
+                },
+                "description": "In this step we use the ID of the Charge in order to process a refund.  \n\n#### Documentation\nhttps://stripe.com/docs/refunds. \nhttps://stripe.com/docs/api/refunds."
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "description": "This folder contains examples of creating charges and subsequently refunding them. \n\nThe documentation that corresponds with it can be found [here](https://stripe.com/docs/implementation-guides/core-payments/server-side-integration)."
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "TC-AU-001 — Missing API Key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function() {\n    pm.expect(pm.response.code).to.equal(401);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error message mentions API Key\", function (){\n    const json = pm.response.json();\n    pm.expect(json.error.message).to.include(\"API Key\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": [
+            {
+              "name": "TC-AU-001 — Missing API Key",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true"
+                    },
+                    {
+                      "key": "return_url",
+                      "value": "https://example.com/return"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Payment Intent"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "server",
+                  "value": "nginx"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 11:33:39 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "content-length",
+                  "value": "342"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "access-control-allow-credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-expose-headers",
+                  "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                },
+                {
+                  "key": "access-control-max-age",
+                  "value": "300"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "www-authenticate",
+                  "value": "Basic realm=\"Stripe\""
+                },
+                {
+                  "key": "x-robots-tag",
+                  "value": "none"
+                },
+                {
+                  "key": "x-wc",
+                  "value": "383"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"message\": \"You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/.\",\n    \"type\": \"invalid_request_error\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "TC-AU-002 — Invalid API Key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function() {\n    pm.expect(pm.response.code).to.equal(401);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error message mentions invalid API Key\", function (){\n    const json = pm.response.json();\n    pm.expect(json.error.message).to.include(\"invalid API Key\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{secret_key_live}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling",
+      "item": [
+        {
+          "name": "Customers",
+          "item": [
+            {
+              "name": "Create a customer",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = JSON.parse(responseBody);",
+                      "//save the network transaction id to a cVar so it can be used in the next step. ",
+                      "pm.collectionVariables.set(\"customer_object_id\", jsonData.id);",
+                      "console.log(\"Customer Id\" + jsonData.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "description",
+                      "value": "Customer Object for Jane Doe",
+                      "description": "An arbitrary string that you can attach to a customer object. It is displayed alongside the customer in the dashboard."
+                    },
+                    {
+                      "key": "email",
+                      "value": "jane.doe@example.com",
+                      "description": "Customer's email address. It's displayed alongside the customer in your dashboard and can be useful for searching and tracking. This may be up to *512 characters*."
+                    },
+                    {
+                      "key": "name",
+                      "value": "Jane Doe",
+                      "description": "The customer's full name or business name."
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "<string>",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/customers",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "customers"
+                  ]
+                },
+                "description": "This is an example of creating a Customer in Stripe.\n\n#### Documentation\nhttps://stripe.com/docs/payments/save-during-payment. \nhttps://stripe.com/docs/api/customers\n\n#### Note\nOnce create, the ID of the customer is stored as a collection variable."
+              },
+              "response": []
+            },
+            {
+              "name": "Attach a PaymentMethod",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "(Required) The ID of the customer to which to attach the PaymentMethod."
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_methods/:payment_method/attach",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_methods",
+                    ":payment_method",
+                    "attach"
+                  ],
+                  "variable": [
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "This is a test payment method.  More can be found here: https://stripe.com/docs/testing"
+                    }
+                  ]
+                },
+                "description": "Once you have created the Customer object, you can attach a PaymentMethod.  Notice in the URL, there is the 'pm_card_visa'.  This is a test card, in the Live environment, this would be the ID of a payment method created client side.  \n\n#### Documentation\nhttps://stripe.com/docs/api/payment_methods/attach."
+              },
+              "response": []
+            },
+            {
+              "name": "List a Customer's PaymentMethods",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_methods?customer={{customer_object_id}}&type=card",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_methods"
+                  ],
+                  "query": [
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}"
+                    },
+                    {
+                      "key": "type",
+                      "value": "card"
+                    }
+                  ]
+                },
+                "description": "This is an example request of how you would get a list of the payment methods attached to a given Customer object.  \n\n#### Documentation\nhttps://stripe.com/docs/api/payment_methods/list."
+              },
+              "response": []
+            }
+          ],
+          "description": "This folder contains examples related to creating Customer objects in Stripe.  \n\n#### Documentation\nhttps://stripe.com/docs/payments/save-during-payment. \nhttps://stripe.com/docs/api/customers"
+        },
+        {
+          "name": "TC-ER-001 — Invalid Amount Zero",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error parameter is amount\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"amount\");\n});\n\npm.test(\"Error code is parameter_invalid_integer\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.code).to.equal(\"parameter_invalid_integer\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "0"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ER-002 — Invalid Currency Code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error param is currency\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"currency\");\n});\n\npm.test(\"Error message menyions invalid currency\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message).to.include(\"invalid currency\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "xyz"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payments with Separate Capture",
+      "item": [
+        {
+          "name": "v1/payment_intents",
+          "item": [
+            {
+              "name": "Create a PaymentIntent (Auth Only)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = JSON.parse(responseBody);",
+                      "//save the network transaction id to a cVar so it can be used in the next step. ",
+                      "pm.collectionVariables.set(\"auth_payment_intent_id\", jsonData.id);",
+                      "console.log(\"Payment Intent Id\" + jsonData.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "10000",
+                      "type": "text"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd",
+                      "type": "text"
+                    },
+                    {
+                      "key": "capture_method",
+                      "value": "manual",
+                      "description": "\"Manual\" denotes that you would like to perform an auth for later capture",
+                      "type": "text"
+                    },
+                    {
+                      "key": "confirm",
+                      "value": "true",
+                      "type": "text"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "payment_method",
+                      "value": "pm_card_visa",
+                      "description": "See: https://stripe.com/docs/testing for more test cards",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Testing separate auth and capture",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents"
+                  ]
+                },
+                "description": "This is the auth step for PaymentIntents.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/payments/capture-later"
+              },
+              "response": []
+            },
+            {
+              "name": "Capture a PaymentIntent",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "",
+                      "description": "If you would like to only capture a portion of the authorization, enter an amount less that the original charge. ",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/payment_intents/{{auth_payment_intent_id}}/capture",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment_intents",
+                    "{{auth_payment_intent_id}}",
+                    "capture"
+                  ]
+                },
+                "description": "This is the capture step for PaymentIntents.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/payments/capture-later"
+              },
+              "response": []
+            }
+          ],
+          "description": "This is an example of a request to create a PaymentIntent which is captured separately from the creation of an authorization.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/payments/capture-later\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+        },
+        {
+          "name": "v1/charges",
+          "item": [
+            {
+              "name": "Create a Charge (Auth Only)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = JSON.parse(responseBody);",
+                      "//save the network transaction id to a cVar so it can be used in the next step. ",
+                      "pm.collectionVariables.set(\"auth_charge_id\", jsonData.id);",
+                      "console.log(\"Charge Id\" + jsonData.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "10500",
+                      "type": "text"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd",
+                      "type": "text"
+                    },
+                    {
+                      "key": "source",
+                      "value": "tok_visa",
+                      "type": "text"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer_object_id}}",
+                      "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "capture",
+                      "value": "false",
+                      "description": "This parameter signals that you would like to authorize and capture later",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Automatic Capture Charge",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/charges",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "charges"
+                  ]
+                },
+                "description": "This is auth step for v1/charges.  \n\n#### Documentation:\nCharges: https://stripe.com/docs/charges/placing-a-hold\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+              },
+              "response": []
+            },
+            {
+              "name": "Capture a charge",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "amount",
+                      "value": "400",
+                      "description": "If you would like to only capture a portion of the authorization, enter an amount less that the original charge. ",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://api.stripe.com/v1/charges/{{auth_charge_id}}/capture",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "charges",
+                    "{{auth_charge_id}}",
+                    "capture"
+                  ]
+                },
+                "description": "This is the capture step for v1/charges.  \n\n#### Documentation:\nCharges: https://stripe.com/docs/charges/placing-a-hold"
+              },
+              "response": []
+            }
+          ],
+          "description": "This is an example of a request to create a Charge which is captured separately from the creation of an authorization.  \n\n#### Documentation:\nCharges: https://stripe.com/docs/charges/placing-a-hold\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+        }
+      ]
+    },
+    {
+      "name": "Payments Failure",
+      "item": [
+        {
+          "name": "Create a PaymentIntent (Failed Charge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "75000",
+                  "type": "text"
+                },
+                {
+                  "key": "currency",
+                  "value": "eur",
+                  "type": "text"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "automatic",
+                  "type": "text"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_chargeDeclined",
+                  "description": "This is the test payment method for a decline. See the full list here: https://stripe.com/docs/testing for more test cards",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Test for Declined Payment",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured but the payment is declined.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        },
+        {
+          "name": "Create a Charge (Failed Charge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "10500",
+                  "type": "text"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd",
+                  "type": "text"
+                },
+                {
+                  "key": "source",
+                  "value": "tok_chargeDeclined",
+                  "description": "This is the test payment method for a decline. See the full list here: https://stripe.com/docs/testing for more test cards",
+                  "type": "text"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "capture",
+                  "value": "false",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Failed Charge",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/charges",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "charges"
+              ]
+            },
+            "description": "This is an example of a request to create a Charge which is automatically captured but the payment is declined.  \n\n#### Documentation:\nCharges: https://stripe.com/docs/api/charges/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        }
+      ],
+      "description": "This folder contains examples which are functionally similar to the Auto Capture but using a test card number that results in a payment decline.\n\nhttps://stripe.com/docs/implementation-guides/core-payments/qa-test-gl-checks"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{secret_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_payment_intent_id",
+      "value": ""
+    },
+    {
+      "key": "auth_charge_id",
+      "value": ""
+    },
+    {
+      "key": "secret_key",
+      "value": ""
+    },
+    {
+      "key": "refund_payment_intent_id",
+      "value": ""
+    },
+    {
+      "key": "refund_charge_id",
+      "value": ""
+    },
+    {
+      "key": "customer_object_id",
+      "value": ""
+    }
+  ]
+}
