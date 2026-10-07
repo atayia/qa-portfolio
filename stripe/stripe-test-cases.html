@@ -837,6 +837,84 @@
       </article>
 
       <div class="tc-separator"></div>
+      
+      <!-- TC-RF-003 -->
+      <article class="report-section tc-block" id="TC-RF-003">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-RF-003 &mdash; Double Refund Attempt
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell cell-right"><code style="color:var(--accent);">POST /v1/refunds</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Objective</div>
+          <div class="cell cell-right">Verify the API rejects a refund attempt on an already fully refunded PaymentIntent with
+            a descriptive error.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell cell-right"><a href="stripe-requirements.html#REQ-STR-04" class="back-link">REQ-STR-04</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Preconditions</div>
+          <div class="cell cell-right">TC-RF-001 executed — <code style="color:var(--accent);">{{payment_intent_id}}</code>
+            already fully refunded.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell cell-right">
+            <pre class="code-block">{
+        "payment_intent": "{{payment_intent_id}}"
+      }</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell cell-right">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.code: "charge_already_refunded"</code> &bull;
+            <code style="color:var(--accent);">error.type: "invalid_request_error"</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell cell-right">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.code: "charge_already_refunded"</code> &bull;
+            <code style="color:var(--accent);">error.type: "invalid_request_error"</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Status</div>
+          <div class="cell cell-right"><span class="status-badge verified">Pass</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Notes</div>
+          <div class="cell cell-right">Discovered during automation execution — not part of original manual scope.
+            Demonstrates Stripe correctly prevents double refunds with a specific error code.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 charge_already_refunded</h4>
+                <img src="screenshots_stripe/tc-rf-003-auto-a.png" alt="TC-RF-003 response 400 charge already refunded"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Test Results — 3/3 Passed</h4>
+                <img src="screenshots_stripe/tc-rf-003-auto-b.png" alt="TC-RF-003 automation 3 tests passed"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="tc-separator"></div>
 
 
       <!-- ═══════════════════════════════════════
