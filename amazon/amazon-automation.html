@@ -55,11 +55,11 @@
           </div>
           <div>
             <span class="metadata-label">Total Automated</span>
-            <span class="metadata-value">2 test cases</span>
+            <span class="metadata-value">3 test cases</span>
           </div>
           <div>
             <span class="metadata-label">Passed</span>
-            <span class="metadata-value" style="color:#22c55e;">2</span>
+            <span class="metadata-value" style="color:#22c55e;">3</span>
           </div>
           <div>
             <span class="metadata-label">Failed</span>
@@ -241,7 +241,7 @@ test.describe('TC-AMZ-003 — Product Search', () => {
                 <h4>Playwright Report — 5/5 Pass</h4>
                 <img src="../automation/tests/amazon/screenshots/tc-amz-005-auto.png"
                   alt="Playwright report showing TC-AMZ-005 passing 5 of 5 runs"
-                  class="tc-screenshot tc-screenshot--crop zoomable"
+                  class="tc-screenshot zoomable"
                   onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
@@ -256,6 +256,95 @@ test.describe('TC-AMZ-003 — Product Search', () => {
                 <h4>Variant B — GitHub Actions CI</h4>
                 <img src="../automation/tests/amazon/screenshots/tc-amz-005-variant-b.png"
                   alt="Amazon search results showing No results for your search query heading" class="tc-screenshot tc-screenshot--crop zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+            <!-- ACCESSIBILITY -->
+      <h2 class="section-heading" id="accessibility">
+        <i class="fas fa-universal-access"></i> Accessibility
+      </h2>
+
+      <!-- TC-AMZ-008 -->
+      <article class="report-section tc-block" id="auto-TC-AMZ-008">
+        <div class="tc-block-title">
+          <span class="status-badge verified">Pass</span>
+          TC-AMZ-008 &mdash; Sign-In Programmatic Labels (A11y)
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="amazon-test-cases.html#TC-AMZ-008" class="back-link">TC-AMZ-008</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Spec File</div>
+          <div class="cell cell-right"><code>automation/tests/amazon/signin-a11y.spec.ts</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Notes</div>
+          <div class="cell cell-right">
+            <p>The manual test verified VoiceOver's spoken output, which automation cannot hear. This spec
+            verifies what the screen reader reads from: the field's <strong>programmatic label</strong>.
+            Playwright's <code>getByLabel()</code> only matches an input whose label is programmatically
+            associated with it, so the test fails if the label is removed or disconnected.</p>
+            <p style="margin-top:0.75rem;"><strong>Scope:</strong> email field only. Reaching the password
+            field requires submitting credentials, which Amazon's bot detection blocks for automated
+            sessions. Password field labelling and spoken output remain covered by the manual test.</p>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">import { test, expect } from '@playwright/test';
+
+test.describe('TC-AMZ-008 — Sign-In Programmatic Labels (A11y)', () => {
+  test('Email field exposes an accessible name matching its visible label', async ({ page }) => {
+    await page.goto('/');
+
+    // Open the sign-in page from the header, as a user would
+    await page.getByRole('link', { name: /hello, sign in/i }).click();
+    await expect(page).toHaveURL(/\/ap\/signin/);
+
+    // getByLabel finds the input through its programmatic label —
+    // the same information a screen reader announces
+    const emailField = page.getByLabel(/mobile number or email/i);
+
+    await expect(emailField).toBeVisible();
+    await expect(emailField).toBeEditable();
+
+    await test.info().attach('Sign-in page', {
+      body: await page.screenshot({ fullPage: true }),
+      contentType: 'image/png',
+    });
+  });
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">Pass</span> — 3/3 local · CI</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Playwright Report — 3/3 Pass</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-008-auto.png"
+                  alt="Playwright report showing TC-AMZ-008 passing 3 of 3 runs"
+                  class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Sign-In Page</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-008-signin-page.png"
+                  alt="Amazon sign-in page captured during the automated run"
+                  class="tc-screenshot tc-screenshot--crop zoomable"
                   onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
