@@ -1,23 +1,31 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('TC-AMZ-005 — Empty Search / No Results', () => {
-    test('Non-existent query returns sponsored fallback content', async ({ page }) => {
+    test('Non-existent query shows a no-results message or sponsored fallback', async ({ page }) => {
         await page.goto('/');
-        const searchBox = page.locator('#twotabsearchtextbox');
+        const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
         await searchBox.fill('zxyvwk123456789');
         await searchBox.press('Enter');
 
-        // Landed on search results page
         await expect(page).toHaveURL(/s\?k=/);
 
-        // Results container is present (Amazon shows sponsored fallback, not a blank page)
-        await expect(page.locator('.s-search-results')).toBeVisible();
+        // Amazon serves two variants for unmatched queries:
+        //   A) "More results" heading with sponsored fallback only (AMZ-OBS-001)
+        //   B) "No results for your search query." heading, then sponsored fallback
+        const noResultsHeading = page.getByRole('heading', { name: /no results for/i });
+        const moreResultsHeading = page.getByRole('heading', { name: /more results/i });
 
-        // Amazon signals no direct matches with "No results for" OR shows "More results" fallback
-        // Either way, the original query keyword appears in the results header
-        const noResultsMsg = page.locator('[data-component-type="s-no-results"]');
-        const moreResultsHeading = page.locator('h2').filter({ hasText: 'More results' });
+        await expect(noResultsHeading.or(moreResultsHeading).first()).toBeVisible();
 
-        await expect(noResultsMsg.or(moreResultsHeading)).toBeVisible();
+        // Record which variant this run received, as evidence in the report
+        const variant = (await noResultsHeading.isVisible())
+            ? 'B — "No results for your search query." heading shown'
+            : 'A — "More results" sponsored fallback, no empty-state message';
+
+        test.info().annotations.push({ type: 'Variant observed', description: variant });
+        await test.info().attach('Search results page', {
+            body: await page.screenshot({ fullPage: true }),
+            contentType: 'image/png',
+        });
     });
 });
