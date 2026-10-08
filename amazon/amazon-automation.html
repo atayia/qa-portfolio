@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Automation | Amazon Project | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body id="top">
+
+  <div class="wrapper">
+    <header class="intro-container bug-header">
+      <a href="amazon.html" class="back-link">← AMAZON HUB</a>
+      <h1 class="deliverable-title"><span class="deliverable-gradient">UI Automation</span></h1>
+      <p class="deliverable-subtitle">Playwright (TypeScript) — Amazon E-Commerce v2</p>
+
+      <nav class="project-menu">
+        <a href="amazon-requirements.html" class="menu-link">Requirements</a>
+        <a href="amazon-test-plan.html" class="menu-link">Test Plan</a>
+        <a href="amazon-test-cases.html" class="menu-link">Test Cases</a>
+        <a href="amazon-automation.html" class="menu-link active">Automation</a>
+        <a href="amazon-bug-reports.html" class="menu-link">Bug Reports</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- OVERVIEW -->
+      <section class="hub-section">
+        <h2 class="hub-section-title">Automation Overview</h2>
+        <p>
+          Selected manual test cases from v1 were automated using
+          <code style="color:var(--accent);">Playwright</code> with TypeScript. Each spec file maps
+          directly to an existing manual test case, extending the audit with executable regression
+          coverage. Tests run against the live Amazon.com environment using Chromium.
+        </p>
+        <p style="font-size:0.85rem; color:var(--muted); margin-top:0.75rem;">
+          Login-dependent tests (TC-AMZ-001, TC-AMZ-002, TC-AMZ-004, TC-AMZ-006, TC-AMZ-007) were
+          scoped out of this automation pass. Amazon's bot detection blocks headless authentication
+          flows. The recommended path forward is Playwright's <code>storageState</code> with a
+          dedicated automation account — deferred to v3.
+        </p>
+
+        <div class="hub-metadata-grid" style="margin-top:1.5rem;">
+          <div>
+            <span class="metadata-label">Tool</span>
+            <span class="metadata-value">Playwright v1.63.0 · TypeScript</span>
+          </div>
+          <div>
+            <span class="metadata-label">Runner</span>
+            <span class="metadata-value">Chromium (Desktop Chrome)</span>
+          </div>
+          <div>
+            <span class="metadata-label">Total Automated</span>
+            <span class="metadata-value">2 test cases</span>
+          </div>
+          <div>
+            <span class="metadata-label">Passed</span>
+            <span class="metadata-value" style="color:#22c55e;">2</span>
+          </div>
+          <div>
+            <span class="metadata-label">Failed</span>
+            <span class="metadata-value">0</span>
+          </div>
+          <div>
+            <span class="metadata-label">Deferred</span>
+            <span class="metadata-value" style="color:var(--muted);">5 (auth-dependent)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEARCH -->
+      <h2 class="section-heading" id="search">
+        <i class="fas fa-search"></i> Search
+      </h2>
+
+      <!-- TC-AMZ-003 -->
+      <article class="report-section tc-block" id="auto-TC-AMZ-003">
+        <div class="tc-block-title">
+          <span class="status-badge verified">Pass</span>
+          TC-AMZ-003 &mdash; Alphanumeric Search — Happy Path
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="amazon-test-cases.html#TC-AMZ-003" class="back-link">TC-AMZ-003</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Spec File</div>
+          <div class="cell cell-right"><code>automation/tests/amazon/search.spec.ts</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">import { test, expect } from '@playwright/test';
+
+test.describe('TC-AMZ-003 — Product Search', () => {
+  test('Search returns relevant results for a valid query', async ({ page }) => {
+    await page.goto('/');
+    const searchBox = page.locator('#twotabsearchtextbox');
+    await searchBox.fill('Logitech MX Master 3S');
+    await searchBox.press('Enter');
+
+    await expect(page).toHaveURL(/s\?k=/);
+    await expect(page.locator('.s-search-results')).toBeVisible();
+    await expect(page.locator('h2.a-size-mini').first()).toBeVisible();
+  });
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">Pass</span> — 3.9s</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Playwright Report — Pass</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-003-auto.png"
+                  alt="Playwright report showing TC-AMZ-003 passing"
+                  class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- TC-AMZ-005 -->
+      <article class="report-section tc-block" id="auto-TC-AMZ-005">
+        <div class="tc-block-title">
+          <span class="status-badge verified">Pass</span>
+          TC-AMZ-005 &mdash; Global Search — No Results (Negative)
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="amazon-test-cases.html#TC-AMZ-005" class="back-link">TC-AMZ-005</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Observation</div>
+          <div class="cell cell-right"><a href="amazon-bug-reports.html#AMZ-OBS-001" class="back-link">AMZ-OBS-001</a> — No empty-state UI; sponsored fallback returned instead</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Spec File</div>
+          <div class="cell cell-right"><code>automation/tests/amazon/search-empty.spec.ts</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Notes</div>
+          <div class="cell cell-right">
+            Amazon does not surface a true empty state for unrecognised queries. Instead, the system
+            returns sponsored fallback products under a "More results" heading. The assertion was
+            updated to reflect this actual behaviour — verifying that either a
+            <code>[data-component-type="s-no-results"]</code> block OR a "More results" heading is
+            present using Playwright's <code>.or()</code> combinator.
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">import { test, expect } from '@playwright/test';
+
+test.describe('TC-AMZ-005 — Empty Search / No Results', () => {
+  test('Non-existent query returns sponsored fallback content', async ({ page }) => {
+    await page.goto('/');
+    const searchBox = page.locator('#twotabsearchtextbox');
+    await searchBox.fill('zxyvwk123456789');
+    await searchBox.press('Enter');
+
+    await expect(page).toHaveURL(/s\?k=/);
+    await expect(page.locator('.s-search-results')).toBeVisible();
+
+    const noResultsMsg = page.locator('[data-component-type="s-no-results"]');
+    const moreResultsHeading = page.locator('h2').filter({ hasText: 'More results' });
+
+    await expect(noResultsMsg.or(moreResultsHeading)).toBeVisible();
+  });
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">Pass</span> — 3.9s</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Playwright Report — Pass</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-005-auto.png"
+                  alt="Playwright report showing TC-AMZ-005 passing"
+                  class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- DEFERRED -->
+      <h2 class="section-heading" id="deferred">
+        <i class="fas fa-pause-circle"></i> Deferred — v3
+      </h2>
+
+      <section class="hub-section">
+        <p style="color:var(--muted); font-size:0.9rem;">
+          The following test cases require authenticated sessions and were deferred due to
+          Amazon's bot detection blocking headless login flows. Recommended path: Playwright
+          <code>storageState</code> with a dedicated test account (no 2FA, no passkey).
+        </p>
+        <div class="tc-table" style="margin-top:1rem;">
+          <div class="tc-row-item">
+            <div class="cell cell-left">TC-AMZ-001</div>
+            <div class="cell cell-right">Valid Login — <span class="status-badge status-todo">Deferred v3</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left">TC-AMZ-002</div>
+            <div class="cell cell-right">Invalid Password — <span class="status-badge status-todo">Deferred v3</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left">TC-AMZ-004</div>
+            <div class="cell cell-right">Cart Persistence — <span class="status-badge status-todo">Deferred v3</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left">TC-AMZ-006</div>
+            <div class="cell cell-right">Cart Max Quantity — <span class="status-badge status-todo">Deferred v3</span></div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left">TC-AMZ-007</div>
+            <div class="cell cell-right">Keyboard-Only Navigation — <span class="status-badge status-todo">Deferred v3</span></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="evidenceModal" class="modal" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg" alt="Evidence screenshot enlarged">
+  </div>
+
+  <a href="#" id="backToTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></a>
+  <a href="#footer-bottom" id="jumpToBottom" aria-label="Jump to bottom"><i class="fas fa-chevron-down"></i></a>
+
+  <footer id="footer-bottom"></footer>
+
+  <script src="../scripts.js"></script>
+
+</body>
+</html>
