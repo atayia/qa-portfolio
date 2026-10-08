@@ -453,7 +453,7 @@ body {
 ============================================================================= */
 .tc-row-item {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 220px minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -592,6 +592,13 @@ body {
   border-radius: var(--radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.1);
   object-fit: cover;
+}
+
+/* Long full-page captures: show the top portion only; click opens the full image */
+.tc-screenshot--crop {
+  height: 360px;
+  object-fit: cover;
+  object-position: top;
 }
 
 .evidence-thumb {
