@@ -143,6 +143,140 @@
         </div>
       </article>
 
+            <!-- AMZ-OBS-002 -->
+      <article class="report-section" id="AMZ-OBS-002">
+        <div class="project-card-header">
+          <h2 class="report-title">AMZ-OBS-002: Sign-In Flow Reveals Whether an Email Has an Account</h2>
+          <span class="status-badge status-todo">Observation</span>
+        </div>
+
+        <div class="tc-table">
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Type</span></div>
+            <div class="cell cell-right">Observation — Security / Requirement Deviation (Account Enumeration)</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Severity</span></div>
+            <div class="cell cell-right">Low</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Priority</span></div>
+            <div class="cell cell-right">Low</div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Summary</span></div>
+            <div class="cell cell-right">
+              Amazon's sign-in uses an email-first flow. Submitting an email with no account displays
+              "Looks like you're new to Amazon" with a prompt to create one, while an email with an
+              existing account proceeds to the password screen. The difference reveals whether an
+              account exists for any email address, which deviates from REQ-AMZ-02's requirement for
+              non-revealing responses that prevent enumeration.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Steps to Reproduce</span></div>
+            <div class="cell cell-right">
+              <ol class="standard-list">
+                <li>Open the Amazon.com sign-in page in a private window (signed out).</li>
+                <li>Enter an email with no Amazon account (e.g. <code>heatqa.noaccount.2026x@gmail.com</code>) and click Continue.</li>
+                <li>Observe the response.</li>
+                <li>Return to the sign-in page, enter an email with an existing account, and click Continue.</li>
+                <li>Compare the two responses.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Expected Result</span></div>
+            <div class="cell cell-right">
+              Per REQ-AMZ-02, the response should not reveal whether an account exists for the submitted email.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Actual Result</span></div>
+            <div class="cell cell-right">
+              Unregistered email: "Looks like you're new to Amazon — Let's create an account using your email."
+              Registered email: proceeds to the password screen. Account existence is disclosed before any
+              password is entered.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Requirement</span></div>
+            <div class="cell cell-right">
+              <a href="amazon-requirements.html#REQ-AMZ-02" class="back-link">REQ-AMZ-02</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Linked Test Case</span></div>
+            <div class="cell cell-right">
+              <a href="amazon-test-cases.html#TC-AMZ-002" class="back-link">TC-AMZ-002</a>
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">QA Recommendation</span></div>
+            <div class="cell cell-right">
+              Email-first sign-in is a deliberate design choice used by many large platforms; it trades
+              enumeration resistance for usability. If this audit were formally delivered, REQ-AMZ-02 should
+              either be revised to reflect the accepted design, or the enumeration risk should be formally
+              accepted by the product owner. TC-AMZ-002 remains valid for its scope (an incorrect password is
+              rejected), but does not verify the enumeration clause of REQ-AMZ-02.
+            </div>
+          </div>
+          <div class="tc-row-item">
+            <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+            <div class="cell cell-right">
+              <div class="evidence-area">
+                <div class="evidence-box">
+                  <h4>Unregistered Email</h4>
+                  <img src="screenshots/amazon-login-enum-new-email.png"
+                    alt="Amazon sign-in showing Looks like you're new to Amazon for an unregistered email"
+                    class="tc-screenshot zoomable"
+                    onclick="openModal(this.src)">
+                  <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+                </div>
+                <div class="evidence-box">
+                  <h4>Registered Email</h4>
+                  <img src="screenshots/amazon-login-enum-existing-email.png"
+                    alt="Amazon sign-in proceeding to the password screen for a registered email"
+                    class="tc-screenshot zoomable"
+                    onclick="openModal(this.src)">
+                  <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="audit-trail-container">
+          <h3 class="label-text audit-trail-header">
+            <i class="fas fa-history"></i> Observation History &amp; Audit Trail
+          </h3>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action / Note</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Oct 8, 2026</td>
+                <td><span class="status-badge status-new">New</span></td>
+                <td>Identified during portfolio review: TC-AMZ-002 passed, but its expected result implies the email had already been accepted as registered, conflicting with REQ-AMZ-02. Verified manually by comparing registered and unregistered emails.</td>
+                <td>Marie-Jo A.</td>
+              </tr>
+              <tr>
+                <td>Oct 8, 2026</td>
+                <td><span class="status-badge status-todo">Observation</span></td>
+                <td>Logged as observation. Email-first sign-in appears to be an intentional design choice; no developer triage available.</td>
+                <td>Marie-Jo A.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
 
     </main>
   </div>
