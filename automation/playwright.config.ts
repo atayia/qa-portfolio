@@ -27,10 +27,10 @@ export default defineConfig({
   use: {
     baseURL: 'https://www.amazon.com',
     trace: 'on-first-retry',
-    headless: false,
+    headless: !!process.env.CI,
     launchOptions: {
-      slowMo: 1000,
-    }
+      slowMo: process.env.CI ? 0 : 1000,
+    },
   },
 
   /* Configure projects for major browsers */
