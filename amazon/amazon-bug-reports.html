@@ -31,7 +31,7 @@
       <!-- AMZ-OBS-001 -->
       <article class="report-section" id="AMZ-OBS-001">
         <div class="project-card-header">
-          <h2 class="report-title">AMZ-OBS-001: Empty Search State Suppressed in Favor of Sponsored Content</h2>
+          <h2 class="report-title">AMZ-OBS-001: Empty Search State Inconsistent Across Network Origins</h2>
           <span class="status-badge status-todo">Observation</span>
         </div>
 
@@ -51,9 +51,11 @@
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Summary</span></div>
             <div class="cell cell-right">
-              The system never surfaces a true empty state for search queries that return no organic
-              results. Instead, sponsored fallback products are always displayed regardless of query
-              relevance, deviating from the documented requirement which specifies a
+              Search behavior for queries with no organic results is inconsistent. From a residential
+              network, Amazon displays only sponsored fallback products under a "More results" heading,
+              with no "no results" message (Variant A). From a cloud CI environment (GitHub Actions),
+              Amazon displays a "No results for your search query." heading before the sponsored
+              fallback (Variant B). Variant A deviates from REQ-AMZ-03, which specifies a
               "no results" message with fallback suggestions.
             </div>
           </div>
@@ -130,19 +132,17 @@
                 <td>Confirmed intentional product behavior. No developer triage required.</td>
                 <td>Marie-Jo A.</td>
               </tr>
+              <tr>
+                <td>Oct 8, 2026</td>
+                <td><span class="status-badge status-todo">Observation</span></td>
+                <td>Updated after automated runs of TC-AMZ-005. Residential network, fresh browser profile: Variant A in 5/5 runs. GitHub Actions (cloud CI): Variant B in all runs. Empty-state behavior varies by network origin; the root cause is internal to Amazon and cannot be confirmed externally. Automated test updated to accept both variants and record which one was observed.</td>
+                <td>Marie-Jo A.</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </article>
 
-      <div class="tc-separator"></div>
-
-      <!-- Future bug discovery slot -->
-      <article class="discovery-placeholder">
-        <div class="dashed-container">
-          <p>No defects identified during this audit cycle. Slot reserved for regression testing results.</p>
-        </div>
-      </article>
 
     </main>
   </div>
