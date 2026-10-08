@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Plan | Amazon Project</title>
-  <link rel="stylesheet" href="../../styles.css">
+  <title>Test Plan | Amazon Project | Heat QA Solutions</title>
+  <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
+
 <body id="top">
 
   <div class="wrapper">
     <header class="intro-container bug-header">
-      <a href="../amazon.html" class="back-link">← AMAZON HUB</a>
-    
+      <a href="amazon.html" class="back-link">← AMAZON HUB</a>
+
       <h1 class="deliverable-title"><span class="deliverable-gradient">Test Plan</span></h1>
-      <p class="deliverable-subtitle">Master Strategy for Authentication, Global Search, and WCAG Compliance.</p>
-    
+      <p class="deliverable-subtitle">Test Strategy for Authentication, Search, Cart, and Accessibility</p>
+
       <nav class="project-menu">
         <a href="amazon-requirements.html" class="menu-link">Requirements</a>
         <a href="amazon-test-plan.html" class="menu-link active">Test Plan</a>
@@ -24,45 +26,131 @@
         <a href="amazon-bug-reports.html" class="menu-link">Bug Reports</a>
       </nav>
     </header>
-    
+
     <main>
       <div class="tc-table">
+
         <div class="tc-row-item">
-          <div class="cell cell-left"><span class="label-text">Scope</span></div>
-          <div class="cell cell-right">Testing focuses on the user lifecycle: Authentication, Product Discovery (Search),
-            and Cart Persistence.</div>
-        </div>
-    
-        <div class="tc-row-item">
-          <div class="cell cell-left"><span class="label-text">Testing Strategy</span></div>
-          <div class="cell cell-right">Risk-based approach utilizing manual Functional, Negative, and Accessibility (WCAG
-            2.1 AA) validation.</div>
-        </div>
-    
-        <div class="tc-row-item">
-          <div class="cell cell-left"><span class="label-text">Environments</span></div>
+          <div class="cell cell-left"><span class="label-text">Objective</span></div>
           <div class="cell cell-right">
-            Browser: Chrome (v120+), Safari (Latest)<br>
-            Assistive Tech: NVDA / VoiceOver (A11y verification)
+            Independently verify core customer journeys on Amazon.com against documented
+            requirements (REQ-AMZ-01 to REQ-AMZ-04), report deviations as defects or observations,
+            and extend selected manual test cases into automated regression checks.
           </div>
         </div>
-    
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Scope</span></div>
+          <div class="cell cell-right">
+            <strong>In scope:</strong>
+            <ul class="standard-list" style="margin-top:0.5rem;">
+              <li><strong>Authentication</strong> — valid login, invalid password handling (TC-AMZ-001, 002)</li>
+              <li><strong>Search</strong> — valid query results, no-results handling (TC-AMZ-003, 005)</li>
+              <li><strong>Cart</strong> — persistence across sessions, maximum quantity boundary (TC-AMZ-004, 006)</li>
+              <li><strong>Accessibility (WCAG 2.1 AA)</strong> — keyboard-only navigation, screen reader labels on
+                sign-in (TC-AMZ-007, 008)</li>
+            </ul>
+            <strong style="display:block; margin-top:0.75rem;">Out of scope:</strong>
+            Checkout and payment, account creation, product detail pages (REQ-AMZ-05, draft),
+            mobile apps, performance and security penetration testing.
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Test Approach</span></div>
+          <div class="cell cell-right">
+            Risk-based black-box testing of the production site as an anonymous and signed-in customer.
+            <ul class="standard-list" style="margin-top:0.75rem;">
+              <li><strong>Functional &amp; positive</strong> — core journeys complete as specified</li>
+              <li><strong>Negative</strong> — invalid credentials, unmatched search queries</li>
+              <li><strong>Boundary (BVA)</strong> — cart quantity limits</li>
+              <li><strong>State</strong> — cart contents persist across sessions</li>
+              <li><strong>Accessibility</strong> — keyboard operability and programmatic labels (WCAG 2.1 AA)</li>
+              <li><strong>Automation (v2)</strong> — Playwright (TypeScript) regression checks for
+                non-authenticated flows, executed locally and in GitHub Actions CI</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Environment</span></div>
+          <div class="cell cell-right">
+            <strong>Manual:</strong> macOS Tahoe 26 · Chrome (latest) · VoiceOver<br>
+            <strong>Automation:</strong> Playwright v1.63 · Chromium · local (macOS) and GitHub Actions (Ubuntu)<br>
+            <strong>Target:</strong> Amazon.com production (US storefront)
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Test Data</span></div>
+          <div class="cell cell-right">
+            <ul class="standard-list">
+              <li>Dedicated test account (credentials not published)</li>
+              <li>Valid search query: <code>Logitech MX Master 3S</code></li>
+              <li>Unmatched search query: <code>zxyvwk123456789</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Risk Areas</span></div>
+          <div class="cell cell-right">
+            <ul class="standard-list">
+              <li><strong>High:</strong> Authentication — failed or insecure login blocks every downstream journey</li>
+              <li><strong>High:</strong> Accessibility — inaccessible sign-in excludes keyboard and screen reader users
+              </li>
+              <li><strong>Medium:</strong> Search — irrelevant or empty results reduce product discovery</li>
+              <li><strong>Medium:</strong> Cart state — lost cart contents between sessions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Constraints</span></div>
+          <div class="cell cell-right">
+            Testing targets a live third-party production site. Behaviour can vary by session,
+            location, and network origin (see <a href="amazon-bug-reports.html#AMZ-OBS-001" class="back-link"
+              style="padding:0;">AMZ-OBS-001</a>).
+            Bot detection blocks automated sign-in, so authenticated flows remain manual in v2.
+            Deviations are logged as observations; no developer triage is available.
+          </div>
+        </div>
+
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Exit Criteria</span></div>
-          <div class="cell cell-right">100% of P0/P1 cases executed; all High-severity bugs resolved; WCAG AA contrast
-            standards met.</div>
+          <div class="cell cell-right">
+            100% of in-scope test cases executed with evidence; every requirement traced to at least one
+            test case; all deviations documented in Bug Reports; automated checks passing in CI.
+          </div>
         </div>
-    
+
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Deliverables</span></div>
           <div class="cell cell-right">
             <ul class="standard-list">
-              <li><a href="../test-cases/amazon-test-cases.html" class="back-link" style="padding: 0;">Manual Test Cases</a></li>
-              <li><a href="../bug-reports/amazon-bug-reports.html" class="back-link" style="padding: 0;">Defect Log</a></li>
-              <li><a href="../requirements/amazon-requirements.html" class="back-link" style="padding: 0;">Requirement Traceability Matrix (RTM)</a></li>
+              <li><a href="amazon-requirements.html" class="back-link" style="padding:0;">Requirements Traceability
+                  Matrix (RTM)</a></li>
+              <li><a href="amazon-test-cases.html" class="back-link" style="padding:0;">Manual Test Cases &amp;
+                  Execution Log</a></li>
+              <li><a href="amazon-automation.html" class="back-link" style="padding:0;">UI Automation (Playwright)</a>
+              </li>
+              <li><a href="amazon-bug-reports.html" class="back-link" style="padding:0;">Defect &amp; Observation
+                  Log</a></li>
             </ul>
           </div>
         </div>
+
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Future Scope (v3)</span></div>
+          <div class="cell cell-right">
+            <ul class="standard-list">
+              <li>Automate authenticated flows using Playwright <code>storageState</code> with a dedicated test account
+              </li>
+              <li>Define and test REQ-AMZ-05 (product detail accuracy)</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
@@ -71,8 +159,9 @@
   <a href="#footer-bottom" id="jumpToBottom" aria-label="Jump to bottom"><i class="fas fa-chevron-down"></i></a>
 
   <footer id="footer-bottom"></footer>
-  
-  <script src="../../scripts.js"></script>
+
+  <script src="../scripts.js"></script>
 
 </body>
+
 </html>
