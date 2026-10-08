@@ -113,13 +113,19 @@
 test.describe('TC-AMZ-003 — Product Search', () => {
   test('Search returns relevant results for a valid query', async ({ page }) => {
     await page.goto('/');
-    const searchBox = page.locator('#twotabsearchtextbox');
+    const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
     await searchBox.fill('Logitech MX Master 3S');
     await searchBox.press('Enter');
 
     await expect(page).toHaveURL(/s\?k=/);
     await expect(page.locator('.s-search-results')).toBeVisible();
     await expect(page.locator('h2.a-size-mini').first()).toBeVisible();
+
+    // Attach the results page as evidence in the report
+    await test.info().attach('Search results page', {
+      body: await page.screenshot({ fullPage: true }),
+      contentType: 'image/png',
+    });
   });
 });</pre>
           </div>
@@ -136,7 +142,15 @@ test.describe('TC-AMZ-003 — Product Search', () => {
                 <h4>Playwright Report — Pass</h4>
                 <img src="../automation/tests/amazon/screenshots/tc-amz-003-auto.png"
                   alt="Playwright report showing TC-AMZ-003 passing"
-                  class="tc-screenshot zoomable"
+                  class="tc-screenshot tc-screenshot--crop zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Search Results Page</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-003-results-page.png"
+                  alt="Amazon search results for Logitech MX Master 3S captured during the automated run"
+                  class="tc-screenshot tc-screenshot--crop zoomable"
                   onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
@@ -151,14 +165,15 @@ test.describe('TC-AMZ-003 — Product Search', () => {
           <span class="status-badge verified">Pass</span>
           TC-AMZ-005 &mdash; Global Search — No Results (Negative)
         </div>
-
+      
         <div class="tc-row-item">
           <div class="cell cell-left">Linked Test Case</div>
           <div class="cell cell-right"><a href="amazon-test-cases.html#TC-AMZ-005" class="back-link">TC-AMZ-005</a></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Observation</div>
-          <div class="cell cell-right"><a href="amazon-bug-reports.html#AMZ-OBS-001" class="back-link">AMZ-OBS-001</a> — No empty-state UI; sponsored fallback returned instead</div>
+          <div class="cell cell-right"><a href="amazon-bug-reports.html#AMZ-OBS-001" class="back-link">AMZ-OBS-001</a> —
+            Empty-state behavior varies by network origin</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Spec File</div>
@@ -167,49 +182,82 @@ test.describe('TC-AMZ-003 — Product Search', () => {
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
           <div class="cell cell-right">
-            Amazon does not surface a true empty state for unrecognised queries. Instead, the system
-            returns sponsored fallback products under a "More results" heading. The assertion was
-            updated to reflect this actual behaviour — verifying that either a
-            <code>[data-component-type="s-no-results"]</code> block OR a "More results" heading is
-            present using Playwright's <code>.or()</code> combinator.
+            <p>The first CI run in GitHub Actions marked this test <strong>flaky</strong>: it failed twice, then passed
+              on retry. The Playwright error context showed that Amazon served a different page from the cloud runner:
+              a <em>"No results for your search query."</em> heading (Variant B) instead of the "More results" sponsored
+              fallback seen locally (Variant A).</p>
+            <p style="margin-top:0.75rem;">Fix: replaced CSS and internal-attribute selectors
+              (<code>#twotabsearchtextbox</code>, <code>[data-component-type]</code>) with Playwright's recommended
+              role-based locators (<code>getByRole</code>), which target what users and screen readers perceive.
+              The assertion accepts either variant, and each run records the variant observed as a report
+              annotation with a full-page screenshot attached.</p>
+            <p style="margin-top:0.75rem;">Result: Variant A in 5/5 local runs (residential network, fresh browser
+              profile); Variant B in all CI runs. Finding logged to AMZ-OBS-001.</p>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Assertions</div>
           <div class="cell cell-right">
             <pre class="code-block">import { test, expect } from '@playwright/test';
-
-test.describe('TC-AMZ-005 — Empty Search / No Results', () => {
-  test('Non-existent query returns sponsored fallback content', async ({ page }) => {
-    await page.goto('/');
-    const searchBox = page.locator('#twotabsearchtextbox');
-    await searchBox.fill('zxyvwk123456789');
-    await searchBox.press('Enter');
-
-    await expect(page).toHaveURL(/s\?k=/);
-    await expect(page.locator('.s-search-results')).toBeVisible();
-
-    const noResultsMsg = page.locator('[data-component-type="s-no-results"]');
-    const moreResultsHeading = page.locator('h2').filter({ hasText: 'More results' });
-
-    await expect(noResultsMsg.or(moreResultsHeading)).toBeVisible();
-  });
-});</pre>
+      
+      test.describe('TC-AMZ-005 — Empty Search / No Results', () => {
+        test('Non-existent query shows a no-results message or sponsored fallback', async ({ page }) => {
+          await page.goto('/');
+          const searchBox = page.getByRole('searchbox', { name: 'Search Amazon' });
+          await searchBox.fill('zxyvwk123456789');
+          await searchBox.press('Enter');
+      
+          await expect(page).toHaveURL(/s\?k=/);
+      
+          // Variant A: "More results" sponsored fallback only
+          // Variant B: "No results for your search query." heading, then fallback
+          const noResultsHeading = page.getByRole('heading', { name: /no results for/i });
+          const moreResultsHeading = page.getByRole('heading', { name: /more results/i });
+      
+          await expect(noResultsHeading.or(moreResultsHeading).first()).toBeVisible();
+      
+          // Record which variant this run received
+          const variant = (await noResultsHeading.isVisible())
+            ? 'B — "No results for your search query." heading shown'
+            : 'A — "More results" sponsored fallback, no empty-state message';
+      
+          test.info().annotations.push({ type: 'Variant observed', description: variant });
+          await test.info().attach('Search results page', {
+            body: await page.screenshot({ fullPage: true }),
+            contentType: 'image/png',
+          });
+        });
+      });</pre>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Result</div>
-          <div class="cell cell-right"><span class="status-badge verified">Pass</span> — 3.9s</div>
+          <div class="cell cell-right"><span class="status-badge verified">Pass</span> — 5/5 local (Variant A) · CI (Variant
+            B)</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Evidence</div>
           <div class="cell cell-right">
             <div class="evidence-area">
               <div class="evidence-box">
-                <h4>Playwright Report — Pass</h4>
+                <h4>Playwright Report — 5/5 Pass</h4>
                 <img src="../automation/tests/amazon/screenshots/tc-amz-005-auto.png"
-                  alt="Playwright report showing TC-AMZ-005 passing"
-                  class="tc-screenshot zoomable"
+                  alt="Playwright report showing TC-AMZ-005 passing 5 of 5 runs"
+                  class="tc-screenshot tc-screenshot--crop zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Variant A — Local (Residential Network)</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-005-variant-a.png"
+                  alt="Amazon search results showing More results sponsored fallback with no empty-state message"
+                  class="tc-screenshot tc-screenshot--crop zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>Variant B — GitHub Actions CI</h4>
+                <img src="../automation/tests/amazon/screenshots/tc-amz-005-variant-b.png"
+                  alt="Amazon search results showing No results for your search query heading" class="tc-screenshot tc-screenshot--crop zoomable"
                   onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
