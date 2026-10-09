@@ -68,12 +68,12 @@
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Test Data</span></div>
           <div class="cell cell-right">
-            Stripe-provided test cards only. No real card numbers used.
+            Stripe-provided test PaymentMethods only. No real card data used.
             <ul class="standard-list" style="margin-top:0.75rem;">
-              <li><code style="color:var(--accent);">4242 4242 4242 4242</code> — always succeeds (Visa)</li>
-              <li><code style="color:var(--accent);">4000 0000 0000 0002</code> — generic decline</li>
-              <li><code style="color:var(--accent);">4000 0000 0000 9995</code> — insufficient funds</li>
-              <li><code style="color:var(--accent);">4000 0000 0000 0101</code> — incorrect CVC</li>
+              <li><code style="color:var(--accent);">pm_card_visa</code> — succeeds (Visa 4242) — TC-PI-001, TC-PI-004, TC-AU-001/002, TC-ER-001/002</li>
+              <li><code style="color:var(--accent);">pm_card_visa_chargeDeclined</code> — generic decline — TC-PI-002</li>
+              <li><code style="color:var(--accent);">pm_card_visa_chargeDeclinedInsufficientFunds</code> — insufficient funds — TC-PI-003</li>
+              <li><code style="color:var(--accent);">tok_visa</code> — legacy card token — TC-CH-001 (blocked, see <a href="stripe-bug-reports.html#STR-OBS-001" class="back-link" style="padding:0;">STR-OBS-001</a>)</li>
             </ul>
           </div>
         </div>
