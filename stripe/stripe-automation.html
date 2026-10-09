@@ -335,6 +335,7 @@ pm.test("Amount capturable is 0", function () {
       <article class="report-section tc-block" id="auto-TC-RF-001">
         <div class="tc-block-title">
           <span class="method-pill method-post">POST</span>
+          <span class="method-pill method-get">GET</span>
           TC-RF-001 &mdash; Full Refund
         </div>
         <div class="tc-row-item">
@@ -342,43 +343,66 @@ pm.test("Amount capturable is 0", function () {
           <div class="cell cell-right"><a href="stripe-test-cases.html#TC-RF-001" class="back-link">TC-RF-001</a></div>
         </div>
         <div class="tc-row-item">
-          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-left">POST Assertions</div>
           <div class="cell cell-right">
             <pre class="code-block">pm.test("Status code is 200", function () {
-  pm.expect(pm.response.code).to.equal(200);
-});
-pm.test("Status is succeeded", function () {
-  const json = pm.response.json();
-  pm.expect(json.status).to.equal("succeeded");
-});
-pm.test("Amount is 2000", function () {
-  const json = pm.response.json();
-  pm.expect(json.amount).to.equal(2000);
-});
-pm.test("Object is refund", function () {
-  const json = pm.response.json();
-  pm.expect(json.object).to.equal("refund");
-});</pre>
+        pm.expect(pm.response.code).to.equal(200);
+      });
+      pm.test("Status is succeeded", function () {
+        const json = pm.response.json();
+        pm.expect(json.status).to.equal("succeeded");
+      });
+      pm.test("Amount is 2000", function () {
+        const json = pm.response.json();
+        pm.expect(json.amount).to.equal(2000);
+      });
+      pm.test("Object is refund", function () {
+        const json = pm.response.json();
+        pm.expect(json.object).to.equal("refund");
+      });
+      // Save charge ID for GET verification
+      const json = pm.response.json();
+      pm.environment.set("charge_id_full", json.charge);</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">GET Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Amount refunded is 2000", function () {
+        const json = pm.response.json();
+        pm.expect(json.amount_refunded).to.equal(2000);
+      });
+      pm.test("Charge is fully refunded", function () {
+        const json = pm.response.json();
+        pm.expect(json.refunded).to.equal(true);
+      });</pre>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Result</div>
-          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+          <div class="cell cell-right"><span class="status-badge verified">6 / 6 Passed</span></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Evidence</div>
           <div class="cell cell-right">
             <div class="evidence-area">
               <div class="evidence-box">
-                <h4>Test Results — 4/4 Passed</h4>
-                <img src="screenshots_stripe/tc-rf-001-auto.png" alt="TC-RF-001 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <h4>POST — Refund Created</h4>
+                <img src="screenshots_stripe/tc-rf-001-auto.png" alt="TC-RF-001 refund POST 4 tests passed"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>GET — Charge Verification</h4>
+                <img src="screenshots_stripe/tc-rf-001b-auto.png" alt="TC-RF-001 charge GET 2 tests passed refunded true"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
             </div>
           </div>
         </div>
       </article>
-
+      
       <div class="tc-separator"></div>
 
       <!-- TC-RF-002 -->
