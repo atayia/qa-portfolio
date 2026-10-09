@@ -2289,6 +2289,152 @@
                   "body": "{\n  \"id\": \"ch_3UNXUbPJJILmdXdP2CP51BkC\",\n  \"object\": \"charge\",\n  \"amount\": 2000,\n  \"amount_captured\": 2000,\n  \"amount_refunded\": 500,\n  \"application\": null,\n  \"application_fee\": null,\n  \"application_fee_amount\": null,\n  \"balance_transaction\": \"txn_3UNXUbPJJILmdXdP2hUzePv5\",\n  \"billing_details\": {\n    \"address\": {\n      \"city\": null,\n      \"country\": null,\n      \"line1\": null,\n      \"line2\": null,\n      \"postal_code\": null,\n      \"state\": null\n    },\n    \"email\": null,\n    \"name\": null,\n    \"phone\": null,\n    \"tax_id\": null\n  },\n  \"calculated_statement_descriptor\": \"Stripe\",\n  \"captured\": true,\n  \"created\": 1791289754,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"description\": \"PaymentIntent to be Refunded\",\n  \"destination\": null,\n  \"dispute\": null,\n  \"disputed\": false,\n  \"failure_balance_transaction\": null,\n  \"failure_code\": null,\n  \"failure_message\": null,\n  \"fraud_details\": {},\n  \"livemode\": false,\n  \"metadata\": {},\n  \"on_behalf_of\": null,\n  \"order\": null,\n  \"outcome\": {\n    \"advice_code\": null,\n    \"network_advice_code\": null,\n    \"network_decline_code\": null,\n    \"network_status\": \"approved_by_network\",\n    \"reason\": null,\n    \"risk_level\": \"normal\",\n    \"risk_score\": 24,\n    \"seller_message\": \"Payment complete.\",\n    \"type\": \"authorized\"\n  },\n  \"paid\": true,\n  \"payment_intent\": \"pi_3UNXUbPJJILmdXdP2aRq6GbU\",\n  \"payment_method\": \"pm_1UNXUbPJJILmdXdP05zcGuWA\",\n  \"payment_method_details\": {\n    \"card\": {\n      \"amount_authorized\": 2000,\n      \"authorization_code\": \"353190\",\n      \"brand\": \"visa\",\n      \"checks\": {\n        \"address_line1_check\": null,\n        \"address_postal_code_check\": null,\n        \"cvc_check\": \"pass\"\n      },\n      \"country\": \"US\",\n      \"electronic_commerce_indicator\": \"07\",\n      \"exp_month\": 10,\n      \"exp_year\": 2027,\n      \"extended_authorization\": {\n        \"status\": \"disabled\"\n      },\n      \"fingerprint\": \"SKjMo25DosXoXh07\",\n      \"funding\": \"credit\",\n      \"incremental_authorization\": {\n        \"status\": \"unavailable\"\n      },\n      \"installments\": null,\n      \"last4\": \"4242\",\n      \"mandate\": null,\n      \"multicapture\": {\n        \"status\": \"unavailable\"\n      },\n      \"network\": \"visa\",\n      \"network_token\": {\n        \"used\": false\n      },\n      \"network_transaction_id\": \"837510677111505\",\n      \"overcapture\": {\n        \"maximum_amount_capturable\": 2000,\n        \"status\": \"unavailable\"\n      },\n      \"regulated_status\": \"unregulated\",\n      \"three_d_secure\": null,\n      \"transaction_link_id\": null,\n      \"wallet\": null\n    },\n    \"type\": \"card\"\n  },\n  \"radar_options\": {},\n  \"receipt_email\": null,\n  \"receipt_number\": null,\n  \"receipt_url\": \"https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xVUxyYzZQSkpJTG1kWGRQKOrPmNYGMgY3PM9uJcw6LBb1Z2YDgqUbTb6vFEB225vwBbgHLv5VC4JQUJu_e1QQKFq1de9Nud40YMLG\",\n  \"refunded\": false,\n  \"review\": null,\n  \"shipping\": null,\n  \"source\": null,\n  \"source_transfer\": null,\n  \"statement_descriptor\": null,\n  \"statement_descriptor_suffix\": null,\n  \"status\": \"succeeded\",\n  \"transfer_data\": null,\n  \"transfer_group\": null\n}"
                 }
               ]
+            },
+            {
+              "name": "TC-RF-001b",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Amount refunded is 500\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount_refunded).to.equal(500);\n});\n\npm.test(\"Charge is not fully refunded\", function () {\n    const json = pm.response.json();\n    pm.expect(json.refunded).to.equal(false);\n});\n"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api.stripe.com/v1/charges/{{charge_id_partial}}",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "stripe",
+                    "com"
+                  ],
+                  "path": [
+                    "v1",
+                    "charges",
+                    "{{charge_id_partial}}"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "TC-RF-002b",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "https://api.stripe.com/v1/charges/ch_3UNXUbPJJILmdXdP2CP51BkC",
+                      "protocol": "https",
+                      "host": [
+                        "api",
+                        "stripe",
+                        "com"
+                      ],
+                      "path": [
+                        "v1",
+                        "charges",
+                        "ch_3UNXUbPJJILmdXdP2CP51BkC"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "server",
+                      "value": "nginx"
+                    },
+                    {
+                      "key": "date",
+                      "value": "Wed, 07 Oct 2026 11:07:22 GMT"
+                    },
+                    {
+                      "key": "content-type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "content-length",
+                      "value": "3029"
+                    },
+                    {
+                      "key": "connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "access-control-allow-credentials",
+                      "value": "true"
+                    },
+                    {
+                      "key": "access-control-allow-methods",
+                      "value": "GET, HEAD, PUT, PATCH, POST, DELETE"
+                    },
+                    {
+                      "key": "access-control-allow-origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "access-control-expose-headers",
+                      "value": "Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required"
+                    },
+                    {
+                      "key": "access-control-max-age",
+                      "value": "300"
+                    },
+                    {
+                      "key": "cache-control",
+                      "value": "no-cache, no-store"
+                    },
+                    {
+                      "key": "content-security-policy",
+                      "value": "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=kEtqF7fR5uMiEuI8pElsT3yQzbHt_EsPdkJwBS6EcXmrosLghEfeY9zkGCduR8UwE1M7qnGQaiZ6i48r; report-to csp"
+                    },
+                    {
+                      "key": "report-to",
+                      "value": "{\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=kEtqF7fR5uMiEuI8pElsT3yQzbHt_EsPdkJwBS6EcXmrosLghEfeY9zkGCduR8UwE1M7qnGQaiZ6i48r&t=1\"}],\"include_subdomains\":true}"
+                    },
+                    {
+                      "key": "reporting-endpoints",
+                      "value": "csp=\"https://q.stripe.com/csp-report-v2?q=kEtqF7fR5uMiEuI8pElsT3yQzbHt_EsPdkJwBS6EcXmrosLghEfeY9zkGCduR8UwE1M7qnGQaiZ6i48r&t=1\""
+                    },
+                    {
+                      "key": "request-id",
+                      "value": "req_Zb3ZbkREzeKLCX"
+                    },
+                    {
+                      "key": "stripe-version",
+                      "value": "2026-08-26.dahlia"
+                    },
+                    {
+                      "key": "vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "x-stripe-priority-routing-enabled",
+                      "value": "true"
+                    },
+                    {
+                      "key": "x-stripe-routing-context-priority-tier",
+                      "value": "api-testmode"
+                    },
+                    {
+                      "key": "x-wc",
+                      "value": "3c3"
+                    },
+                    {
+                      "key": "strict-transport-security",
+                      "value": "max-age=63072000; includeSubDomains; preload"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"ch_3UNXUbPJJILmdXdP2CP51BkC\",\n  \"object\": \"charge\",\n  \"amount\": 2000,\n  \"amount_captured\": 2000,\n  \"amount_refunded\": 500,\n  \"application\": null,\n  \"application_fee\": null,\n  \"application_fee_amount\": null,\n  \"balance_transaction\": \"txn_3UNXUbPJJILmdXdP2hUzePv5\",\n  \"billing_details\": {\n    \"address\": {\n      \"city\": null,\n      \"country\": null,\n      \"line1\": null,\n      \"line2\": null,\n      \"postal_code\": null,\n      \"state\": null\n    },\n    \"email\": null,\n    \"name\": null,\n    \"phone\": null,\n    \"tax_id\": null\n  },\n  \"calculated_statement_descriptor\": \"Stripe\",\n  \"captured\": true,\n  \"created\": 1791289754,\n  \"currency\": \"usd\",\n  \"customer\": null,\n  \"description\": \"PaymentIntent to be Refunded\",\n  \"destination\": null,\n  \"dispute\": null,\n  \"disputed\": false,\n  \"failure_balance_transaction\": null,\n  \"failure_code\": null,\n  \"failure_message\": null,\n  \"fraud_details\": {},\n  \"livemode\": false,\n  \"metadata\": {},\n  \"on_behalf_of\": null,\n  \"order\": null,\n  \"outcome\": {\n    \"advice_code\": null,\n    \"network_advice_code\": null,\n    \"network_decline_code\": null,\n    \"network_status\": \"approved_by_network\",\n    \"reason\": null,\n    \"risk_level\": \"normal\",\n    \"risk_score\": 24,\n    \"seller_message\": \"Payment complete.\",\n    \"type\": \"authorized\"\n  },\n  \"paid\": true,\n  \"payment_intent\": \"pi_3UNXUbPJJILmdXdP2aRq6GbU\",\n  \"payment_method\": \"pm_1UNXUbPJJILmdXdP05zcGuWA\",\n  \"payment_method_details\": {\n    \"card\": {\n      \"amount_authorized\": 2000,\n      \"authorization_code\": \"353190\",\n      \"brand\": \"visa\",\n      \"checks\": {\n        \"address_line1_check\": null,\n        \"address_postal_code_check\": null,\n        \"cvc_check\": \"pass\"\n      },\n      \"country\": \"US\",\n      \"electronic_commerce_indicator\": \"07\",\n      \"exp_month\": 10,\n      \"exp_year\": 2027,\n      \"extended_authorization\": {\n        \"status\": \"disabled\"\n      },\n      \"fingerprint\": \"SKjMo25DosXoXh07\",\n      \"funding\": \"credit\",\n      \"incremental_authorization\": {\n        \"status\": \"unavailable\"\n      },\n      \"installments\": null,\n      \"last4\": \"4242\",\n      \"mandate\": null,\n      \"multicapture\": {\n        \"status\": \"unavailable\"\n      },\n      \"network\": \"visa\",\n      \"network_token\": {\n        \"used\": false\n      },\n      \"network_transaction_id\": \"837510677111505\",\n      \"overcapture\": {\n        \"maximum_amount_capturable\": 2000,\n        \"status\": \"unavailable\"\n      },\n      \"regulated_status\": \"unregulated\",\n      \"three_d_secure\": null,\n      \"transaction_link_id\": null,\n      \"wallet\": null\n    },\n    \"type\": \"card\"\n  },\n  \"radar_options\": {},\n  \"receipt_email\": null,\n  \"receipt_number\": null,\n  \"receipt_url\": \"https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xVUxyYzZQSkpJTG1kWGRQKOrPmNYGMgY3PM9uJcw6LBb1Z2YDgqUbTb6vFEB225vwBbgHLv5VC4JQUJu_e1QQKFq1de9Nud40YMLG\",\n  \"refunded\": false,\n  \"review\": null,\n  \"shipping\": null,\n  \"source\": null,\n  \"source_transfer\": null,\n  \"statement_descriptor\": null,\n  \"statement_descriptor_suffix\": null,\n  \"status\": \"succeeded\",\n  \"transfer_data\": null,\n  \"transfer_group\": null\n}"
+                }
+              ]
             }
           ]
         },
