@@ -31,22 +31,22 @@
       <!-- STR-OBS-001 -->
       <article class="report-section" id="STR-OBS-001">
         <div class="project-card-header">
-          <h2 class="report-title">STR-OBS-001: Charges API Card Token EOL Policy Setting Has No Effect</h2>
+          <h2 class="report-title">STR-OBS-001: Charges API Rejects Card Tokens Despite Documentation and Policy Setting</h2>
           <span class="status-badge status-todo">Observation</span>
         </div>
 
         <div class="tc-table">
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Type</span></div>
-            <div class="cell cell-right">Observation — API Deprecation / Policy Enforcement Issue</div>
+            <div class="cell cell-right">Observation — Documentation vs. Behavior Discrepancy (API Deprecation)</div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Severity</span></div>
-            <div class="cell cell-right">High — blocks Charges API test execution entirely</div>
+            <div class="cell cell-right">Medium — Charges API card-token flow unusable; documented replacement (PaymentIntents) works</div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Priority</span></div>
-            <div class="cell cell-right">High</div>
+            <div class="cell cell-right">Low</div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Summary</span></div>
@@ -76,8 +76,9 @@
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Expected Result</span></div>
             <div class="cell cell-right">
-              After enabling Card Token support in API Policies, the Charges API should accept
-              <code>source: tok_visa</code> and return HTTP 200 with a succeeded charge.
+              Per Stripe's <a href="https://docs.stripe.com/payments/older-apis" target="_blank" rel="noopener" style="color:var(--accent);">Older payment APIs</a>
+              documentation, the Charges API "remains available" for existing integrations. After enabling Card Token
+              support in API Policies, <code>POST /v1/charges</code> with <code>source: tok_visa</code> should return HTTP 200.
             </div>
           </div>
           <div class="tc-row-item">
@@ -152,6 +153,12 @@
                 <td>Oct 5, 2026</td>
                 <td><span class="status-badge status-todo">Observation</span></td>
                 <td>API Policy setting enabled and key regenerated — error persisted. TC-CH-001 and TC-CH-002 marked Blocked. Charge creation verified via TC-PI-001 instead.</td>
+                <td>Marie-Jo A.</td>
+              </tr>
+              <tr>
+                <td>Oct 9, 2026</td>
+                <td><span class="status-badge status-todo">Observation</span></td>
+                <td>Reclassified as a documentation vs. behavior discrepancy; severity lowered from High to Medium. Stripe's Older payment APIs page states the Charges API remains available, but card-token requests are rejected as end of life. Impact is limited: the documented PaymentIntents replacement is verified (TC-PI-001), and charge <em>retrieval</em> still works (TC-RF-001, TC-RF-002).</td>
                 <td>Marie-Jo A.</td>
               </tr>
             </tbody>
