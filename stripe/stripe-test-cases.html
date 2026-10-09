@@ -559,11 +559,13 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Endpoint</div>
-          <div class="cell"><code style="color:var(--accent);">POST /v1/refunds</code></div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/refunds</code> &bull; verified via <code
+              style="color:var(--accent);">GET /v1/charges/:id</code></div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Objective</div>
-          <div class="cell">Verify a full refund is issued and the charge transitions to <code style="color:var(--accent);">refunded: true</code>.</div>
+          <div class="cell">Verify a full refund is issued and the associated charge transitions to <code
+              style="color:var(--accent);">refunded: true</code>.</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Linked Requirement</div>
@@ -571,7 +573,10 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Preconditions</div>
-          <div class="cell">TC-PI-001 executed; <code style="color:var(--accent);">{{payment_intent_id}}</code> set in Postman environment.</div>
+          <div class="cell">TC-PI-001 freshly executed immediately before this test, so
+            <code style="color:var(--accent);">{{payment_intent_id}}</code> references a new, unrefunded PaymentIntent.
+            Reusing an already refunded PaymentIntent returns HTTP 400 <code style="color:var(--accent);">charge_already_refunded</code>
+            (see <a href="#TC-RF-003" class="back-link">TC-RF-003</a>).</div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Request Body</div>
@@ -584,15 +589,21 @@
         <div class="tc-row-item">
           <div class="cell cell-left">Expected Result</div>
           <div class="cell">
-            HTTP 200 &bull; <code style="color:var(--accent);">object: "refund"</code> &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
-            <code style="color:var(--accent);">amount: 2000</code>
+            <strong>Refund:</strong> HTTP 200 &bull; <code style="color:var(--accent);">object: "refund"</code> &bull; <code
+              style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code><br>
+            <strong>Charge (GET):</strong> HTTP 200 &bull; <code style="color:var(--accent);">refunded: true</code> &bull;
+            <code style="color:var(--accent);">amount_refunded: 2000</code>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Actual Result</div>
           <div class="cell">
-            HTTP 200 &bull; <code style="color:var(--accent);">object: "refund"</code> &bull; <code style="color:var(--accent);">status: "succeeded"</code> &bull;
-            <code style="color:var(--accent);">amount: 2000</code>
+            <strong>Refund:</strong> HTTP 200 &bull; <code style="color:var(--accent);">object: "refund"</code> &bull; <code
+              style="color:var(--accent);">status: "succeeded"</code> &bull;
+            <code style="color:var(--accent);">amount: 2000</code><br>
+            <strong>Charge (GET):</strong> HTTP 200 &bull; <code style="color:var(--accent);">refunded: true</code> &bull;
+            <code style="color:var(--accent);">amount_refunded: 2000</code>
           </div>
         </div>
         <div class="tc-row-item">
@@ -601,10 +612,14 @@
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">Notes</div>
-          <div class="cell">Full refund confirmed via refund response <code style="color:var(--accent);">status: "succeeded"</code> and <code
-            style="color:var(--accent);">amount: 2000</code>. Charge object verification via <code
-            style="color:var(--accent);">GET /v1/charges/:id</code> skipped — Charges API blocked per <a
-            href="stripe-bug-reports.html#STR-OBS-001" class="back-link">STR-OBS-001</a>.</div>
+          <div class="cell">The refund response does not include the charge's <code
+              style="color:var(--accent);">refunded</code> field;
+            it returns the charge ID instead. The charge state is verified with a follow-up
+            <code style="color:var(--accent);">GET /v1/charges/:id</code>, mirroring TC-RF-002.
+            Charge retrieval is unaffected by <a href="stripe-bug-reports.html#STR-OBS-001" class="back-link">STR-OBS-001</a>,
+            which only blocks charge <em>creation</em> with card tokens. An earlier execution skipped this check on that
+            assumption; it was re-executed on Oct 9, 2026 with the GET verification.
+          </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left"><span class="label-text">Evidence</span></div>
@@ -619,6 +634,13 @@
               <div class="evidence-box">
                 <h4>Response — status: "succeeded"</h4>
                 <img src="screenshots_stripe/tc-rf-001-b.png" alt="TC-RF-001 status succeeded" class="tc-screenshot zoomable"
+                  onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+              <div class="evidence-box">
+                <h4>GET Charge — refunded: true</h4>
+                <img src="screenshots_stripe/tc-rf-001b-a.png"
+                  alt="TC-RF-001 charge GET showing refunded true and status succeeded" class="tc-screenshot zoomable"
                   onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
