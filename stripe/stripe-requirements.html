@@ -47,7 +47,9 @@
             <div class="cell cell-right">
               The API shall create a PaymentIntent and return HTTP 200 when provided a valid amount,
               currency, and payment method. The response must include <code>id</code>,
-              <code>status: "succeeded"</code>, <code>amount</code>, and <code>currency</code>.
+              <code>amount</code>, <code>currency</code>, and a <code>status</code> that reflects the
+              capture method: <code>"succeeded"</code> for automatic capture, <code>"requires_capture"</code>
+              for manual capture until captured.
             </div>
           </div>
           <div class="tc-row-item">
@@ -172,22 +174,24 @@
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Description</span></div>
             <div class="cell cell-right">
-              The API shall process full and partial refunds against a succeeded charge.
-              Full refunds must set <code>refunded: true</code> on the charge object.
-              Partial refunds must correctly reflect <code>amount_refunded</code> without
-              setting <code>refunded: true</code> until the full amount is returned.
+              The API shall process full and partial refunds against a succeeded PaymentIntent.
+              After a full refund, the associated charge must show <code>refunded: true</code> and
+              <code>amount_refunded</code> equal to the original amount. After a partial refund,
+              <code>amount_refunded</code> must reflect the refunded amount and <code>refunded</code>
+              must remain <code>false</code>. A refund attempt on an already fully refunded payment
+              must be rejected with HTTP 400.
             </div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Verified By</span></div>
             <div class="cell cell-right">
               <a href="stripe-test-cases.html#TC-RF-001" class="back-link">TC-RF-001</a>,
-              <a href="stripe-test-cases.html#TC-RF-002" class="back-link">TC-RF-002</a>
+              <a href="stripe-test-cases.html#TC-RF-002" class="back-link">TC-RF-002</a>,
+              <a href="stripe-test-cases.html#TC-RF-003" class="back-link">TC-RF-003</a>
             </div>
           </div>
           <div class="tc-row-item">
             <div class="cell cell-left"><span class="label-text">Status</span></div>
-            <div class="cell cell-right"><span class="status-badge>
             <div class="cell cell-right"><span class="status-badge verified">Verified</span></div>
           </div>
           <div class="tc-row-item">
