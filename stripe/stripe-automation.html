@@ -34,18 +34,19 @@
         <p>
           Manual test cases from v1 were extended with Postman <code style="color:var(--accent);">pm.test()</code>
           and <code style="color:var(--accent);">pm.expect()</code> assertions, automating response verification
-          for all in-scope test cases. Each request is structured as a standalone test case with its own
-          body, scripts, and saved example response.
+          for all in-scope test cases. Requests pass IDs to each other through environment variables
+          (state chaining), so the full collection runs end to end from a clean environment.
         </p>
         <p style="font-size:0.85rem; color:var(--muted); margin-top:0.75rem;">
-          TC-RF-003 (Double Refund Attempt) was discovered during automation execution — not part of the
-          original manual scope. Demonstrates exploratory testing instinct during automation runs.
+          TC-RF-003 (Double Refund Attempt) was discovered during execution: re-running TC-RF-001 against an
+          already refunded PaymentIntent returned HTTP 400 <code>charge_already_refunded</code>, which became its own
+          negative test case.
         </p>
-
+      
         <div class="hub-metadata-grid" style="margin-top:1.5rem;">
           <div>
             <span class="metadata-label">Tool</span>
-            <span class="metadata-value">Postman Scripts (pm.test / pm.expect)</span>
+            <span class="metadata-value">Postman Scripts · Newman CLI</span>
           </div>
           <div>
             <span class="metadata-label">Collection</span>
@@ -56,8 +57,16 @@
             </span>
           </div>
           <div>
+            <span class="metadata-label">Environment</span>
+            <span class="metadata-value">
+              <a href="stripe-environment.template.json" style="color:var(--accent);">
+                <i class="fas fa-file-export" style="margin-right:4px;"></i>Template (no keys)
+              </a>
+            </span>
+          </div>
+          <div>
             <span class="metadata-label">Total Automated</span>
-            <span class="metadata-value">12 test cases</span>
+            <span class="metadata-value">12 test cases · 47 assertions</span>
           </div>
           <div>
             <span class="metadata-label">Passed</span>
@@ -65,11 +74,33 @@
           </div>
           <div>
             <span class="metadata-label">Failed</span>
-            <span class="metadata-value" style="color:#ef4444;">0</span>
+            <span class="metadata-value">0</span>
           </div>
           <div>
             <span class="metadata-label">Blocked</span>
             <span class="metadata-value" style="color:#ef4444;">2 (TC-CH-001, TC-CH-002)</span>
+          </div>
+        </div>
+      </section>
+      
+      <!-- FULL SUITE RUN -->
+      <section class="hub-section">
+        <h2 class="hub-section-title">Full Suite Run (Newman)</h2>
+        <p>
+          The exported collection is run from the command line with Newman, Postman's CLI runner, using the
+          blank environment template. The API key is injected at run time and never stored in a file.
+          A clean run proves the collection is self-contained: no leftover variables, no manual run order.
+        </p>
+        <pre class="code-block" style="margin-top:1rem;">npx newman run stripe/stripe-collection.json \
+        -e stripe/stripe-environment.template.json \
+        --env-var "secret_key=sk_test_…"</pre>
+        <div class="evidence-area">
+          <div class="evidence-box">
+            <h4>Newman Summary — 47 assertions, 0 failed</h4>
+            <img src="screenshots_stripe/newman-run.png"
+              alt="Newman run summary showing 16 requests and 47 assertions with 0 failures" class="tc-screenshot zoomable"
+              onclick="openModal(this.src)">
+            <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
           </div>
         </div>
       </section>
@@ -252,7 +283,9 @@ pm.test("Capture method is manual", function () {
 pm.test("Amount is 2000", function () {
   const json = pm.response.json();
   pm.expect(json.amount).to.equal(2000);
-});</pre>
+});
+const json = pm.response.json();
+pm.environment.set("payment_intent_id_manual", json.id);</pre>
           </div>
         </div>
         <div class="tc-row-item">
@@ -346,35 +379,35 @@ pm.test("Amount capturable is 0", function () {
           <div class="cell cell-left">POST Assertions</div>
           <div class="cell cell-right">
             <pre class="code-block">pm.test("Status code is 200", function () {
-        pm.expect(pm.response.code).to.equal(200);
+  pm.expect(pm.response.code).to.equal(200);
       });
-      pm.test("Status is succeeded", function () {
-        const json = pm.response.json();
-        pm.expect(json.status).to.equal("succeeded");
+pm.test("Status is succeeded", function () {
+  const json = pm.response.json();
+  pm.expect(json.status).to.equal("succeeded");
       });
-      pm.test("Amount is 2000", function () {
-        const json = pm.response.json();
-        pm.expect(json.amount).to.equal(2000);
+pm.test("Amount is 2000", function () {
+  const json = pm.response.json();
+  pm.expect(json.amount).to.equal(2000);
       });
-      pm.test("Object is refund", function () {
-        const json = pm.response.json();
-        pm.expect(json.object).to.equal("refund");
+pm.test("Object is refund", function () {
+  const json = pm.response.json();
+  pm.expect(json.object).to.equal("refund");
       });
-      // Save charge ID for GET verification
-      const json = pm.response.json();
-      pm.environment.set("charge_id_full", json.charge);</pre>
+// Save charge ID for GET verification
+const json = pm.response.json();
+pm.environment.set("charge_id_full", json.charge);</pre>
           </div>
         </div>
         <div class="tc-row-item">
           <div class="cell cell-left">GET Assertions</div>
           <div class="cell cell-right">
             <pre class="code-block">pm.test("Amount refunded is 2000", function () {
-        const json = pm.response.json();
-        pm.expect(json.amount_refunded).to.equal(2000);
+  const json = pm.response.json();
+  pm.expect(json.amount_refunded).to.equal(2000);
       });
-      pm.test("Charge is fully refunded", function () {
-        const json = pm.response.json();
-        pm.expect(json.refunded).to.equal(true);
+pm.test("Charge is fully refunded", function () {
+  const json = pm.response.json();
+  pm.expect(json.refunded).to.equal(true);
       });</pre>
           </div>
         </div>
@@ -559,8 +592,8 @@ pm.test("Error type is invalid_request_error", function () {
   pm.expect(json.error.type).to.equal("invalid_request_error");
 });
 pm.test("Error message mentions API key", function () {
-  const json = pm.response.json();
-  pm.expect(json.error.message).to.include("API key");
+const json = pm.response.json();
+pm.expect(json.error.message.toLowerCase()).to.include("api key");
 });</pre>
           </div>
         </div>
@@ -606,7 +639,7 @@ pm.test("Error type is invalid_request_error", function () {
 });
 pm.test("Error message mentions invalid API Key", function () {
   const json = pm.response.json();
-  pm.expect(json.error.message).to.include("invalid API Key");
+  pm.expect(json.error.message.toLowerCase()).to.include("invalid api key");
 });</pre>
           </div>
         </div>
@@ -711,8 +744,8 @@ pm.test("Error param is currency", function () {
   pm.expect(json.error.param).to.equal("currency");
 });
 pm.test("Error message mentions invalid currency", function () {
-  const json = pm.response.json();
-  pm.expect(json.error.message).to.include("Invalid currency");
+const json = pm.response.json();
+pm.expect(json.error.message.toLowerCase()).to.include("invalid currency");
 });</pre>
           </div>
         </div>
