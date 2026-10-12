@@ -1,3 +1,38 @@
+// ==========================================================================
+// AUTOMATION TOTALS — counts the article.tc-block test blocks in any document
+// Defined at the top level so hub pages can call it on a fetched page.
+// ==========================================================================
+function countAutomation(doc) {
+  const blocks = doc.querySelectorAll('article.tc-block');
+  let assertions = 0;
+  let failed = 0;
+
+  blocks.forEach(function (block) {
+    // Count assertions inside code blocks only: pm.test( for Postman, await expect( for Playwright
+    block.querySelectorAll('pre.code-block').forEach(function (pre) {
+      assertions += (pre.textContent.match(/pm\.test\(|await expect\(/g) || []).length;
+    });
+
+    // A block fails if any badge says "Fail", or a result reads "N / M Passed" with N < M
+    const ratio = block.textContent.match(/(\d+) \/ (\d+) Passed/);
+    const hasFailBadge = Array.from(block.querySelectorAll('.status-badge'))
+      .some(function (badge) { return /fail/i.test(badge.textContent); });
+
+    if (hasFailBadge || (ratio && ratio[1] !== ratio[2])) failed++;
+  });
+
+  return { tests: blocks.length, assertions: assertions, passed: blocks.length - failed, failed: failed };
+}
+
+// Writes totals into elements labelled data-count="tests|assertions|passed|failed"
+function fillCounts(container, totals) {
+  container.querySelectorAll('[data-count]').forEach(function (el) {
+    const key = el.dataset.count;
+    if (key in totals) el.textContent = totals[key];
+    if (key === 'failed' && totals.failed > 0) el.style.color = '#ef4444';
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // ==========================================================================
@@ -108,6 +143,14 @@ document.addEventListener("DOMContentLoaded", function () {
         jumpToBottom.style.pointerEvents = nearBottom ? 'none' : 'auto';
       }
     });
+  }
+
+
+  // ==========================================================================
+  // 4. AUTOMATION TOTALS on pages that contain test blocks
+  // ==========================================================================
+  if (document.querySelector('article.tc-block') && document.querySelector('[data-count]')) {
+    fillCounts(document, countAutomation(document));
   }
 
 });

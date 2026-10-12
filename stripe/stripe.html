@@ -90,7 +90,7 @@
             <h3 class="deliverable-link-title">
               <i class="fas fa-vial"></i> Test Cases
             </h3>
-            <p><span id="case-count"> </span> test cases across Payment Intents, Charges, Refunds, Auth, and Error Handling.</p>
+            <p><span id="case-count">16</span> test cases across Payment Intents, Charges, Refunds, Auth, and Error Handling.</p>
           </div>
         </a>
 
@@ -108,8 +108,10 @@
             <h3 class="deliverable-link-title">
               <i class="fas fa-robot"></i> API Automation
             </h3>
-            <p>Postman script assertions for all in-scope test cases — 14 automated, 0 failed. Includes TC-RF-003 discovered
-              during execution.</p>
+            <p>Postman script assertions for all in-scope test cases — <span data-count="tests">14</span> automated,
+              <span data-count="assertions">55</span> assertions, <span data-count="failed">0</span> failed.
+              Includes TC-RF-003 discovered during execution.
+            </p>
           </div>
         </a>
 
@@ -124,8 +126,11 @@
       try {
         const tcRes = await fetch('stripe-test-cases.html');
         const tcDoc = new DOMParser().parseFromString(await tcRes.text(), 'text/html');
-        const tcCount = tcDoc.querySelectorAll('.tc-block').length;
-        document.getElementById('case-count').textContent = tcCount || '10';
+        document.getElementById('case-count').textContent = tcDoc.querySelectorAll('.tc-block').length;
+
+        const autoRes = await fetch('stripe-automation.html');
+        const autoDoc = new DOMParser().parseFromString(await autoRes.text(), 'text/html');
+        fillCounts(document, countAutomation(autoDoc));
       } catch (e) {
         console.warn('Count sync skipped (likely local file:// context):', e.message);
       }
