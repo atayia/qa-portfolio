@@ -63,6 +63,7 @@ Auth, and Error Handling.
 - 14 test cases, including negative paths, auth failures, and input validation
 - 12 automated with Postman script assertions (`pm.test` / `pm.expect`)
 - Exported Postman collection: [`stripe/stripe-collection.json`](stripe/stripe-collection.json)
+- Full collection runs end to end from a clean environment with Newman (47 assertions, 0 failed)
 
 ---
 
@@ -102,6 +103,19 @@ npm ci
 npx playwright install chromium
 npx playwright test
 ```
+
+### Run the Stripe API suite locally
+
+Requires your own Stripe **test** secret key (`sk_test_…`). The environment template contains no keys.
+
+```bash
+npx newman run stripe/stripe-collection.json \
+  -e stripe/stripe-environment.template.json \
+  --env-var "secret_key=sk_test_…"
+```
+
+Or in Postman: import `stripe/stripe-collection.json` and `stripe/stripe-environment.template.json`,
+paste your test key into `secret_key`, and run the collection in order.
 
 ---
 
