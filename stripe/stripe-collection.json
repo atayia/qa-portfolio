@@ -765,7 +765,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n\npm.test(\"Status is requires_capture\", function () {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"requires_capture\");\n});\n\npm.test(\"Capture method is manual\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.capture_method).to.equal(\"manual\");\n});\n\npm.test(\"Amount is 2000\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});"
+                  "pm.test(\"Status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n\npm.test(\"Status is requires_capture\", function () {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"requires_capture\");\n});\n\npm.test(\"Capture method is manual\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.capture_method).to.equal(\"manual\");\n});\n\npm.test(\"Amount is 2000\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});\n\nconst json = pm.response.json();\npm.environment.set(\"payment_intent_id_manual\", json.id);\n\n"
                 ]
               }
             }
@@ -1282,7 +1282,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 200\", function() {\n    pm.expect(pm.response.code).to.equal(200);\n})\n\npm.test(\"Status is succeeded\", function() {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount is 2000\", function() {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});\n\npm.test(\"Object is refund\", function() {\n    const json = pm.response.json();\n    pm.expect(json.object).to.equal(\"refund\");\n});"
+                  "pm.test(\"Status code is 200\", function() {\n    pm.expect(pm.response.code).to.equal(200);\n})\n\npm.test(\"Status is succeeded\", function() {\n    const json = pm.response.json();\n    pm.expect(json.status).to.equal(\"succeeded\");\n});\n\npm.test(\"Amount is 2000\", function() {\n    const json = pm.response.json();\n    pm.expect(json.amount).to.equal(2000);\n});\n\npm.test(\"Object is refund\", function() {\n    const json = pm.response.json();\n    pm.expect(json.object).to.equal(\"refund\");\n});\n\nconst json = pm.response.json();\npm.environment.set(\"charge_id_full\", json.charge);"
                 ]
               }
             }
@@ -1472,14 +1472,14 @@
           ]
         },
         {
-          "name": "TC-RF-001b",
+          "name": "TC-RF-001b - Full refund charge state verification",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Amount refunded is 500\", function () {\n    const json = pm.response.json();\n    pm.expect(json.amount_refunded).to.equal(500);\n});\n\npm.test(\"Charge is not fully refunded\", function () {\n    const json = pm.response.json();\n    pm.expect(json.refunded).to.equal(false);\n});\n"
+                  "pm.test(\"Amount refunded is 2000\", function () {\n        const json = pm.response.json();\n        pm.expect(json.amount_refunded).to.equal(2000);\n      });\n      \npm.test(\"Charge is fully refunded\", function () {\n        const json = pm.response.json();\n        pm.expect(json.refunded).to.equal(true);\n      });"
                 ]
               }
             }
@@ -1488,7 +1488,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.stripe.com/v1/charges/{{charge_id_partial}}",
+              "raw": "https://api.stripe.com/v1/charges/{{charge_id_full}}",
               "protocol": "https",
               "host": [
                 "api",
@@ -1498,7 +1498,7 @@
               "path": [
                 "v1",
                 "charges",
-                "{{charge_id_partial}}"
+                "{{charge_id_full}}"
               ]
             }
           },
@@ -1618,7 +1618,7 @@
           ]
         },
         {
-          "name": "pre TC-RF-002 -partial PI creation",
+          "name": "Setup — Create PaymentIntent for partial refund",
           "event": [
             {
               "listen": "test",
@@ -1747,7 +1747,7 @@
           "response": []
         },
         {
-          "name": "TC-RF-002b",
+          "name": "TC-RF-002b - Partial refund charge state verification",
           "event": [
             {
               "listen": "test",
@@ -2037,7 +2037,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error param is currency\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"currency\");\n});\n\npm.test(\"Error message menyions invalid currency\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message).to.include(\"invalid currency\");\n});"
+                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error param is currency\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"currency\");\n});\n\npm.test(\"Error message mentions invalid currency\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message.toLowerCase()).to.include(\"invalid currency\");\n});"
                 ]
               }
             }
@@ -2121,7 +2121,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 401\", function() {\n    pm.expect(pm.response.code).to.equal(401);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error message mentions API Key\", function (){\n    const json = pm.response.json();\n    pm.expect(json.error.message).to.include(\"API Key\");\n});"
+                  "pm.test(\"Status code is 401\", function() {\n    pm.expect(pm.response.code).to.equal(401);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error message mentions API key\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message.toLowerCase()).to.include(\"api key\");\n});"
                 ]
               }
             }
@@ -2339,7 +2339,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 401\", function() {\n    pm.expect(pm.response.code).to.equal(401);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error message mentions invalid API Key\", function (){\n    const json = pm.response.json();\n    pm.expect(json.error.message).to.include(\"invalid API Key\");\n});"
+                  "pm.test(\"Status code is 401\", function() {\n    pm.expect(pm.response.code).to.equal(401);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error message mentions invalid API key\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message.toLowerCase()).to.include(\"invalid api key\");\n});"
                 ]
               }
             }
@@ -2350,7 +2350,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{secret_key_live}}",
+                  "value": "{{invalid_api_key}}",
                   "type": "string"
                 }
               ]
