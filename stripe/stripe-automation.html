@@ -66,11 +66,11 @@
           </div>
           <div>
             <span class="metadata-label">Total Automated</span>
-            <span class="metadata-value">12 test cases · 47 assertions</span>
+            <span class="metadata-value">14 test cases · 55 assertions</span>
           </div>
           <div>
             <span class="metadata-label">Passed</span>
-            <span class="metadata-value" style="color:#22c55e;">12</span>
+            <span class="metadata-value" style="color:#22c55e;">14</span>
           </div>
           <div>
             <span class="metadata-label">Failed</span>
@@ -105,9 +105,9 @@
         --env-var "secret_key=sk_test_…"</pre>
         <div class="evidence-area">
           <div class="evidence-box">
-            <h4>Newman Summary — 47 assertions, 0 failed</h4>
+            <h4>Newman Summary — 55 assertions, 0 failed</h4>
             <img src="screenshots_stripe/newman-run.png"
-              alt="Newman run summary showing 16 requests and 47 assertions with 0 failures" class="tc-screenshot zoomable"
+              alt="Newman run summary showing 18 requests and 55 assertions with 0 failures" class="tc-screenshot zoomable"
               onclick="openModal(this.src)">
             <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
           </div>
@@ -769,6 +769,100 @@ pm.expect(json.error.message.toLowerCase()).to.include("invalid currency");
               <div class="evidence-box">
                 <h4>Test Results — 4/4 Passed</h4>
                 <img src="screenshots_stripe/tc-er-002-auto.png" alt="TC-ER-002 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="report-section tc-block" id="auto-TC-ER-003">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-003 &mdash; Invalid Amount (Negative)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-ER-003" class="back-link">TC-ER-003</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 400", function () {
+  pm.expect(pm.response.code).to.equal(400);
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});
+pm.test("Error param is amount", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.param).to.equal("amount");
+});
+pm.test("Error code is parameter_invalid_integer", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.code).to.equal("parameter_invalid_integer");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-er-003-auto.png" alt="TC-ER-003 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="report-section tc-block" id="auto-TC-ER-004">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-004 &mdash; Missing Required Field (Currency)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Test Case</div>
+          <div class="cell cell-right"><a href="stripe-test-cases.html#TC-ER-004" class="back-link">TC-ER-004</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Assertions</div>
+          <div class="cell cell-right">
+            <pre class="code-block">pm.test("Status code is 400", function () {
+  pm.expect(pm.response.code).to.equal(400);
+});
+pm.test("Error type is invalid_request_error", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.type).to.equal("invalid_request_error");
+});
+pm.test("Error param is currency", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.param).to.equal("currency");
+});
+pm.test("Error code is parameter_missing", function () {
+  const json = pm.response.json();
+  pm.expect(json.error.code).to.equal("parameter_missing");
+});</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Result</div>
+          <div class="cell cell-right"><span class="status-badge verified">4 / 4 Passed</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Evidence</div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Test Results — 4/4 Passed</h4>
+                <img src="screenshots_stripe/tc-er-004-auto.png" alt="TC-ER-004 automation 4 tests passed" class="tc-screenshot zoomable" onclick="openModal(this.src)">
                 <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
               </div>
             </div>
