@@ -33,6 +33,35 @@ function fillCounts(container, totals) {
   });
 }
 
+// Counts elements on a sibling page.
+// <span data-count-from="page.html" data-count-selector=".tc-block">10</span>
+// No selector = automation counts (fills data-count spans inside the element).
+async function syncRemoteCounts() {
+  const targets = document.querySelectorAll('[data-count-from]');
+  const pages = {}; // fetch each page only once
+
+  for (const el of targets) {
+    const url = el.dataset.countFrom;
+    try {
+      if (!pages[url]) {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        pages[url] = new DOMParser().parseFromString(await res.text(), 'text/html');
+      }
+      const doc = pages[url];
+
+      if (el.dataset.countSelector) {
+        const n = doc.querySelectorAll(el.dataset.countSelector).length;
+        if (n) el.textContent = n;          // 0 = keep the fallback number
+      } else {
+        fillCounts(el, countAutomation(doc));
+      }
+    } catch (e) {
+      console.warn('Count sync skipped for', url, e.message);
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // ==========================================================================
@@ -152,5 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.querySelector('article.tc-block') && document.querySelector('[data-count]')) {
     fillCounts(document, countAutomation(document));
   }
+
+  syncRemoteCounts();
 
 });
