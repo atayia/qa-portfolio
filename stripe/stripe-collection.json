@@ -1948,169 +1948,6 @@
       ]
     },
     {
-      "name": "Error Handling",
-      "item": [
-        {
-          "name": "TC-ER-001 — Invalid Amount Zero",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error parameter is amount\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"amount\");\n});\n\npm.test(\"Error code is parameter_invalid_integer\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.code).to.equal(\"parameter_invalid_integer\");\n});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/x-www-form-urlencoded"
-              }
-            ],
-            "body": {
-              "mode": "urlencoded",
-              "urlencoded": [
-                {
-                  "key": "amount",
-                  "value": "0"
-                },
-                {
-                  "key": "currency",
-                  "value": "usd"
-                },
-                {
-                  "key": "payment_method",
-                  "value": "pm_card_visa",
-                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
-                },
-                {
-                  "key": "confirm",
-                  "value": "true"
-                },
-                {
-                  "key": "return_url",
-                  "value": "https://example.com/return"
-                },
-                {
-                  "key": "capture_method",
-                  "value": "manual",
-                  "disabled": true
-                },
-                {
-                  "key": "description",
-                  "value": "Automatic Capture Payment Intent"
-                },
-                {
-                  "key": "customer",
-                  "value": "{{customer_object_id}}",
-                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
-                  "disabled": true
-                }
-              ]
-            },
-            "url": {
-              "raw": "https://api.stripe.com/v1/payment_intents",
-              "protocol": "https",
-              "host": [
-                "api",
-                "stripe",
-                "com"
-              ],
-              "path": [
-                "v1",
-                "payment_intents"
-              ]
-            },
-            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
-          },
-          "response": []
-        },
-        {
-          "name": "TC-ER-002 — Invalid Currency Code",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error param is currency\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"currency\");\n});\n\npm.test(\"Error message mentions invalid currency\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message.toLowerCase()).to.include(\"invalid currency\");\n});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/x-www-form-urlencoded"
-              }
-            ],
-            "body": {
-              "mode": "urlencoded",
-              "urlencoded": [
-                {
-                  "key": "amount",
-                  "value": "2000"
-                },
-                {
-                  "key": "currency",
-                  "value": "xyz"
-                },
-                {
-                  "key": "payment_method",
-                  "value": "pm_card_visa",
-                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
-                },
-                {
-                  "key": "confirm",
-                  "value": "true"
-                },
-                {
-                  "key": "return_url",
-                  "value": "https://example.com/return"
-                },
-                {
-                  "key": "capture_method",
-                  "value": "manual",
-                  "disabled": true
-                },
-                {
-                  "key": "description",
-                  "value": "Automatic Capture Payment Intent"
-                },
-                {
-                  "key": "customer",
-                  "value": "{{customer_object_id}}",
-                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
-                  "disabled": true
-                }
-              ]
-            },
-            "url": {
-              "raw": "https://api.stripe.com/v1/payment_intents",
-              "protocol": "https",
-              "host": [
-                "api",
-                "stripe",
-                "com"
-              ],
-              "path": [
-                "v1",
-                "payment_intents"
-              ]
-            },
-            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
-          },
-          "response": []
-        }
-      ]
-    },
-    {
       "name": "Auth",
       "item": [
         {
@@ -2385,6 +2222,169 @@
                 {
                   "key": "return_url",
                   "value": "https://example.com/return"
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling",
+      "item": [
+        {
+          "name": "TC-ER-001 — Invalid Amount Zero",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error parameter is amount\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"amount\");\n});\n\npm.test(\"Error code is parameter_invalid_integer\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.code).to.equal(\"parameter_invalid_integer\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "0"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
+                },
+                {
+                  "key": "description",
+                  "value": "Automatic Capture Payment Intent"
+                },
+                {
+                  "key": "customer",
+                  "value": "{{customer_object_id}}",
+                  "description": "If you want to test with a Customer object, create a customer via the \"Customers\" folder within this collection and its ID will be stored as a variable.  Alternatively, you can directly input an ID here",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://api.stripe.com/v1/payment_intents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stripe",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "payment_intents"
+              ]
+            },
+            "description": "This is an example of a request to create a PaymentIntent which is automatically captured.  \n\n#### Documentation:\nPaymentIntents: https://stripe.com/docs/api/payment_intents/create\n\nThese requests use a test visa payment method.  If you like you can also test other payment scenarios by using any of our [test cards/payment methods from our documentation](https://stripe.com/docs/testing)."
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ER-002 — Invalid Currency Code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.expect(pm.response.code).to.equal(400);\n});\n\npm.test(\"Error type is invalid_request_error\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.type).to.equal(\"invalid_request_error\");\n});\n\npm.test(\"Error param is currency\", function () {\n    const json = pm.response.json ();\n    pm.expect(json.error.param).to.equal(\"currency\");\n});\n\npm.test(\"Error message mentions invalid currency\", function () {\n    const json = pm.response.json();\n    pm.expect(json.error.message.toLowerCase()).to.include(\"invalid currency\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000"
+                },
+                {
+                  "key": "currency",
+                  "value": "xyz"
+                },
+                {
+                  "key": "payment_method",
+                  "value": "pm_card_visa",
+                  "description": "You can find more test cards here: https://stripe.com/docs/testing"
+                },
+                {
+                  "key": "confirm",
+                  "value": "true"
+                },
+                {
+                  "key": "return_url",
+                  "value": "https://example.com/return"
+                },
+                {
+                  "key": "capture_method",
+                  "value": "manual",
+                  "disabled": true
                 },
                 {
                   "key": "description",
