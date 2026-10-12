@@ -34,7 +34,7 @@
         <p>
           Manual test cases from v1 were extended with Postman <code style="color:var(--accent);">pm.test()</code>
           and <code style="color:var(--accent);">pm.expect()</code> assertions, automating response verification
-          for all in-scope test cases. Requests pass IDs to each other through environment variables
+          for all 14 in-scope test cases. Requests pass IDs to each other through environment variables
           (state chaining), so the full collection runs end to end from a clean environment.
         </p>
         <p style="font-size:0.85rem; color:var(--muted); margin-top:0.75rem;">
@@ -66,7 +66,7 @@
           </div>
           <div>
             <span class="metadata-label">Total Automated</span>
-            <span class="metadata-value"><span id="auto-count">14</span> test cases · <span id="assert-count">55</span> assertions</span>
+            <span class="metadata-value"><span data-count="tests">14</span> test cases · <span data-count="assertions">55</span> assertions</span>
           </div>
           <div>
             <span class="metadata-label">Passed</span>
@@ -97,7 +97,7 @@
         <h2 class="hub-section-title">Full Suite Run (Newman)</h2>
         <p>
           The exported collection runs from the command line with Newman, Postman's CLI runner, both locally
-          and in GitHub Actions on every collection change, using the blank environment template.. The API key is injected at run time and never stored in a file.
+          and in GitHub Actions on every collection change, using the blank environment template. The API key is injected at run time and never stored in a file.
           A clean run proves the collection is self-contained: no leftover variables, no manual run order.
         </p>
         <pre class="code-block" style="margin-top:1rem;">npx newman run stripe/stripe-collection.json \
