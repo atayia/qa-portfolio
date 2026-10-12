@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "cc60bfa8-837e-4e38-ab79-756176e1c0fa",
     "name": "Heat QA - Stripe API Audit",
-    "description": "This collection is meant to be used alongside the Stripe [Implementation Guides documentation](https://stripe.com/docs/implementation-guides/core-payments).\n\nBefore getting started, you will want to be sure to populate the {{secret_key}} collection variable with the one that can be found in your [Stripe Dashboard Test API Key Settings](https://dashboard.stripe.com/test/apikeys).\n\nYou will notice that in some cases this collection will save certain ID's as variables for you to make chaining requests easier.  For example, the example of refunding a charge will save the ID of the charge to use in the refund request.",
+    "description": "Setup: Import stripe-environment.template.json as an environment, paste your own Stripe test secret key (sk_test_…) into secret_key, and select the environment. Run folders in order. TC-RF-001 requires TC-PI-001 to run immediately before it.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "38813940"
   },
