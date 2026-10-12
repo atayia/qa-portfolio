@@ -290,11 +290,20 @@ body {
 
 .project-links {
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  /* new */
+  gap: 0.5rem 2rem;
+  /* changed: row gap, column gap */
   font-size: 0.8rem;
   color: var(--accent);
   font-weight: 700;
 }
+
+.project-links span {
+  white-space: nowrap;
+}
+
+/* new: keeps icon + label together */
 
 /* Legacy alias — kept for inner pages that still use .req-item */
 .req-item {
