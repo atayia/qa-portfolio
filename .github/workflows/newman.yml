@@ -1,0 +1,29 @@
+name: Stripe API Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'stripe/stripe-collection.json'
+      - 'stripe/stripe-environment.template.json'
+      - '.github/workflows/newman.yml'
+  workflow_dispatch:
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+
+      - name: Run Stripe collection with Newman
+        env:
+          STRIPE_TEST_KEY: ${{ secrets.STRIPE_TEST_KEY }}
+        run: |
+          npx --yes newman@6 run stripe/stripe-collection.json \
+            -e stripe/stripe-environment.template.json \
+            --env-var "secret_key=$STRIPE_TEST_KEY"
