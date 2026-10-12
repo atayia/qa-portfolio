@@ -103,17 +103,20 @@
           <div class="cell cell-left"><span class="label-text">Exit Criteria</span></div>
           <div class="cell cell-right">
             ✓ 100% of in-scope test cases executed; all High-risk scenarios verified; all contract deviations documented in Bug
-            Reports. See Future Scope (v2) for planned extensions.
+            Reports. See Future Scope (v3) for planned extensions.
           </div>
         </div>
 
-      <div class="tc-row-item">
-        <div class="cell cell-left"><span class="label-text">Future Scope (v2)</span></div>
+        <div class="tc-row-item">
+        <div class="cell cell-left"><span class="label-text">v2 — Automation (Delivered)</span></div>
         <div class="cell cell-right">
           <ul class="standard-list">
-            <li><strong>Postman Scripts</strong> — ✓ Completed. See <a href="stripe-automation.html"
-                class="back-link">Automation page</a>.</li>
+            <li><strong>Postman script assertions</strong> for all 12 in-scope test cases (47 assertions)</li>
+            <li><strong>State chaining</strong> — IDs passed between requests through environment variables</li>
+            <li><strong>Clean-state Newman run</strong> from a blank environment template, 0 failures</li>
+            <li>TC-RF-003 (double refund) and TC-RF-001b (charge state verification) added during execution</li>
           </ul>
+          See the <a href="stripe-automation.html" class="back-link" style="padding:0;">Automation page</a>.
         </div>
       </div>
       
@@ -126,6 +129,7 @@
             <li><strong>Webhook Testing</strong> — validate <code style="color:var(--accent);">payment_intent.succeeded</code>
               and <code style="color:var(--accent);">charge.refunded</code> event delivery</li>
             <li><strong>Charges API Migration</strong> — retest TC-CH-001/002 once Card Token EOL policy is resolved</li>
+            <li>Input Validation — negative amounts and missing required fields (REQ-STR-06)</li>
           </ul>
         </div>
       </div>
