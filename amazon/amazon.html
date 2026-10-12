@@ -68,7 +68,8 @@
             <h3 class="deliverable-link-title">
               <i class="fas fa-vial"></i> Execution Log
             </h3>
-            <p><span id="case-count">8</span> detailed test cases (P0–P2) with execution evidence.</p>
+            <p><span data-count-from="amazon-test-cases.html" data-count-selector=".report-section">8</span> detailed test cases
+              (P0–P2) with execution evidence.</p>
           </div>
         </a>
 
@@ -77,7 +78,8 @@
             <h3 class="deliverable-link-title">
               <i class="fas fa-bug"></i> Defect Report
             </h3>
-            <p>Technical documentation of <span id="bug-count">1</span> audit observations and identified stability risks.</p>
+            <p>Technical documentation of <span data-count-from="amazon-bug-reports.html"
+                data-count-selector="article.report-section">1</span> audit observations and identified stability risks.</p>
           </div>
         </a>
 
@@ -86,7 +88,9 @@
             <h3 class="deliverable-link-title">
               <i class="fas fa-robot"></i> UI Automation
             </h3>
-            <p>Playwright (TypeScript) specs mapped to manual test cases, running in GitHub Actions CI.</p>
+            <p data-count-from="amazon-automation.html">Playwright (TypeScript) specs mapped to manual test cases — <span
+                data-count="tests">3</span> automated, <span data-count="assertions">8</span> assertions, <span
+                data-count="failed">0</span> failed — running in GitHub Actions CI.</p>
           </div>
         </a>
 
@@ -99,26 +103,6 @@
 
   <footer id="footer-bottom"></footer>
 
-  <script>
-    // Fetch live counts from sibling deliverable pages (flat structure)
-    async function updateCounts() {
-      try {
-        const tcRes = await fetch('amazon-test-cases.html');
-        const tcDoc = new DOMParser().parseFromString(await tcRes.text(), 'text/html');
-        const tcCount = tcDoc.querySelectorAll('.report-section').length;
-        document.getElementById('case-count').textContent = tcCount || '8';
-
-        const bugRes = await fetch('amazon-bug-reports.html');
-        const bugDoc = new DOMParser().parseFromString(await bugRes.text(), 'text/html');
-        const bugCount = bugDoc.querySelectorAll('article.report-section').length;
-        document.getElementById('bug-count').textContent = bugCount || '0';
-      } catch (e) {
-        console.warn('Count sync skipped (likely local file:// context):', e.message);
-      }
-    }
-
-    window.onload = updateCounts;
-  </script>
 
   <script src="../scripts.js"></script>
 
