@@ -62,10 +62,10 @@ Auth, and Error Handling.
 | Bug reports | [View](https://atayia.github.io/qa-portfolio/stripe/stripe-bug-reports.html) |
 
 **Highlights**
-- 14 test cases, including negative paths, auth failures, and input validation
-- 12 automated with Postman script assertions (`pm.test` / `pm.expect`)
+- 16 test cases, including negative paths, auth failures, and input validation
+- 14 automated with Postman script assertions (`pm.test` / `pm.expect`)
 - Exported Postman collection: [`stripe/stripe-collection.json`](stripe/stripe-collection.json)
-- Full collection runs end to end from a clean environment with Newman (47 assertions, 0 failed)
+- Full collection runs end to end from a clean environment with Newman (55 assertions, 0 failed)
 
 ---
 
