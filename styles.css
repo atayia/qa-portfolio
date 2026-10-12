@@ -411,7 +411,10 @@ body {
 /* Project nav menu (inner pages) */
 .project-menu {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  /* new: links move to a second line when there's no room */
+  gap: 0.5rem 1.25rem;
+  /* changed: row gap, column gap */
   margin-top: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 0.5rem;
@@ -421,6 +424,8 @@ body {
   color: var(--muted);
   text-decoration: none;
   font-size: 0.85rem;
+  white-space: nowrap;
+  /* new: keeps "Test Plan" on one line */
   transition: 0.3s;
 }
 
