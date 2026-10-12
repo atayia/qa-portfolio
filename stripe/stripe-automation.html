@@ -80,6 +80,15 @@
             <span class="metadata-label">Blocked</span>
             <span class="metadata-value" style="color:#ef4444;">2 (TC-CH-001, TC-CH-002)</span>
           </div>
+          <div>
+            <span class="metadata-label">CI</span>
+            <span class="metadata-value">
+              <a href="https://github.com/atayia/qa-portfolio/actions/workflows/newman.yml" target="_blank" rel="noopener">
+                <img src="https://github.com/atayia/qa-portfolio/actions/workflows/newman.yml/badge.svg"
+                  alt="Stripe API Tests CI status">
+              </a>
+            </span>
+          </div>
         </div>
       </section>
       
@@ -87,8 +96,8 @@
       <section class="hub-section">
         <h2 class="hub-section-title">Full Suite Run (Newman)</h2>
         <p>
-          The exported collection is run from the command line with Newman, Postman's CLI runner, using the
-          blank environment template. The API key is injected at run time and never stored in a file.
+          The exported collection runs from the command line with Newman, Postman's CLI runner, both locally
+          and in GitHub Actions on every collection change, using the blank environment template.. The API key is injected at run time and never stored in a file.
           A clean run proves the collection is self-contained: no leftover variables, no manual run order.
         </p>
         <pre class="code-block" style="margin-top:1rem;">npx newman run stripe/stripe-collection.json \

@@ -2,6 +2,8 @@
 
 [![Playwright Tests](https://github.com/atayia/qa-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/atayia/qa-portfolio/actions/workflows/playwright.yml)
 
+[![Stripe API Tests](https://github.com/atayia/qa-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/atayia/qa-portfolio/actions/workflows/newman.yml)
+
 **Marie-Jo Atayi** · Independent QA Engineer · Building toward AI QA Engineering
 
 🔗 **Live portfolio:** [atayia.github.io/qa-portfolio](https://atayia.github.io/qa-portfolio/)
