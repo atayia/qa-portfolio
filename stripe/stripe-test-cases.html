@@ -1083,6 +1083,140 @@
         </div>
       </article>
 
+      <article class="report-section tc-block" id="TC-ER-003">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-003 &mdash; Invalid Amount (Negative)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API rejects a negative amount with a validation error identifying the offending field.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-06" class="back-link">REQ-STR-06</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": -100,
+  "currency": "usd",
+  "payment_method": "pm_card_visa"
+}</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "amount"</code> &bull;
+            <code style="color:var(--accent);">error.code: "parameter_invalid_integer"</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "amount"</code> &bull;
+            <code style="color:var(--accent);">error.code: "parameter_invalid_integer"</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Notes</div>
+          <div class="cell">Boundary partner to <a href="#TC-ER-001" class="back-link">TC-ER-001</a> (zero). Stripe returns the
+            same error code for zero and negative amounts, treating both as an invalid integer.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 Bad Request, negative amount</h4>
+                <img src="screenshots_stripe/tc-er-003-a.png" alt="TC-ER-003 response 400 parameter_invalid_integer for negative amount"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="report-section tc-block" id="TC-ER-004">
+        <div class="tc-block-title">
+          <span class="method-pill method-post">POST</span>
+          TC-ER-004 &mdash; Missing Required Field (Currency)
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Endpoint</div>
+          <div class="cell"><code style="color:var(--accent);">POST /v1/payment_intents</code></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Objective</div>
+          <div class="cell">Verify the API rejects a request missing a required field and names the missing field.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Linked Requirement</div>
+          <div class="cell"><a href="stripe-requirements.html#REQ-STR-06" class="back-link">REQ-STR-06</a></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Request Body</div>
+          <div class="cell">
+            <pre class="code-block">{
+  "amount": 2000,
+  "payment_method": "pm_card_visa"
+}</pre>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Expected Result</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "currency"</code> &bull;
+            <code style="color:var(--accent);">error.code: "parameter_missing"</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Actual Result</div>
+          <div class="cell">
+            HTTP 400 &bull; <code style="color:var(--accent);">error.type: "invalid_request_error"</code> &bull;
+            <code style="color:var(--accent);">error.param: "currency"</code> &bull;
+            <code style="color:var(--accent);">error.code: "parameter_missing"</code>
+          </div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Status</div>
+          <div class="cell"><span class="status-badge verified">Pass</span></div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left">Notes</div>
+          <div class="cell"><code style="color:var(--accent);">currency</code> is omitted from the request entirely (the
+            Postman body row is disabled), not sent empty. A distinct error code (<code style="color:var(--accent);">parameter_missing</code>)
+            separates a missing field from an invalid value.</div>
+        </div>
+        <div class="tc-row-item">
+          <div class="cell cell-left"><span class="label-text">Evidence</span></div>
+          <div class="cell cell-right">
+            <div class="evidence-area">
+              <div class="evidence-box">
+                <h4>Response — 400 Bad Request, missing currency</h4>
+                <img src="screenshots_stripe/tc-er-004-a.png" alt="TC-ER-004 response 400 parameter_missing for currency"
+                  class="tc-screenshot zoomable" onclick="openModal(this.src)">
+                <p class="evidence-caption"><i class="fas fa-search-plus"></i> Click to enlarge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      
     </main>
   </div>
 
